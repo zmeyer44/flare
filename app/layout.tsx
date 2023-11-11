@@ -29,7 +29,7 @@ export default function RootLayout({
         className={cn(
           inter.className,
           interTight.variable,
-          "w-full bg-background scrollbar-none"
+          "antialiased w-full bg-background scrollbar-none"
         )}
       >
         <Providers>{children}</Providers>

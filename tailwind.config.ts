@@ -56,8 +56,7 @@ module.exports = {
         condensed: ["var(--font-inter-tight)"],
       },
       width: {
-        "sidebar-open": "var(--sidebar-open-width)",
-        "sidebar-closed": "var(--sidebar-closed-width)",
+        sidebar: "var(--sidebar-width)",
       },
       borderRadius: {
         lg: "var(--radius)",
