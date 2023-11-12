@@ -12,13 +12,6 @@ const MobileBanner = dynamic(() => import("./MobileBanner"), {
 });
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  //   return (
-  //     <main className="app-layout w-screen sm:absolute sm:inset-0">
-  //       <div className="bg-blue-400 f1"></div>
-  //       <div className="bg-green-400 f2"></div>
-  //       <div className="bg-red-400 f3"></div>
-  //     </main>
-  //   );
   return (
     <main className="app-layout w-screen sm:absolute sm:inset-0 bg-background min-h-[100svh]">
       <div className="f1">
