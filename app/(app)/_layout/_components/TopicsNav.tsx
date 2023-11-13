@@ -14,22 +14,23 @@ const topics = [
 export default function TopicsNav() {
   const [activeTopic, setActiveTopic] = useState("");
   return (
-    <nav className="h-[var(--header-nav-height)] items-stretch flex gap-2 sm:gap-3 overflow-x-auto scrollbar-none px-2">
+    <nav className="flex h-[var(--header-nav-height)] items-stretch gap-2 overflow-x-auto px-2 scrollbar-none sm:gap-3">
       {topics.map((t, index) => (
         <button
+          key={t.value}
           onClick={() => setActiveTopic(t.value)}
-          className="relative whitespace-nowrap px-4 hover:bg-muted transition-all rounded-t-lg"
+          className="relative whitespace-nowrap rounded-t-lg px-4 transition-all hover:bg-muted"
         >
           <div
             className={cn(
-              "center text-sm sm:text-[16px] text-muted-foreground font-medium",
-              t.value === activeTopic && "text-foreground"
+              "center text-sm font-medium text-muted-foreground sm:text-[16px]",
+              t.value === activeTopic && "text-foreground",
             )}
           >
             <span>{t.label}</span>
           </div>
           {t.value === activeTopic && (
-            <div className="absolute inset-x-0 bottom-0 w-full h-[3px] bg-foreground rounded-full"></div>
+            <div className="absolute inset-x-0 bottom-0 h-[3px] w-full rounded-full bg-foreground"></div>
           )}
         </button>
       ))}

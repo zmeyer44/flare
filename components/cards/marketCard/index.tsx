@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect, useRef } from "react";
 import {
   Card,
   CardContent,
@@ -11,8 +12,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import Split from "@/components/spread/Split";
 import { Button } from "@/components/ui/button";
+import { formatCount } from "@/lib/utils";
+import {
+  POOL_FEE,
+  SATS_PER_SHARE,
+  INITIAL_LIQUIDITY_SHARES,
+  DEFAULT_SHARE_PURCHASE,
+} from "@/constants";
+import { useMarket } from "@/lib/hooks/useMarket";
 
 export default function MarketCard() {
+  const { pool, tokens, split, buyShares } = useMarket();
+  if (!tokens || !pool) {
+    return null;
+  }
   return (
     <Card className="group overflow-hidden">
       <CardHeader className="space-y-4 p-5">
@@ -26,7 +39,9 @@ export default function MarketCard() {
           </Avatar>
           <div className="flex flex-wrap gap-2">
             <Badge variant={"secondary"}>Politics</Badge>
-            <Badge variant={"default"}>2.4k sats</Badge>
+            <Badge variant={"default"}>{`${formatCount(
+              tokens[0].totalSupply * SATS_PER_SHARE,
+            )} sats`}</Badge>
           </div>
         </div>
         <div className="space-y-2">
@@ -41,14 +56,20 @@ export default function MarketCard() {
           <span className="text-center text-[10px] leading-3 text-muted-foreground">
             Win Probability
           </span>
-          <Split shares={[0.4, 0.6]} />
+
+          <Split shares={split} />
         </div>
         <div className="absolute inset-x-0 -bottom-full w-full bg-background pt-5">
           <div className="flex items-center gap-2 px-5 transition-all group-hover:translate-y-[-20px]">
-            <Button className="flex-1 rounded-sm font-semibold" size={"sm"}>
+            <Button
+              onClick={() => buyShares(tokens[0], DEFAULT_SHARE_PURCHASE)}
+              className="flex-1 rounded-sm font-semibold"
+              size={"sm"}
+            >
               Buy Yes
             </Button>
             <Button
+              onClick={() => buyShares(tokens[1], DEFAULT_SHARE_PURCHASE)}
               className="flex-1 rounded-sm font-semibold"
               size={"sm"}
               variant={"secondary"}

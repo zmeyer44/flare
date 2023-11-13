@@ -21,10 +21,10 @@ export default function MarketsSection() {
       </SectionHeader>
       <SectionContent className="md-feed-cols relative mx-auto gap-4">
         <MarketCard />
+        {/* <MarketCard />
         <MarketCard />
         <MarketCard />
-        <MarketCard />
-        <MarketCard />
+        <MarketCard /> */}
       </SectionContent>
     </Section>
   );
