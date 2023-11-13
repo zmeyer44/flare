@@ -4,6 +4,9 @@ import {
   RiCalendarEventFill,
   RiCompass3Fill,
   RiQuestionAnswerFill,
+  RiCrosshair2Line,
+  RiWindyFill,
+  RiSettings4Line,
 } from "react-icons/ri";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -14,17 +17,17 @@ export default function BottomNav() {
     {
       href: "/explore",
       name: "explore",
-      icon: RiCompass3Fill,
+      icon: RiCrosshair2Line,
     },
     {
-      href: "/events",
-      name: "events",
-      icon: RiCalendarEventFill,
+      href: "/activity",
+      name: "activity",
+      icon: RiWindyFill,
     },
     {
       href: "/explore",
-      name: "messages",
-      icon: RiQuestionAnswerFill,
+      name: "settings",
+      icon: RiSettings4Line,
     },
   ];
   return (

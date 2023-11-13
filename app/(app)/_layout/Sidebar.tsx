@@ -10,6 +10,8 @@ import {
   RiSettings4Fill,
   RiCalendarEventFill,
   RiSettings4Line,
+  RiCrosshair2Line,
+  RiWindyFill,
 } from "react-icons/ri";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { cn } from "@/lib/utils";
@@ -69,30 +71,22 @@ export default function Sidebar() {
       href: "/explore",
       name: "explore",
       label: "Explore",
-      icon: RiCompassLine,
+      icon: RiCrosshair2Line,
       type: "link",
       active: true,
     },
     {
-      href: "/events",
-      name: "events",
-      label: "Events",
-      icon: RiCalendarEventFill,
+      href: "/activity",
+      name: "activity",
+      label: "Activity",
+      icon: RiWindyFill,
       type: "link",
       active: true,
-    },
-    {
-      href: "",
-      name: "messages",
-      label: "Messages",
-      icon: RiQuestionAnswerLine,
-      type: "link",
-      active: false,
     },
     {
       onClick: () => {},
       name: "zap",
-      label: "Zap Flockstr",
+      label: "Zap Turbine",
       icon: HiOutlineLightningBolt,
       type: "button",
       active: true,
@@ -114,7 +108,7 @@ export default function Sidebar() {
                         "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
                         pathname === item.href
                           ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground"
+                          : "text-muted-foreground hover:text-foreground",
                       )}
                     >
                       <item.icon
@@ -133,7 +127,7 @@ export default function Sidebar() {
                               "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
                               false
                                 ? "text-foreground"
-                                : "text-muted-foreground hover:text-foreground"
+                                : "text-muted-foreground hover:text-foreground",
                             )}
                           >
                             <item.icon
@@ -159,7 +153,7 @@ export default function Sidebar() {
                         "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
                         false
                           ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground"
+                          : "text-muted-foreground hover:text-foreground",
                       )}
                     >
                       <item.icon
@@ -178,7 +172,7 @@ export default function Sidebar() {
                               "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
                               false
                                 ? "text-foreground"
-                                : "text-muted-foreground hover:text-foreground"
+                                : "text-muted-foreground hover:text-foreground",
                             )}
                           >
                             <item.icon
@@ -204,7 +198,7 @@ export default function Sidebar() {
             className={cn(
               "center relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
 
-              "text-muted-foreground group-hover:text-foreground"
+              "text-muted-foreground group-hover:text-foreground",
             )}
           >
             <RiSettings4Line

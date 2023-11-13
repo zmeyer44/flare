@@ -10,7 +10,7 @@ const Search = dynamic(() => import("./_components/Search"), {
 export default function Header() {
   return (
     <header className="flex h-[var(--header-height)] shrink-0 grow-0 ">
-      <div className="fixed z-header flex flex-col justify-between h-[var(--header-height)] pt-2 sm:pt-0 shadow w-full grow bg-background sm:w-[calc(100vw_-_var(--sidebar-width))] border-b-0">
+      <div className="fixed z-header flex h-[var(--header-height)] w-full grow flex-col justify-between border-b-0 bg-background pt-2 shadow sm:w-[calc(100vw_-_var(--sidebar-width))] sm:pt-0">
         <div className="flex flex-1 items-stretch justify-between gap-x-4 px-5">
           <Link
             href="/explore"
@@ -18,7 +18,7 @@ export default function Header() {
           >
             <Logo className="h-[30px] w-[30px] text-primary sm:hidden" />
             <div className="font-condensed text-xl font-semibold text-foreground">
-              Surge
+              Turbine
             </div>
           </Link>
           <div className="flex grow items-center justify-end gap-x-4 xl:justify-between">

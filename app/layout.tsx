@@ -23,13 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true} className="">
+    <html lang="en" suppressHydrationWarning={true} className="dark">
       <body
         suppressHydrationWarning={true}
         className={cn(
           inter.className,
           interTight.variable,
-          "antialiased w-full bg-background scrollbar-none"
+          "w-full bg-background antialiased scrollbar-none",
         )}
       >
         <Providers>{children}</Providers>
