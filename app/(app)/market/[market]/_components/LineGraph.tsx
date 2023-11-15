@@ -10,38 +10,13 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 
-const data = [
-  {
-    average: 400,
-    today: 240,
-  },
-  {
-    average: 300,
-    today: 139,
-  },
-  {
-    average: 200,
-    today: 980,
-  },
-  {
-    average: 278,
-    today: 390,
-  },
-  {
-    average: 189,
-    today: 480,
-  },
-  {
-    average: 239,
-    today: 380,
-  },
-  {
-    average: 349,
-    today: 430,
-  },
-];
+type LineGraphProps<T> = {
+  data: T[];
+  primaryKey: keyof T;
+};
 
-export function LineGraph() {
+export function LineGraph<T>({ data, primaryKey }: LineGraphProps<T>) {
+  const keys = Object.keys(data[0] ?? { yes: 1, no: 0 });
   return (
     <Card className="w-full">
       <CardHeader>
@@ -68,59 +43,62 @@ export function LineGraph() {
                     return (
                       <div className="rounded-lg border bg-background p-2 shadow-sm">
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
-                              Average
-                            </span>
-                            <span className="font-bold text-muted-foreground">
-                              {payload[0]?.value}
-                            </span>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
-                              Today
-                            </span>
-                            <span className="font-bold text-foreground">
-                              {payload[1]?.value}
-                            </span>
-                          </div>
+                          {keys.map((key) => {
+                            if (key === primaryKey) {
+                              return (
+                                <div className="flex flex-col">
+                                  <span className="text-[0.70rem] uppercase text-muted-foreground">
+                                    {key}
+                                  </span>
+                                  <span className="font-bold text-foreground">
+                                    {payload[0]?.value}
+                                  </span>
+                                </div>
+                              );
+                            } else {
+                              return (
+                                <div className="flex flex-col">
+                                  <span className="text-[0.70rem] uppercase text-muted-foreground">
+                                    {key}
+                                  </span>
+                                  <span className="font-bold text-muted-foreground">
+                                    {payload[1]?.value}
+                                  </span>
+                                </div>
+                              );
+                            }
+                          })}
                         </div>
                       </div>
                     );
                   }
-
                   return null;
                 }}
               />
-              <Line
-                type="monotone"
-                strokeWidth={2}
-                dataKey="average"
-                activeDot={{
-                  r: 6,
-                  style: { fill: "text-primary", opacity: 0.25 },
-                }}
-                style={
-                  {
-                    stroke: "text-primary",
-                    opacity: 0.25,
-                  } as React.CSSProperties
-                }
-              />
-              <Line
-                type="monotone"
-                dataKey="today"
-                strokeWidth={2}
-                activeDot={{
-                  r: 8,
-                  style: { fill: "currentColor" },
-                }}
-                style={
-                  {
-                    stroke: "currentColor",
-                  } as React.CSSProperties
-                }
-              />
+              {keys.map((k) => (
+                <Line
+                  key={k}
+                  type="monotone"
+                  dataKey={k}
+                  activeDot={{
+                    r: k === primaryKey ? 8 : 6,
+                    style:
+                      k === primaryKey
+                        ? { fill: "currentColor" }
+                        : { fill: "text-primary", opacity: 0.25 },
+                  }}
+                  style={
+                    k === primaryKey
+                      ? ({
+                          stroke: "currentColor",
+                        } as React.CSSProperties)
+                      : ({
+                          stroke: "text-primary",
+                          opacity: 0.25,
+                        } as React.CSSProperties)
+                  }
+                />
+              ))}
             </LineChart>
           </ResponsiveContainer>
         </div>

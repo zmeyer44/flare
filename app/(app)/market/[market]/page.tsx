@@ -11,6 +11,10 @@ export default function EventPage({
     market: string;
   };
 }) {
+  const data = [
+    0.5, 0.5, 0.5, 0.59, 0.63, 0.71, 0.6, 0.76, 0.81, 0.98, 0.987, 0.95, 0.99,
+    0.55, 0.45, 0.49, 0.4, 0.7,
+  ];
   return (
     <div className="flex gap-6">
       <div className="flex max-w-[800px] flex-1 flex-col gap-y-6">
@@ -38,7 +42,13 @@ export default function EventPage({
             </div>
           </div>
         </div>
-        <LineGraph />
+        <LineGraph
+          data={data.map((num) => ({
+            yes: Math.round(num * 100),
+            no: Math.round((1 - num) * 100),
+          }))}
+          primaryKey={"yes"}
+        />
         <div className="h-[100vh]"></div>
       </div>
       <div className="hidden w-[300px] shrink-0 flex-col bg-red-400 md:flex">
