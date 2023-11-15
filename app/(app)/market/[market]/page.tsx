@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LineGraph } from "./_components/LineGraph";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BidCard } from "./_components/BidCard";
 
 export default function EventPage({
   params: { market },
@@ -26,12 +26,12 @@ export default function EventPage({
             />
             <AvatarFallback>FB</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-y-3">
             <div className="pt-2">
               <h2 className="line-clamp-1 text-xl font-semibold">
                 Market Title
               </h2>
-              <p className="line-clamp-3 text-base text-muted-foreground">
+              <p className="line-clamp-3 text-sm  text-muted-foreground">
                 Market description with some short details about what is being
                 offered
               </p>
@@ -52,12 +52,7 @@ export default function EventPage({
         <div className="h-[100vh]"></div>
       </div>
       <div className="hidden w-[300px] shrink-0 flex-col bg-red-400 md:flex">
-        <Card className="sticky top-[calc(var(--header-height)_+_12px)] w-full">
-          <CardHeader className="border-b p-5">
-            <CardTitle>Place a bet</CardTitle>
-          </CardHeader>
-          <CardContent className="p-5">content</CardContent>
-        </Card>
+        <BidCard />
       </div>
     </div>
   );
