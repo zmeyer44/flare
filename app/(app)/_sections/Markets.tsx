@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   Section,
   SectionContent,
@@ -20,9 +22,11 @@ export default function MarketsSection() {
         </Button>
       </SectionHeader>
       <SectionContent className="md-feed-cols relative mx-auto gap-4">
-        <MarketCard />
+        <Link href={`/market/1`}>
+          <MarketCard />
+        </Link>
         {/* <MarketCard />
-        <MarketCard />
+        <MarketCard />bun
         <MarketCard />
         <MarketCard /> */}
       </SectionContent>

@@ -45,16 +45,19 @@ export default function MarketCard() {
           </div>
         </div>
         <div className="space-y-2">
-          <CardTitle className="line-clamp-2">Test Title</CardTitle>
+          <CardTitle className="line-clamp-2 leading-5">
+            Bitcoin hits $40k before the halving
+          </CardTitle>
           <CardDescription className="line-clamp-3">
-            Here is a short description about what you are about to bet on.
+            The price of BTC in usd on Coinbase is above 40k prior to block
+            840,000.
           </CardDescription>
         </div>
       </CardHeader>
       <CardContent className="relative transform bg-background p-5 pt-0 transition-all group-hover:translate-y-[-50px]">
         <div className="flex flex-col gap-y-0.5">
           <span className="text-center text-[10px] leading-3 text-muted-foreground">
-            Win Probability
+            Sat Spread
           </span>
 
           <Split shares={split} />
