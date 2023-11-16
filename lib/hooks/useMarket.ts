@@ -13,6 +13,7 @@ export function useMarket() {
   const [pool, setPool] = useState<Pool>();
   const [tokens, setTokens] = useState<[Token, Token]>();
   const [split, setSplit] = useState<[number, number]>([0.5, 0.5]);
+
   useEffect(() => {
     const tokenA = new Token("YES", "Yes outcome");
     tokenA.setMarketPrice(0.5);
@@ -43,6 +44,7 @@ export function useMarket() {
           .reduce((prev, currentValue, index) => prev + currentValue, 0),
     ]);
   }, [pool, tokens]);
+
   function buyShares(token: Token, amount: number) {
     if (!tokens || !pool) return;
     for (const t of tokens) {
@@ -68,10 +70,23 @@ export function useMarket() {
             .reduce((prev, currentValue, index) => prev + currentValue, 0),
     ]);
   }
+
+  function quotePrice(token: Token, sats: number) {
+    if (!tokens || !pool) return;
+    const shares = sats / SATS_PER_SHARE;
+    const quote = pool.quote(
+      tokens.find((t) => t.symbol !== token.symbol)!,
+      token,
+      shares,
+    );
+    console.log("SHARES", shares, "quote", quote);
+    return shares + quote;
+  }
   return {
     pool,
     tokens,
     split,
     buyShares,
+    quotePrice,
   };
 }

@@ -29,8 +29,8 @@ import {
 } from "@/components/ui/tooltip";
 import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import LoginModal from "@/components/modals/test";
-// import { useNDK } from "@/app/_providers/ndk";
-// import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import { useNDK } from "@/app/_providers/ndk";
+import useCurrentUser from "@/lib/hooks/useCurrentUser";
 
 // const LoginModal = dynamic(() => import("@/components/Modals/Login"), {
 //   ssr: false,
@@ -39,29 +39,27 @@ import LoginModal from "@/components/modals/test";
 export default function AuthActions() {
   const router = useRouter();
   const modal = useModal();
-  const currentUser = null;
-  // const { currentUser, logout, attemptLogin, initSubscriptions } =
-  //   useCurrentUser();
-  // const { ndk } = useNDK();
+  const { currentUser, logout, attemptLogin } = useCurrentUser();
+  const { ndk } = useNDK();
 
-  // useKeyboardShortcut(["shift", "ctrl", "u"], () => {
-  //   if (currentUser) {
-  //     router.push(`/${currentUser?.npub}`);
-  //   } else {
-  //     modal?.show(<LoginModal />);
-  //   }
-  // });
-  // useKeyboardShortcut(["shift", "ctrl", "q"], () => {
-  //   if (currentUser) {
-  //     logout();
-  //   }
-  // });
-  // useEffect(() => {
-  //   if (ndk && !currentUser) {
-  //     void attemptLogin();
-  //   }
-  // }, [ndk]);
-  function logout() {}
+  useKeyboardShortcut(["shift", "ctrl", "u"], () => {
+    if (currentUser) {
+      router.push(`/${currentUser?.npub}`);
+    } else {
+      modal?.show(<LoginModal />);
+    }
+  });
+  useKeyboardShortcut(["shift", "ctrl", "q"], () => {
+    if (currentUser) {
+      logout();
+    }
+  });
+  useEffect(() => {
+    if (ndk && !currentUser) {
+      void attemptLogin();
+    }
+  }, [ndk]);
+
   if (currentUser) {
     return (
       <>
@@ -158,7 +156,7 @@ export function Notifications({ user }: { user: NDKUser }) {
   //   );
 }
 export function Relays() {
-  // const { ndk } = useNDK();
+  const { ndk } = useNDK();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -171,14 +169,14 @@ export function Relays() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="z-header+ w-56" align="end" forceMount>
-        {/* {ndk?.explicitRelayUrls?.map((r) => (
+        {ndk?.explicitRelayUrls?.map((r) => (
           <DropdownMenuGroup key={r}>
             <DropdownMenuItem className="flex items-center gap-x-2 overflow-hidden">
               <StatusIndicator status="online" />
               <span className="w-full truncate">{r}</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-        ))} */}
+        ))}
 
         <DropdownMenuSeparator />
         <DropdownMenuItem>

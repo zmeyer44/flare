@@ -29,11 +29,11 @@ export default function EventPage({
           <div className="flex flex-col gap-y-3">
             <div className="pt-2">
               <h2 className="line-clamp-1 text-xl font-semibold">
-                Market Title
+                Bitcoin hits $40k before the halving
               </h2>
               <p className="line-clamp-3 text-sm  text-muted-foreground">
-                Market description with some short details about what is being
-                offered
+                The price of BTC in usd on Coinbase is above 40k prior to block
+                840,000.
               </p>
             </div>
             <div className="mt-auto flex flex-wrap gap-1.5">
@@ -51,7 +51,7 @@ export default function EventPage({
         />
         <div className="h-[100vh]"></div>
       </div>
-      <div className="hidden w-[300px] shrink-0 flex-col bg-red-400 md:flex">
+      <div className="hidden w-[300px] shrink-0 flex-col md:flex">
         <BidCard />
       </div>
     </div>
