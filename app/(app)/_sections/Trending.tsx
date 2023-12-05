@@ -24,10 +24,10 @@ export default function TrendingSection() {
         </Button>
       </SectionHeader>
       <SectionContent className="md-feed-cols relative mx-auto gap-4">
-        <Link href={`/market/1`}>
+        <Link href={`/w/1`}>
           <MarketCard />
         </Link>
-        <Link href={`/video/1`}>
+        <Link href={`/w/1`}>
           <VideoCard />
         </Link>
 
