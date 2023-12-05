@@ -6,17 +6,11 @@ import { Button } from "@/components/ui/button";
 export default function Search() {
   const [open, setOpen] = useAtom(commandDialogAtom);
   return (
-    <div>
-      {/* <Input
-        type="search"
-        placeholder="Search..."
-        className="sm:w-[200px] lg:w-[300px]"
-        onFocus={() => setOpen(true)}
-      /> */}
+    <div className="w-full max-w-lg">
       <Button
         onClick={() => setOpen(true)}
         variant={"outline"}
-        className="items-center justify-start rounded-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64"
+        className="w-full items-center justify-start rounded-sm text-muted-foreground sm:pr-12"
       >
         <span className="hidden lg:inline-flex">Search...</span>
         <span className="inline-flex lg:hidden">Search...</span>

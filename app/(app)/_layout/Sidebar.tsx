@@ -10,7 +10,7 @@ import {
   RiSettings4Fill,
   RiCalendarEventFill,
   RiSettings4Line,
-  RiCrosshair2Line,
+  RiFireLine,
   RiWindyFill,
 } from "react-icons/ri";
 import { HiOutlineLightningBolt } from "react-icons/hi";
@@ -26,6 +26,7 @@ import dynamic from "next/dynamic";
 import { useModal } from "@/app/_providers/modal/provider";
 import { IconType } from "react-icons";
 import { usePathname } from "next/navigation";
+import { ReactNode } from "react";
 
 // const ZapPickerModal = dynamic(() => import("@/components/Modals/ZapPicker"), {
 //   ssr: false,
@@ -46,7 +47,6 @@ type NavigationElement = {
   name: string;
   label: string;
   icon: IconType;
-  active: boolean;
 } & (NavigationLink | NavigationButton);
 const flockstrEvent = {
   created_at: 1697736945,
@@ -68,12 +68,11 @@ export default function Sidebar() {
 
   const navigation: NavigationElement[] = [
     {
-      href: "/explore",
+      href: "/",
       name: "explore",
       label: "Explore",
-      icon: RiCrosshair2Line,
+      icon: RiFireLine,
       type: "link",
-      active: true,
     },
     {
       href: "/activity",
@@ -81,7 +80,6 @@ export default function Sidebar() {
       label: "Activity",
       icon: RiWindyFill,
       type: "link",
-      active: true,
     },
     {
       onClick: () => {},
@@ -89,111 +87,47 @@ export default function Sidebar() {
       label: "Zap Turbine",
       icon: HiOutlineLightningBolt,
       type: "button",
-      active: true,
     },
   ];
   return (
-    <nav className="z-header- hidden h-[calc(100svh_-_var(--header-top-height))] w-[var(--sidebar-width)] flex-col sm:flex">
-      <div className="fixed bottom-0 flex h-[calc(100svh_-_var(--header-top-height))] w-[var(--sidebar-width)]  flex-col border-r">
+    <nav className="z-header- hidden h-[calc(100svh_-_var(--header-height))] w-[var(--sidebar-width)] flex-col  sm:flex">
+      <div className="fixed bottom-0 flex h-[calc(100svh_-_var(--header-height))] w-[var(--sidebar-width)]  flex-col border-r">
         <div className="flex flex-1 flex-col">
-          <div className="flex flex-col items-stretch gap-y-2 p-4">
+          <div className="flex flex-col items-center gap-y-2 py-4">
             {navigation.map((item) => {
               if (item.type === "link") {
-                if (item.active) {
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={cn(
-                        "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
-                        pathname === item.href
-                          ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      <item.icon
-                        className={cn("h-6 w-6 shrink-0")}
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  );
-                } else {
-                  return (
-                    <TooltipProvider key={item.name}>
-                      <Tooltip delayDuration={100}>
-                        <TooltipTrigger>
-                          <div
-                            className={cn(
-                              "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
-                              false
-                                ? "text-foreground"
-                                : "text-muted-foreground hover:text-foreground",
-                            )}
-                          >
-                            <item.icon
-                              className={cn("h-6 w-6 shrink-0")}
-                              aria-hidden="true"
-                            />
-                          </div>
-                        </TooltipTrigger>
-                        <TooltipContent align="start">
-                          <p>Coming Soon</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  );
-                }
+                return <NavItem {...item} active={pathname === item.href} />;
               } else {
-                if (item.active) {
-                  return (
-                    <button
-                      key={item.name}
-                      onClick={item.onClick}
-                      className={cn(
-                        "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
-                        false
-                          ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      <item.icon
-                        className={cn("h-6 w-6 shrink-0")}
-                        aria-hidden="true"
-                      />
-                    </button>
-                  );
-                } else {
-                  return (
-                    <TooltipProvider key={item.name}>
-                      <Tooltip delayDuration={100}>
-                        <TooltipTrigger>
-                          <div
-                            className={cn(
-                              "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
-                              false
-                                ? "text-foreground"
-                                : "text-muted-foreground hover:text-foreground",
-                            )}
-                          >
-                            <item.icon
-                              className={cn("h-6 w-6 shrink-0")}
-                              aria-hidden="true"
-                            />
-                          </div>
-                        </TooltipTrigger>
-                        <TooltipContent align="start">
-                          <p>Coming Soon</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  );
-                }
+                return (
+                  <TooltipProvider key={item.name}>
+                    <Tooltip delayDuration={100}>
+                      <TooltipTrigger>
+                        <div
+                          className={cn(
+                            "center group relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
+                            false
+                              ? "text-foreground"
+                              : "text-muted-foreground hover:text-foreground",
+                          )}
+                        >
+                          <item.icon
+                            className={cn("h-6 w-6 shrink-0")}
+                            aria-hidden="true"
+                          />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent align="start">
+                        <p>Coming Soon</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                );
               }
             })}
             <div className="center py-2">{/* <AddNoteButton /> */}</div>
           </div>
         </div>
-        <div className="flex flex-1 flex-col justify-end p-4">
+        <div className="flex flex-1 flex-col items-center justify-end p-4">
           <button
             className={cn(
               "center relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
@@ -209,5 +143,33 @@ export default function Sidebar() {
         </div>
       </div>
     </nav>
+  );
+}
+
+type NavItemProps = {
+  name: string;
+  href: string;
+  active: boolean;
+  icon: IconType;
+};
+
+function NavItem({ name, href, active, icon: Icon }: NavItemProps) {
+  return (
+    <div className="center relative w-full">
+      <Link
+        href={href}
+        className={cn(
+          "center group relative min-h-[48px] min-w-[48px] rounded-lg  hover:bg-muted",
+          active
+            ? "text-foreground"
+            : "text-muted-foreground hover:text-foreground",
+        )}
+      >
+        <Icon className={cn("h-6 w-6 shrink-0")} aria-hidden="true" />
+      </Link>
+      {active && (
+        <div className="absolute left-[-4px] h-10 w-[8px] rounded-full bg-primary" />
+      )}
+    </div>
   );
 }

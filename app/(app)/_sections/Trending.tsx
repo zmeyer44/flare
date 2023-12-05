@@ -9,13 +9,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { RiArrowRightLine } from "react-icons/ri";
 import MarketCard from "@/components/cards/marketCard";
+import VideoCard from "@/components/cards/videoCard";
+import ChannelCard from "@/components/cards/channelCard";
 
-export default function MarketsSection() {
+export default function TrendingSection() {
   return (
     <Section className="px-5">
       <SectionHeader>
         <SectionTitle className="font-condensed text-2xl font-bold sm:text-3xl">
-          Trending Markets
+          Trending Trending
         </SectionTitle>
         <Button variant={"ghost"}>
           View all <RiArrowRightLine className="ml-1 h-4 w-4" />
@@ -25,6 +27,10 @@ export default function MarketsSection() {
         <Link href={`/market/1`}>
           <MarketCard />
         </Link>
+        <Link href={`/video/1`}>
+          <VideoCard />
+        </Link>
+
         {/* <MarketCard />
         <MarketCard />bun
         <MarketCard />

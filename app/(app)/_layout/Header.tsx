@@ -9,28 +9,29 @@ const Search = dynamic(() => import("./_components/Search"), {
 });
 export default function Header() {
   return (
-    <header className="flex h-[var(--header-height)] shrink-0 grow-0 ">
-      <div className="fixed z-header flex h-[var(--header-height)] w-full grow flex-col justify-between border-b-0 bg-background pt-2 shadow sm:w-[calc(100vw_-_var(--sidebar-width))] sm:pt-0">
+    <header className="flex h-[var(--header-height)] shrink-0 grow-0">
+      <div className="fixed z-header flex h-[var(--header-height)] w-full grow flex-col justify-between border-b-0 bg-background pt-2 shadow sm:pt-0">
         <div className="flex flex-1 items-stretch justify-between gap-x-4 px-5">
-          <Link
-            href="/explore"
-            className="center justify-between gap-x-3 text-foreground"
-          >
-            <Logo className="h-[30px] w-[30px] text-primary sm:hidden" />
-            <div className="font-condensed text-xl font-semibold text-foreground">
-              Turbine
-            </div>
-          </Link>
-          <div className="flex grow items-center justify-end gap-x-4 xl:justify-between">
-            <div className="hidden sm:flex">
+          <div className="flex w-[150px] items-center">
+            <Link
+              href="/explore"
+              className="center justify-between gap-x-3 text-foreground sm:gap-x-5"
+            >
+              <Logo className="h-[26px] w-[26px] text-primary sm:h-[30px] sm:w-[30px]" />
+              <div className="font-condensed text-xl font-semibold text-foreground">
+                Flare
+              </div>
+            </Link>
+          </div>
+          <div className="flex grow items-center justify-center xl:justify-between">
+            <div className="hidden w-full justify-center sm:flex">
               <Search />
             </div>
-            <div className="flex items-center gap-x-4">
-              <AuthActions />
-            </div>
+          </div>
+          <div className="flex w-[150px] items-center justify-end gap-x-4">
+            <AuthActions />
           </div>
         </div>
-        <TopicsNav />
       </div>
     </header>
   );

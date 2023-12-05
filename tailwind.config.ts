@@ -51,6 +51,8 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "media-brand": "rgb(var(--media-brand) / <alpha-value>)",
+        "media-focus": "rgb(var(--media-focus) / <alpha-value>)",
       },
       fontFamily: {
         condensed: ["var(--font-inter-tight)"],
@@ -110,5 +112,23 @@ module.exports = {
     require("@tailwindcss/container-queries"),
     require("tailwind-scrollbar"),
     require("@tailwindcss/typography"),
+    require("@vidstack/react/tailwind.cjs")({
+      prefix: "media",
+    }),
+    customVariants,
   ],
 };
+
+function customVariants({
+  addVariant,
+  matchVariant,
+}: {
+  addVariant: (label: string, classes: string[]) => void;
+  matchVariant: (label: string, func: (val: string) => string) => void;
+}) {
+  // Strict version of `.group` to help with nesting.
+  matchVariant("parent-data", (value) => `.parent[data-${value}] > &`);
+
+  addVariant("hocus", ["&:hover", "&:focus-visible"]);
+  addVariant("group-hocus", [".group:hover &", ".group:focus-visible &"]);
+}
