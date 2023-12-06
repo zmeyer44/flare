@@ -45,8 +45,8 @@ export default function VideoCard({ className }: VideoCardProps) {
           <Image
             src={card.image}
             alt={card.title}
-            width={250}
-            height={150}
+            width={450}
+            height={250}
             unoptimized
             className={cn(
               "h-auto w-auto object-cover transition-all group-hover:scale-105",

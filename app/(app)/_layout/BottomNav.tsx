@@ -32,7 +32,7 @@ export default function BottomNav() {
   ];
   return (
     <footer className="z-header- flex h-[var(--bottom-nav-height)] w-full sm:hidden">
-      <div className="bottom-tabs fixed inset-x-0 bottom-0 flex h-[var(--bottom-nav-height)] flex-1 items-stretch justify-between border-t bg-background px-4">
+      <div className="bottom-tabs fixed  inset-x-0 bottom-0 flex h-[var(--bottom-nav-height)] flex-1 items-stretch justify-between border-t bg-background/80 px-4 backdrop-blur">
         {navigationItems.map((item) => (
           <Link
             key={item.name}
