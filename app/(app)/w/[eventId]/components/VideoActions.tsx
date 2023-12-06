@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import LikeToggleButton from "@/components/custom-buttons/LikeToggleButton";
 import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
+import { RiMore2Fill } from "react-icons/ri";
+import DropDownOptions from "@/components/custom-buttons/DropDownOptions";
 
 export default function VideoActions() {
   const npub = "";
@@ -87,6 +89,7 @@ export default function VideoActions() {
               }
             }}
           />
+          <DropDownOptions />
         </div>
       </div>
 
@@ -97,7 +100,7 @@ export default function VideoActions() {
           true && "cursor-pointer transition-all hover:bg-muted-foreground/30",
         )}
       >
-        <div className="flex items-center gap-x-1.5 text-sm font-medium text-foreground">
+        <div className="flex items-center gap-x-1.5 text-[13px] font-semibold text-foreground">
           <p>44,053 views</p> <span>•</span>
           <p>44,053 views</p>
         </div>
