@@ -40,8 +40,8 @@ export default function ChannelCard({ className }: ChannelCardProps) {
           <Image
             src={card.image}
             alt={card.title}
-            width={150}
-            height={250}
+            width={200}
+            height={450}
             unoptimized
             className={cn(
               "h-auto w-auto object-cover transition-all group-hover:scale-105",
