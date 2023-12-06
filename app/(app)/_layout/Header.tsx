@@ -10,7 +10,7 @@ const Search = dynamic(() => import("./_components/Search"), {
 export default function Header() {
   return (
     <header className="flex h-[var(--header-height)] shrink-0 grow-0">
-      <div className="fixed z-header flex h-[var(--header-height)] w-full grow flex-col justify-between border-b-0 bg-background pt-2 shadow sm:pt-0">
+      <div className="fixed z-header flex h-[var(--header-height)] w-full grow flex-col justify-between border-b-0 bg-background shadow">
         <div className="flex flex-1 items-stretch justify-between gap-x-4 px-5">
           <div className="flex w-[150px] items-center">
             <Link
