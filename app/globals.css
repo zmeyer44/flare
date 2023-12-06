@@ -25,7 +25,7 @@
     --ring: 24.6 95% 53.1%;
     --radius: 0.75rem;
 
-    --header-height: 48px;
+    --header-height: 56px;
     --sidebar-width-full: 240px;
     --sidebar-width: 72px;
     --bottom-nav-height: 56px;
@@ -52,11 +52,11 @@
     --input: 12 6.5% 15.1%;
     --ring: 20.5 90.2% 48.2%;
   }
-  @media (min-width: 640px) {
+  /* @media (min-width: 640px) {
     :root {
       --header-height: 56px;
     }
-  }
+  } */
 
   @media all and (display-mode: standalone) {
     :root {
