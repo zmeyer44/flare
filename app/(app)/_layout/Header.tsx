@@ -14,7 +14,7 @@ export default function Header() {
         <div className="flex flex-1 items-stretch justify-between gap-x-4 px-5">
           <div className="flex w-[150px] items-center">
             <Link
-              href="/explore"
+              href="/"
               className="center justify-between gap-x-3 text-foreground sm:gap-x-5"
             >
               <Logo className="h-[26px] w-[26px] text-primary sm:h-[30px] sm:w-[30px]" />

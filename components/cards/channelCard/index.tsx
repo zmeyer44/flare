@@ -44,7 +44,7 @@ export default function ChannelCard({ className }: ChannelCardProps) {
             height={450}
             unoptimized
             className={cn(
-              "h-auto w-auto object-cover transition-all group-hover:scale-105",
+              "h-full w-full object-cover transition-all group-hover:scale-105",
               "aspect-[10/16]",
             )}
           />
