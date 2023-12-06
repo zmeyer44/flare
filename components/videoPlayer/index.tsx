@@ -24,7 +24,7 @@ type VideoPlayerProps = {
   src: string;
   title: string;
 };
-export default function VideoPlayer({ textTracks }: VideoPlayerProps) {
+export default function VideoPlayer({ textTracks, src }: VideoPlayerProps) {
   let player = useRef<MediaPlayerInstance>(null);
 
   useEffect(() => {
@@ -55,9 +55,9 @@ export default function VideoPlayer({ textTracks }: VideoPlayerProps) {
 
   return (
     <MediaPlayer
-      className="ring-media-focus bg-muted-background relative aspect-video w-full overflow-hidden rounded-md font-sans text-foreground data-[focus]:ring-4"
+      className="ring-media-focus bg-muted-background relative aspect-video h-full w-full overflow-hidden rounded-md font-sans text-foreground data-[focus]:ring-4"
       title="Sprite Fight"
-      src="https://stream.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/low.mp4"
+      src={src}
       crossorigin
       playsinline
       onProviderChange={onProviderChange}

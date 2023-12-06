@@ -36,7 +36,7 @@ export default function HorizontalVideoCard({ className }: VideoCardProps) {
   return (
     <div className={cn("group flex space-x-3", className)}>
       <div className="relative w-[120px] overflow-hidden rounded-md">
-        <AspectRatio ratio={21 / 14} className="bg-muted">
+        <AspectRatio ratio={21 / 15} className="bg-muted">
           <Image
             src={card.image}
             alt={card.title}
@@ -80,7 +80,7 @@ export default function HorizontalVideoCard({ className }: VideoCardProps) {
               </AvatarFallback>
             </Avatar>
             <div className="flex items-center gap-1">
-              <span className="text-[12px] font-semibold">
+              <span className="truncate text-[12px] font-semibold">
                 {getNameToShow({ npub, profile })}
               </span>
               {!!profile?.nip05 && (

@@ -31,7 +31,7 @@ export default function VideoActions() {
       </div>
 
       {/* Detials Section */}
-      <div className="flex justify-between">
+      <div className="flex flex-wrap justify-between gap-y-3">
         {/* Channel */}
         <div className="flex items-center gap-5">
           {/* Channel Section */}
@@ -40,7 +40,7 @@ export default function VideoActions() {
               href={`/${npub}`}
               className="center group gap-x-3 rounded-sm rounded-r-full pr-1 text-foreground hover:shadow"
             >
-              <Avatar className="center h-[40px] w-[40px] overflow-hidden rounded-[.5rem] bg-muted">
+              <Avatar className="center h-[34px] w-[34px] overflow-hidden rounded-[.5rem] bg-muted sm:h-[40px] sm:w-[40px]">
                 <AvatarImage
                   className="object-cover"
                   src={profile?.image}
@@ -52,14 +52,16 @@ export default function VideoActions() {
               </Avatar>
               <div className="">
                 <div className="flex items-center gap-1">
-                  <span className="text-[16px] font-semibold">
+                  <span className="truncate text-[14px] font-semibold sm:text-[16px]">
                     {getNameToShow({ npub, profile })}
                   </span>
                   {!!profile?.nip05 && (
-                    <HiCheckBadge className="h-[14px] w-[14px] text-primary" />
+                    <HiCheckBadge className="h-[12px] w-[12px] text-primary sm:h-[14px] sm:w-[14px]" />
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground">2.5k followers</p>
+                <p className="text-[11px] text-muted-foreground sm:text-xs">
+                  2.5k followers
+                </p>
               </div>
             </Link>
           </div>
@@ -78,7 +80,7 @@ export default function VideoActions() {
           </div>
         </div>
         {/* Video actions */}
-        <div className="flex items-center gap-3 text-muted-foreground">
+        <div className="ml-auto flex items-center gap-3 text-muted-foreground">
           <LikeToggleButton
             likeCount={likeCount}
             onClick={(action) => {
