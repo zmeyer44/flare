@@ -1,18 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  RiHome6Fill,
-  RiCompassLine,
-  RiCompass3Fill,
-  RiQuestionAnswerLine,
-  RiAddFill,
-  RiSettings4Fill,
-  RiCalendarEventFill,
-  RiSettings4Line,
-  RiFireLine,
-  RiWindyFill,
-} from "react-icons/ri";
+import { RiSettings4Line, RiFireLine, RiWindyFill } from "react-icons/ri";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";

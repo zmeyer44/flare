@@ -19,7 +19,7 @@ export default function ChannelPage({
     nip05: "zach@flockstr.com",
   };
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div className="">
         <BannerImage
           url={
@@ -30,7 +30,7 @@ export default function ChannelPage({
       <div className="">
         <ProfileInfo profile={profile} npub={npub} />
       </div>
-      <div className="pt-2">
+      <div className="pt-1">
         <VerticalVideosFeed title="Videos" />
       </div>
     </div>

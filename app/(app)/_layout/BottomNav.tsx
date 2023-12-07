@@ -1,13 +1,6 @@
 "use client";
 import Link from "next/link";
-import {
-  RiCalendarEventFill,
-  RiCompass3Fill,
-  RiQuestionAnswerFill,
-  RiCrosshair2Line,
-  RiWindyFill,
-  RiSettings4Line,
-} from "react-icons/ri";
+import { RiFireLine, RiWindyFill, RiSettings4Line } from "react-icons/ri";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 
@@ -15,17 +8,17 @@ export default function BottomNav() {
   const pathname = usePathname();
   const navigationItems = [
     {
-      href: "/explore",
-      name: "explore",
-      icon: RiCrosshair2Line,
+      href: "/",
+      name: "home",
+      icon: RiFireLine,
     },
     {
-      href: "/activity",
+      href: "/",
       name: "activity",
       icon: RiWindyFill,
     },
     {
-      href: "/explore",
+      href: "/",
       name: "settings",
       icon: RiSettings4Line,
     },
