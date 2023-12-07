@@ -30,15 +30,13 @@ export default function Modal({
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) {
-  const desktopModalRef = useRef(null);
-
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setShowModal(false);
       }
     },
-    [setShowModal]
+    [setShowModal],
   );
 
   useEffect(() => {
@@ -46,28 +44,28 @@ export default function Modal({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown]);
 
-  const { isMobile, isDesktop } = useWindowSize();
+  // const { isMobile, isDesktop } = useWindowSize();
 
-  useEffect(() => {
-    if (showModal) {
-      document.body.style.top = `-${window.scrollY}px`;
-      document.body.style.position = "fixed";
-    } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      window.scrollTo(0, parseInt(scrollY || "0") * -1);
-    }
-    return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      window.scrollTo(0, parseInt(scrollY || "0") * -1);
-    };
-  }, [showModal]);
+  // useEffect(() => {
+  //   if (showModal) {
+  //     document.body.style.top = `-${window.scrollY}px`;
+  //     document.body.style.position = "fixed";
+  //   } else {
+  //     const scrollY = document.body.style.top;
+  //     document.body.style.position = "";
+  //     document.body.style.top = "";
+  //     window.scrollTo(0, parseInt(scrollY || "0") * -1);
+  //   }
+  //   return () => {
+  //     const scrollY = document.body.style.top;
+  //     document.body.style.position = "";
+  //     document.body.style.top = "";
+  //     window.scrollTo(0, parseInt(scrollY || "0") * -1);
+  //   };
+  // }, [showModal]);
 
   if (showModal) {
-    if (isMobile) {
+    if (typeof window.innerWidth === "number" && window.innerWidth < 768) {
       return (
         <Leaflet setShow={setShowModal} open={showModal}>
           {children}
@@ -82,59 +80,4 @@ export default function Modal({
     }
   }
   return null;
-
-  return (
-    <AnimatePresence>
-      {showModal && (
-        <Leaflet setShow={setShowModal} open={showModal}>
-          {children}
-        </Leaflet>
-      )}
-    </AnimatePresence>
-  );
-  return (
-    <AnimatePresence>
-      {showModal && (
-        <>
-          {isMobile && (
-            <Leaflet setShow={setShowModal} open={showModal}>
-              {children}
-            </Leaflet>
-          )}
-          {isDesktop && (
-            <>
-              <FocusTrap
-                focusTrapOptions={{ initialFocus: false }}
-                active={false}
-              >
-                <motion.div
-                  ref={desktopModalRef}
-                  key="desktop-modal"
-                  className="fixed inset-0 z-modal hidden min-h-screen items-center justify-center md:flex"
-                  initial={{ scale: 0.95 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0.95 }}
-                  onMouseDown={(e) => {
-                    if (desktopModalRef.current === e.target) {
-                      setShowModal(false);
-                    }
-                  }}
-                >
-                  <div className="center grow overflow-hidden">{children}</div>
-                </motion.div>
-              </FocusTrap>
-              <motion.div
-                key="desktop-backdrop"
-                className="fixed inset-0 z-overlay bg-background/40 backdrop-blur"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setShowModal(false)}
-              />
-            </>
-          )}
-        </>
-      )}
-    </AnimatePresence>
-  );
 }
