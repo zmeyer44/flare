@@ -5,6 +5,8 @@ import { ModalProvider } from "./modal/provider";
 import useRouteChange from "@/lib/hooks/useRouteChange";
 import { NDKProvider } from "./ndk";
 import { RELAYS } from "@/constants";
+import TRPCProvider from "./trpc/Provider";
+import { SessionProvider } from "next-auth/react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const handleRouteChange = (url: string) => {
@@ -16,11 +18,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
   useRouteChange(handleRouteChange);
   return (
     <>
-      <NDKProvider relayUrls={RELAYS}>
-        <Toaster richColors className="dark:hidden" />
-        <Toaster theme="dark" className="hidden dark:block" />
-        <ModalProvider>{children}</ModalProvider>
-      </NDKProvider>
+      <SessionProvider>
+        <TRPCProvider>
+          <NDKProvider relayUrls={RELAYS}>
+            <Toaster richColors className="dark:hidden" />
+            <Toaster theme="dark" className="hidden dark:block" />
+            <ModalProvider>{children}</ModalProvider>
+          </NDKProvider>
+        </TRPCProvider>
+      </SessionProvider>
     </>
   );
 }
