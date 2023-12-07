@@ -97,7 +97,7 @@ export function VideoCardLoading({ className }: Omit<VideoCardProps, "event">) {
   return (
     <div
       className={cn(
-        "group flex h-full flex-col space-y-3 rounded-[16px] rounded-b-[10px] p-2 hover:bg-muted",
+        "group flex h-full flex-col space-y-3 rounded-[16px] rounded-b-[10px] p-2",
         className,
       )}
     >

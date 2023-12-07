@@ -13,41 +13,41 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
+import useProfile from "@/lib/hooks/useProfile";
+import { nip19 } from "nostr-tools";
 
 type ChannelCardProps = {
   className?: string;
+  channelPubkey: string;
 };
 
-export default function ChannelCard({ className }: ChannelCardProps) {
-  const card = {
-    image:
-      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
-    title: "First YouTube Channel playback",
-    tags: [],
-  };
-  const npub = "";
-  const profile = {
-    name: "Zach",
-    displayName: "Zach Meyer",
-    image:
-      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
-    nip05: "zach@flockstr.com",
-  };
+export default function ChannelCard({
+  className,
+  channelPubkey,
+}: ChannelCardProps) {
+  const npub = nip19.npubEncode(channelPubkey);
+  const { profile } = useProfile(channelPubkey);
+  if (!profile) {
+    return <ChannelCardLoading className={className} />;
+  }
+
   return (
     <div className={cn("group flex h-full flex-col space-y-2", className)}>
       <div className="relative overflow-hidden rounded-md">
         <AspectRatio ratio={3 / 4} className="bg-muted">
-          <Image
-            src={card.image}
-            alt={card.title}
-            width={200}
-            height={320}
-            unoptimized
-            className={cn(
-              "h-full w-full object-cover transition-all group-hover:scale-105",
-              "aspect-[3/4]",
-            )}
-          />
+          {!!profile.image && (
+            <Image
+              src={profile.image}
+              alt={npub}
+              width={200}
+              height={320}
+              unoptimized
+              className={cn(
+                "h-full w-full object-cover transition-all group-hover:scale-105",
+                "aspect-[3/4]",
+              )}
+            />
+          )}
         </AspectRatio>
         {false && (
           <div className="pointer-events-none absolute bottom-0 right-0 p-2">
@@ -73,11 +73,11 @@ export default function ChannelCard({ className }: ChannelCardProps) {
             </Avatar>
             <div className="">
               <div className="flex items-center gap-1">
-                <span className="text-[14px] font-semibold">
+                <span className="line-clamp-1 text-[14px] font-semibold">
                   {getNameToShow({ npub, profile })}
                 </span>
                 {!!profile?.nip05 && (
-                  <HiCheckBadge className="h-[14px] w-[14px] text-primary" />
+                  <HiCheckBadge className="h-[14px] w-[14px] shrink-0 text-primary" />
                 )}
               </div>
               <p className="text-xs text-muted-foreground">2.5k followers</p>
@@ -88,21 +88,9 @@ export default function ChannelCard({ className }: ChannelCardProps) {
     </div>
   );
 }
-export function ChannelCardLoading({ className }: ChannelCardProps) {
-  const card = {
-    image:
-      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
-    title: "First YouTube Channel playback",
-    tags: [],
-  };
-  const npub = "";
-  const profile = {
-    name: "Zach",
-    displayName: "Zach Meyer",
-    image:
-      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
-    nip05: "zach@flockstr.com",
-  };
+export function ChannelCardLoading({
+  className,
+}: Omit<ChannelCardProps, "channelPubkey">) {
   return (
     <div className={cn("group flex h-full flex-col space-y-2", className)}>
       <div className="relative overflow-hidden rounded-md">

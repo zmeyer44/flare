@@ -14,8 +14,9 @@ import MarketCard from "@/components/cards/marketCard";
 import VideoCard, { VideoCardLoading } from "@/components/cards/videoCard";
 import ChannelCard from "@/components/cards/channelCard";
 import useEvents from "@/lib/hooks/useEvents";
-import { NDKKind } from "@nostr-dev-kit/ndk";
-import { useEffect } from "react";
+import { type NDKKind } from "@nostr-dev-kit/ndk";
+import { getTagValues } from "@/lib/nostr/utils";
+import { uniqBy } from "ramda";
 
 export default function TrendingSection() {
   const { events } = useEvents({
@@ -25,10 +26,8 @@ export default function TrendingSection() {
     },
   });
 
-  useEffect(() => {
-    console.log("Events", events);
-  }, [events]);
-  if (events.length) {
+  const processedEvents = uniqBy((e) => getTagValues("title", e.tags), events);
+  if (processedEvents.length) {
     return (
       <Section className="px-5">
         <SectionHeader>
@@ -40,9 +39,9 @@ export default function TrendingSection() {
           </Button>
         </SectionHeader>
         <SectionContent className="md-feed-cols relative mx-auto gap-4">
-          {events.map((e) => {
+          {processedEvents.slice(0, 12).map((e) => {
             return (
-              <Link key={e.id} href={`/w/1`}>
+              <Link key={e.id} href={`/w/${e.tagId()}`}>
                 <VideoCard event={e} />
               </Link>
             );
