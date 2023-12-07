@@ -18,7 +18,7 @@ export default function Header() {
               className="center justify-between gap-x-3 text-foreground sm:gap-x-5"
             >
               <Logo className="h-[26px] w-[26px] text-primary sm:h-[30px] sm:w-[30px]" />
-              <div className="font-condensed text-xl font-semibold text-foreground">
+              <div className="font-monomaniac text-2xl text-foreground">
                 Flare
               </div>
             </Link>

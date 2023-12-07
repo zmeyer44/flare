@@ -31,7 +31,7 @@ export default function TrendingSection() {
     return (
       <Section className="px-5">
         <SectionHeader>
-          <SectionTitle className="font-condensed text-2xl font-bold sm:text-3xl">
+          <SectionTitle className="font-monomaniac text-2xl font-normal sm:text-3xl">
             Trending Trending
           </SectionTitle>
           <Button variant={"ghost"}>
@@ -53,7 +53,7 @@ export default function TrendingSection() {
   return (
     <Section className="px-5">
       <SectionHeader>
-        <SectionTitle className="font-condensed text-2xl font-bold sm:text-3xl">
+        <SectionTitle className="font-monomaniac text-2xl font-normal sm:text-3xl">
           Trending Trending
         </SectionTitle>
         <Button variant={"ghost"}>

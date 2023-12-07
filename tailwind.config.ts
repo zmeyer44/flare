@@ -56,6 +56,7 @@ module.exports = {
       },
       fontFamily: {
         condensed: ["var(--font-inter-tight)"],
+        monomaniac: ["var(--font-monomaniac-one)"],
       },
       width: {
         sidebar: "var(--sidebar-width)",
