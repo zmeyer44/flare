@@ -35,8 +35,8 @@ export default function HorizontalVideoCard({ className }: VideoCardProps) {
   };
   return (
     <div className={cn("group flex space-x-3", className)}>
-      <div className="relative w-[120px] overflow-hidden rounded-md">
-        <AspectRatio ratio={21 / 15} className="bg-muted">
+      <div className="relative h-full w-[120px]  overflow-hidden rounded-md">
+        <AspectRatio ratio={21 / 14} className="bg-muted">
           <Image
             src={card.image}
             alt={card.title}
@@ -44,7 +44,7 @@ export default function HorizontalVideoCard({ className }: VideoCardProps) {
             height={70}
             unoptimized
             className={cn(
-              "!h-full w-auto object-cover transition-all group-hover:scale-105",
+              "h-full w-full object-cover transition-all group-hover:scale-105",
               "aspect-[21/14]",
             )}
           />
