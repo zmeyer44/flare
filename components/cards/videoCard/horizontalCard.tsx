@@ -55,7 +55,7 @@ export default function HorizontalVideoCard({ className }: VideoCardProps) {
           </div>
         )}
       </div>
-      <div className="flex-1 space-y-2 text-base">
+      <div className="flex-1 space-y-2 pt-1.5 text-base">
         <h3 className="line-clamp-2 font-medium leading-none">{card.title}</h3>
         <div className="flex flex-col items-start gap-y-1">
           <div className="flex items-center gap-x-1 text-xs text-muted-foreground">

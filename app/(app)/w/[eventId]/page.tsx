@@ -2,7 +2,7 @@ import HorizontalVideoCard from "@/components/cards/videoCard/horizontalCard";
 import { Button } from "@/components/ui/button";
 import Player from "./components/Player";
 import VideoActions from "./components/VideoActions";
-
+import VerticalVideosFeed from "@/containers/feeds/VerticalVideosFeed";
 export default function PlaybackPage({
   params: { eventId },
 }: {
@@ -21,21 +21,15 @@ export default function PlaybackPage({
           <VideoActions />
         </div>
       </div>
-      <div className="w-full lg:max-w-[400px]">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Up Next</h2>
+      <VerticalVideosFeed
+        className="w-full lg:max-w-[400px]"
+        title="Up Next"
+        action={
           <Button className="" size={"sm"} variant={"ghost"}>
             View more
           </Button>
-        </div>
-        <div className="py-3">
-          <ul>
-            <li>
-              <HorizontalVideoCard />
-            </li>
-          </ul>
-        </div>
-      </div>
+        }
+      />
     </div>
   );
 }

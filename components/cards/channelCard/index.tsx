@@ -36,16 +36,16 @@ export default function ChannelCard({ className }: ChannelCardProps) {
   return (
     <div className={cn("group flex h-full flex-col space-y-2", className)}>
       <div className="relative overflow-hidden rounded-md">
-        <AspectRatio ratio={10 / 16} className="bg-muted">
+        <AspectRatio ratio={3 / 4} className="bg-muted">
           <Image
             src={card.image}
             alt={card.title}
             width={200}
-            height={450}
+            height={320}
             unoptimized
             className={cn(
               "h-full w-full object-cover transition-all group-hover:scale-105",
-              "aspect-[10/16]",
+              "aspect-[3/4]",
             )}
           />
         </AspectRatio>
