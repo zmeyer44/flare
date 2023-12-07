@@ -8,9 +8,9 @@ import {
 } from "@/containers/pageSection";
 import { Button } from "@/components/ui/button";
 import { RiArrowRightLine } from "react-icons/ri";
-import MarketCard from "@/components/cards/marketCard";
-import VideoCard from "@/components/cards/videoCard";
-import ChannelCard from "@/components/cards/channelCard";
+import ChannelCard, {
+  ChannelCardLoading,
+} from "@/components/cards/channelCard";
 import { cn } from "@/lib/utils";
 
 export default function ChannelsSection() {
@@ -18,7 +18,7 @@ export default function ChannelsSection() {
     <Section className="relative overflow-x-hidden">
       <SectionHeader className="px-5">
         <SectionTitle className="font-condensed text-2xl font-bold sm:text-3xl">
-          Channels Trending
+          Channels To Watch
         </SectionTitle>
         <Button variant={"ghost"}>
           View all <RiArrowRightLine className="ml-1 h-4 w-4" />

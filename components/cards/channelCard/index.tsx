@@ -88,3 +88,44 @@ export default function ChannelCard({ className }: ChannelCardProps) {
     </div>
   );
 }
+export function ChannelCardLoading({ className }: ChannelCardProps) {
+  const card = {
+    image:
+      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
+    title: "First YouTube Channel playback",
+    tags: [],
+  };
+  const npub = "";
+  const profile = {
+    name: "Zach",
+    displayName: "Zach Meyer",
+    image:
+      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
+    nip05: "zach@flockstr.com",
+  };
+  return (
+    <div className={cn("group flex h-full flex-col space-y-2", className)}>
+      <div className="relative overflow-hidden rounded-md">
+        <AspectRatio ratio={3 / 4} className="bg-muted"></AspectRatio>
+        {false && (
+          <div className="pointer-events-none absolute bottom-0 right-0 p-2">
+            <Badge variant={"red"}>LIVE</Badge>
+          </div>
+        )}
+      </div>
+      <div className="flex-1 space-y-3 text-base">
+        <div className="flex h-[56px] rounded-[10px] bg-muted p-2">
+          <div className="center group gap-x-2 text-foreground">
+            <Avatar className="center h-[34px] w-[34px] overflow-hidden rounded-[.35rem] bg-background"></Avatar>
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-1">
+                <Skeleton className="h-[12px] w-[100px] bg-background" />
+              </div>
+              <Skeleton className="h-[8px] w-[70px] bg-background" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

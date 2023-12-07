@@ -58,8 +58,8 @@ export default function Sidebar() {
   const navigation: NavigationElement[] = [
     {
       href: "/",
-      name: "explore",
-      label: "Explore",
+      name: "home",
+      label: "Home",
       icon: RiFireLine,
       type: "link",
     },
@@ -85,7 +85,13 @@ export default function Sidebar() {
           <div className="flex flex-col items-center gap-y-2 py-4">
             {navigation.map((item) => {
               if (item.type === "link") {
-                return <NavItem {...item} active={pathname === item.href} />;
+                return (
+                  <NavItem
+                    key={item.name}
+                    {...item}
+                    active={pathname === item.href}
+                  />
+                );
               } else {
                 return (
                   <TooltipProvider key={item.name}>
