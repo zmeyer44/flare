@@ -93,7 +93,7 @@ export default function VideoCard({ className, event }: VideoCardProps) {
     </div>
   );
 }
-export function VideoCardLoading({ className }: VideoCardProps) {
+export function VideoCardLoading({ className }: Omit<VideoCardProps, "event">) {
   return (
     <div
       className={cn(
