@@ -1,12 +1,25 @@
 "use client";
+import Spinner from "@/components/spinner";
 import VideoPlayer from "@/components/videoPlayer";
-export default function Player() {
+export default function Player({
+  url,
+  title,
+  image,
+}: {
+  url: string;
+  title: string;
+  image: string;
+}) {
+  if (!url || !title) {
+    return (
+      <div className="center relative aspect-video h-full w-full overflow-hidden rounded-md bg-muted text-primary">
+        <Spinner />
+      </div>
+    );
+  }
   return (
     <div className="">
-      <VideoPlayer
-        src="https://stream.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/low.mp4"
-        title="test"
-      />
+      <VideoPlayer src={url} title={title} thumbnail={image} />
     </div>
   );
 }

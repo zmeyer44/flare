@@ -1,35 +1,35 @@
-import HorizontalVideoCard from "@/components/cards/videoCard/horizontalCard";
-import { Button } from "@/components/ui/button";
-import Player from "./components/Player";
-import VideoActions from "./components/VideoActions";
-import VerticalVideosFeed from "@/containers/feeds/VerticalVideosFeed";
-export default function PlaybackPage({
+"use client";
+import { nip19 } from "nostr-tools";
+import { redirect } from "next/navigation";
+import PlaybackPage from "./PlaybackPage";
+import Spinner from "@/components/spinner";
+import { useEvent } from "@/lib/hooks/useEvents";
+
+export default function Page({
   params: { eventId },
 }: {
   params: {
     eventId: string;
   };
 }) {
-  return (
-    <div className="flex flex-col gap-6 lg:flex-row">
-      <div className="shrink-1 flex-1 md:min-w-[500px]">
-        {/* Video Player */}
-        <div className="w-full rounded-xl">
-          <Player />
-        </div>
-        <div className="pt-1">
-          <VideoActions />
-        </div>
+  const { data, type } = nip19.decode(eventId);
+  if (type !== "naddr") {
+    throw new Error("Invalid event");
+  }
+  const { identifier, kind, pubkey } = data;
+  const { event, isLoading } = useEvent({
+    filter: {
+      kinds: [kind],
+      authors: [pubkey],
+      ["#d"]: [identifier],
+    },
+  });
+  if (isLoading || !event) {
+    return (
+      <div className="">
+        <Spinner />
       </div>
-      <VerticalVideosFeed
-        className="w-full lg:max-w-[400px]"
-        title="Up Next"
-        action={
-          <Button className="" size={"sm"} variant={"ghost"}>
-            View more
-          </Button>
-        }
-      />
-    </div>
-  );
+    );
+  }
+  return <PlaybackPage event={event} />;
 }

@@ -41,7 +41,7 @@ export default function TrendingSection() {
         <SectionContent className="md-feed-cols relative mx-auto gap-4">
           {processedEvents.slice(0, 12).map((e) => {
             return (
-              <Link key={e.id} href={`/w/${e.tagId()}`}>
+              <Link key={e.id} href={`/w/${e.encode()}`}>
                 <VideoCard event={e} />
               </Link>
             );

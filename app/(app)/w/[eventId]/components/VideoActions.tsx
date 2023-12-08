@@ -9,25 +9,28 @@ import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
 import { RiMore2Fill } from "react-icons/ri";
 import DropDownOptions from "@/components/custom-buttons/DropDownOptions";
+import { NDKEvent } from "@nostr-dev-kit/ndk";
+import { getTagValues } from "@/lib/nostr/utils";
+import useProfile from "@/lib/hooks/useProfile";
 
-export default function VideoActions() {
-  const npub = "";
-  const profile = {
-    name: "Zach",
-    displayName: "Zach Meyer",
-    image:
-      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
-    nip05: "zach@flockstr.com",
-  };
+type VideoActionsProps = {
+  event: NDKEvent;
+};
+export default function VideoActions({ event }: VideoActionsProps) {
+  const npub = event.author.npub;
+  const { profile } = useProfile(event.author.pubkey);
+  console.log(event.rawEvent());
+  const title = getTagValues("title", event.tags) as string;
+  const summary =
+    getTagValues("summary", event.tags) ??
+    (getTagValues("about", event.tags) as string);
 
   const [likeCount, setLikeCount] = useState(0);
   return (
     <div className="space-y-2.5 py-2">
       {/* Title Section */}
       <div className="flex justify-between">
-        <h1 className="text-[1.3rem] text-xl font-semibold">
-          New YouTube Video
-        </h1>
+        <h1 className="text-[1.3rem] text-xl font-semibold">{title}</h1>
       </div>
 
       {/* Detials Section */}
@@ -107,23 +110,11 @@ export default function VideoActions() {
           <p>44,053 views</p>
         </div>
         <div className="text-sm text-muted-foreground">
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam
-            tenetur sit officiis quibusdam inventore recusandae adipisci
-            perspiciatis? Id, nostrum. Sequi laudantium cumque quibusdam id
-            autem odio doloribus minima fugit neque!
-          </p>
+          <p>{summary}</p>
         </div>
         <button className="text-xs font-medium leading-none">
           <span>See more...</span>
         </button>
-      </div>
-
-      {/* Comments Section */}
-      <div className="">
-        <div className="flex items-center">
-          <h2 className="font-semibold text-foreground">123 Comments</h2>
-        </div>
       </div>
     </div>
   );

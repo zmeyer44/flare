@@ -23,8 +23,16 @@ type VideoPlayerProps = {
   textTracks?: TrackType[];
   src: string;
   title: string;
+  thumbnail?: string;
+  alt?: string;
 };
-export default function VideoPlayer({ textTracks, src }: VideoPlayerProps) {
+export default function VideoPlayer({
+  textTracks,
+  src,
+  title,
+  thumbnail,
+  alt,
+}: VideoPlayerProps) {
   let player = useRef<MediaPlayerInstance>(null);
 
   useEffect(() => {
@@ -56,7 +64,7 @@ export default function VideoPlayer({ textTracks, src }: VideoPlayerProps) {
   return (
     <MediaPlayer
       className="ring-media-focus bg-muted-background relative aspect-video h-full w-full overflow-hidden rounded-md font-sans text-foreground data-[focus]:ring-4"
-      title="Sprite Fight"
+      title={title}
       src={src}
       crossorigin
       playsinline
@@ -67,12 +75,13 @@ export default function VideoPlayer({ textTracks, src }: VideoPlayerProps) {
       <MediaProvider>
         <Poster
           className="absolute inset-0 block h-full w-full rounded-md object-cover opacity-0 transition-opacity data-[visible]:opacity-100"
-          src="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/thumbnail.webp?time=268&width=1200"
-          alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!"
+          src={thumbnail}
+          alt={alt ?? "video"}
         />
         {textTracks?.map((track) => <Track {...track} key={track.src} />)}
       </MediaProvider>
-      <VideoLayout thumbnails="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/storyboard.vtt" />
+      {/* <VideoLayout thumbnails="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/storyboard.vtt" /> */}
+      <VideoLayout />
     </MediaPlayer>
   );
 }

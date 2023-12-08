@@ -13,33 +13,31 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
+import { NDKEvent } from "@nostr-dev-kit/ndk";
+import { getTagValues } from "@/lib/nostr/utils";
+import useProfile from "@/lib/hooks/useProfile";
+import { relativeTime } from "@/lib/utils/dates";
 
 type VideoCardProps = {
   className?: string;
+  event: NDKEvent;
 };
 
-export default function HorizontalVideoCard({ className }: VideoCardProps) {
-  const card = {
-    image:
-      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
-    title: "First YouTube video playback",
-    tags: [],
-  };
-  const npub = "";
-  const profile = {
-    name: "Zach",
-    displayName: "Zach Meyer",
-    image:
-      "https://polymarket.com/_next/image?url=https%3A%2F%2Fpolymarket-upload.s3.us-east-2.amazonaws.com%2Fwill-the-p_7249fefe2495a5a6a4725d481e381b12_256x256_qual_100.webp&w=256&q=100",
-    nip05: "zach@flockstr.com",
-  };
+export default function HorizontalVideoCard({
+  className,
+  event,
+}: VideoCardProps) {
+  const npub = event.author.npub;
+  const { profile } = useProfile(event.author.pubkey);
+  const image = getTagValues("image", event.tags) as string;
+  const title = getTagValues("title", event.tags) as string;
   return (
     <div className={cn("group flex space-x-3", className)}>
       <div className="relative h-full w-[120px]  overflow-hidden rounded-md">
         <AspectRatio ratio={21 / 14} className="bg-muted">
           <Image
-            src={card.image}
-            alt={card.title}
+            src={image}
+            alt={title}
             width={150}
             height={70}
             unoptimized
@@ -55,13 +53,19 @@ export default function HorizontalVideoCard({ className }: VideoCardProps) {
           </div>
         )}
       </div>
-      <div className="flex-1 space-y-2 pt-1.5 text-base">
-        <h3 className="line-clamp-2 font-medium leading-none">{card.title}</h3>
+      <div className="flex-1 space-y-1 pt-0.5 text-base">
+        <h3 className="mt-0 line-clamp-2 text-[15px] font-medium leading-4">
+          {title}
+        </h3>
         <div className="flex flex-col items-start gap-y-1">
           <div className="flex items-center gap-x-1 text-xs text-muted-foreground">
             <p>2.7k views</p>
-            <span>•</span>
-            <p>12hrs</p>
+            {!!event.created_at && (
+              <>
+                <span>•</span>
+                <p>{relativeTime(new Date(event.created_at * 1000))}</p>
+              </>
+            )}
           </div>
         </div>
         <div className="flex">

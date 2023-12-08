@@ -1,19 +1,28 @@
 "use client";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import HorizontalVideoCard from "@/components/cards/videoCard/horizontalCard";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { NDKEvent, type NDKFilter } from "@nostr-dev-kit/ndk";
+import useEvents from "@/lib/hooks/useEvents";
+import Spinner from "@/components/spinner";
 
 type VerticalVideosFeedProps = {
   title?: string;
   action?: ReactNode;
   className?: string;
+  filter?: NDKFilter;
+  secondaryFilter?: (event: NDKEvent) => Boolean;
+  loader?: () => JSX.Element;
+  empty?: () => JSX.Element;
 };
 
 export default function VerticalVideosFeed({
   title,
   action,
   className,
+  ...props
 }: VerticalVideosFeedProps) {
   return (
     <div className={cn("w-full", className)}>
@@ -24,12 +33,57 @@ export default function VerticalVideosFeed({
         </div>
       )}
       <div className="py-3">
-        <ul>
-          <li>
-            <HorizontalVideoCard />
-          </li>
-        </ul>
+        <RawFeed {...props} />
       </div>
     </div>
+  );
+}
+
+function RawFeed({
+  filter,
+  secondaryFilter,
+  loader: Loader,
+  empty: Empty,
+}: {
+  filter?: NDKFilter;
+  secondaryFilter?: (event: NDKEvent) => Boolean;
+  loader?: () => JSX.Element;
+  empty?: () => JSX.Element;
+}) {
+  const { events, isLoading } = useEvents({
+    filter: { ...filter },
+  });
+  if (isLoading) {
+    if (Loader) {
+      return <Loader />;
+    }
+    return <Spinner />;
+  }
+  if (Empty && events.length === 0) {
+    return <Empty />;
+  }
+  if (secondaryFilter) {
+    return (
+      <ul className="space-y-3">
+        {events.filter(secondaryFilter).map((e) => (
+          <li key={e.id}>
+            <Link href={`/w/${e.encode()}`}>
+              <HorizontalVideoCard event={e} />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <ul className="space-y-3">
+      {events.map((e) => (
+        <li key={e.id}>
+          <Link href={`/w/${e.encode()}`}>
+            <HorizontalVideoCard event={e} />
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }
