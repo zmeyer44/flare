@@ -139,10 +139,10 @@ export function VideoActionsLoading() {
                 <AvatarFallback className="text-[12px]"></AvatarFallback>
               </Avatar>
               <div className="">
-                <div className="flex items-center gap-1">
-                  <Skeleton className="h-[14px] w-[100px] bg-muted" />
+                <div className="mb-1.5 flex items-center gap-1">
+                  <Skeleton className="h-[12px] w-[100px] bg-muted" />
                 </div>
-                <Skeleton className="h-[11px] w-[70px] bg-muted" />
+                <Skeleton className="h-[9px] w-[70px] bg-muted" />
               </div>
             </div>
           </div>
