@@ -64,7 +64,7 @@ export default function CommentInput({
       };
       const event = await createEvent(ndk, preEvent);
       if (event) {
-        toast.success("Event Created!");
+        toast.success("Comment created!");
         modal?.hide();
       } else {
         toast.error("An error occured");

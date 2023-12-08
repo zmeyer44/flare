@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import HorizontalVideoCard from "@/components/cards/videoCard/horizontalCard";
+import HorizontalVideoCard, {
+  HorizontalVideoCardLoading,
+} from "@/components/cards/videoCard/horizontalCard";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { NDKEvent, type NDKFilter } from "@nostr-dev-kit/ndk";
@@ -34,6 +36,39 @@ export default function VerticalVideosFeed({
       )}
       <div className="py-3">
         <RawFeed {...props} />
+      </div>
+    </div>
+  );
+}
+export function VerticalVideosFeedLoading({
+  title,
+  action,
+  className,
+  ...props
+}: VerticalVideosFeedProps) {
+  return (
+    <div className={cn("w-full", className)}>
+      {!!title && (
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">{title}</h2>
+          {action}
+        </div>
+      )}
+      <div className="py-3">
+        <ul className="space-y-3">
+          <li>
+            <HorizontalVideoCardLoading />
+          </li>
+          <li>
+            <HorizontalVideoCardLoading />
+          </li>
+          <li>
+            <HorizontalVideoCardLoading />
+          </li>
+          <li>
+            <HorizontalVideoCardLoading />
+          </li>
+        </ul>
       </div>
     </div>
   );

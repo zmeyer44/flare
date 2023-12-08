@@ -10,6 +10,7 @@ import useProfile from "@/lib/hooks/useProfile";
 import { getTagValues } from "@/lib/nostr/utils";
 
 export default function PlaybackPage({ event }: { event: NDKEvent }) {
+  const tagId = event.tagId();
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
   const url = getTagValues("streaming", event.tags) as string;
@@ -25,7 +26,7 @@ export default function PlaybackPage({ event }: { event: NDKEvent }) {
         <div className="pt-1">
           <VideoActions event={event} />
         </div>
-        <CommentSection />
+        <CommentSection eventReference={tagId} />
       </div>
       <VerticalVideosFeed
         className="w-full lg:max-w-[400px]"

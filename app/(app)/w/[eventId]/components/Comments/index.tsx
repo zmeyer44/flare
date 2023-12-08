@@ -1,5 +1,22 @@
+"use client";
+
 import CommentInput from "./CommentInput";
-export default function CommentSection() {
+import CommentFeed from "./CommentFeed";
+import useEvents from "@/lib/hooks/useEvents";
+
+type CommentSectionProps = {
+  eventReference: string;
+};
+
+export default function CommentSection({
+  eventReference,
+}: CommentSectionProps) {
+  const { events } = useEvents({
+    filter: {
+      kinds: [1],
+      ["#a"]: [eventReference],
+    },
+  });
   return (
     <section className="space-y-2.5 py-2">
       {/* Comments Section */}
@@ -11,6 +28,7 @@ export default function CommentSection() {
         </div>
       </div>
       <CommentInput />
+      <CommentFeed comments={events} />
     </section>
   );
 }

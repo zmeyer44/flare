@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import PlaybackPage from "./PlaybackPage";
 import Spinner from "@/components/spinner";
 import { useEvent } from "@/lib/hooks/useEvents";
+import LoadingPage from "./loading";
 
 export default function Page({
   params: { eventId },
@@ -25,11 +26,8 @@ export default function Page({
     },
   });
   if (isLoading || !event) {
-    return (
-      <div className="">
-        <Spinner />
-      </div>
-    );
+    return <LoadingPage />;
   }
+
   return <PlaybackPage event={event} />;
 }

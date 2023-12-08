@@ -28,7 +28,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
-import LoginModal from "@/components/modals/test";
+import LoginModal from "@/components/modals/login";
 import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 
@@ -44,7 +44,7 @@ export default function AuthActions() {
 
   useKeyboardShortcut(["shift", "ctrl", "u"], () => {
     if (currentUser) {
-      router.push(`/${currentUser?.npub}`);
+      router.push(`/w/${currentUser?.npub}`);
     } else {
       modal?.show(<LoginModal />);
     }
