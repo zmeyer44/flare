@@ -92,7 +92,22 @@ function RawFeed({
     if (Loader) {
       return <Loader />;
     }
-    return <Spinner />;
+    return (
+      <ul className="space-y-3">
+        <li>
+          <HorizontalVideoCardLoading />
+        </li>
+        <li>
+          <HorizontalVideoCardLoading />
+        </li>
+        <li>
+          <HorizontalVideoCardLoading />
+        </li>
+        <li>
+          <HorizontalVideoCardLoading />
+        </li>
+      </ul>
+    );
   }
   if (Empty && events.length === 0) {
     return <Empty />;
