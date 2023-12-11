@@ -5,7 +5,7 @@ import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import useAutosizeTextArea from "@/lib/hooks/useAutoSizeTextArea";
 import { useModal } from "@/app/_providers/modal/provider";
 import { useNDK } from "@/app/_providers/ndk";
-import useImageUpload from "@/lib/hooks/useImageUpload";
+import useUpload from "@/lib/hooks/useUpload";
 import { toast } from "sonner";
 import { createEvent } from "@/lib/actions/create";
 
@@ -33,13 +33,14 @@ export default function CommentInput({
   const [content, setContent] = useState("");
 
   const {
-    ImageUploadButton,
+    UploadButton,
     ImagePreview,
     clear,
     imagePreview,
-    imageUrl,
+    fileUrl,
     status: imageStatus,
-  } = useImageUpload("event");
+  } = useUpload({ folderName: "event" });
+
   const { ndk } = useNDK();
   const { currentUser } = useCurrentUser();
   const contentRef = useRef<HTMLTextAreaElement>(null);
@@ -52,9 +53,9 @@ export default function CommentInput({
       const tags: string[][] = initialTags ?? [];
       let noteContent = content;
 
-      if (imageUrl) {
-        tags.push(["r", imageUrl]);
-        noteContent += `\n${imageUrl}`;
+      if (fileUrl) {
+        tags.push(["r", fileUrl]);
+        noteContent += `\n${fileUrl}`;
       }
       const preEvent = {
         content: noteContent,
@@ -114,7 +115,7 @@ export default function CommentInput({
                   {imagePreview ? (
                     <ImagePreview className="" />
                   ) : (
-                    <ImageUploadButton>
+                    <UploadButton>
                       <Button
                         size={"icon"}
                         variant={"outline"}
@@ -122,7 +123,7 @@ export default function CommentInput({
                       >
                         <HiOutlinePaperClip className="h-4 w-4" />
                       </Button>
-                    </ImageUploadButton>
+                    </UploadButton>
                   )}
                   <div className="center mt-auto">
                     <Button
