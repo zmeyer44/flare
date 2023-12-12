@@ -13,6 +13,7 @@ import { NDKEvent } from "@nostr-dev-kit/ndk";
 import { getTagValues } from "@/lib/nostr/utils";
 import useProfile from "@/lib/hooks/useProfile";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RenderText } from "@/components/textRendering";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -110,8 +111,8 @@ export default function VideoActions({ event }: VideoActionsProps) {
           <p>44,053 views</p> <span>•</span>
           <p>44,053 views</p>
         </div>
-        <div className="text-sm text-muted-foreground">
-          <p>{summary}</p>
+        <div className="whitespace-break-spaces text-sm text-muted-foreground">
+          <RenderText text={summary} />
         </div>
         <button className="text-xs font-medium leading-none">
           <span>See more...</span>
