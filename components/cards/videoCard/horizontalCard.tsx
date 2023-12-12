@@ -31,6 +31,7 @@ export default function HorizontalVideoCard({
   const { profile } = useProfile(event.author.pubkey);
   const image = getTagValues("image", event.tags) as string;
   const title = getTagValues("title", event.tags) as string;
+  const publishedAt = getTagValues("published_at", event.tags) as string;
   return (
     <div className={cn("group flex space-x-3", className)}>
       <div className="relative h-full w-[120px]  overflow-hidden rounded-md">
@@ -60,10 +61,10 @@ export default function HorizontalVideoCard({
         <div className="flex flex-col items-start gap-y-1">
           <div className="flex items-center gap-x-1 text-xs text-muted-foreground">
             <p>2.7k views</p>
-            {!!event.created_at && (
+            {!!publishedAt && (
               <>
                 <span>•</span>
-                <p>{relativeTime(new Date(event.created_at * 1000))}</p>
+                <p>{relativeTime(new Date(parseInt(publishedAt) * 1000))}</p>
               </>
             )}
           </div>

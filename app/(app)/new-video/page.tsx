@@ -38,6 +38,8 @@ export default function Page() {
     thumbnail?: string;
     fileType?: string;
     fileHash?: string;
+    fileSize?: number;
+    duration?: number;
     hashtags?: string;
     contentWarning?: string;
   }>();
@@ -59,10 +61,20 @@ export default function Page() {
         ["title", videoData.title],
         ["summary", videoData.summary ?? ""],
         ["published_at", unixTimeNowInSeconds().toString()],
+        ["client", "flare"],
       ];
 
+      if (videoData.fileType) {
+        tags.push(["m", videoData.fileType]);
+      }
       if (videoData.fileHash) {
         tags.push(["x", videoData.fileHash]);
+      }
+      if (videoData.fileSize) {
+        tags.push(["size", videoData.fileSize.toString()]);
+      }
+      if (videoData.duration) {
+        tags.push(["duration", videoData.duration.toString()]);
       }
 
       if (videoData.thumbnail) {
@@ -89,7 +101,7 @@ export default function Page() {
       const event = await createEvent(ndk, preEvent);
       if (event) {
         console.log("Event", event);
-        toast.success("File uploaded!");
+        toast.success("Video published!");
         const encodedEvent = event.encode();
         router.push(`/w/${encodedEvent}`);
       } else {

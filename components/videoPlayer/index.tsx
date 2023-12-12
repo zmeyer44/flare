@@ -73,11 +73,13 @@ export default function VideoPlayer({
       ref={player}
     >
       <MediaProvider>
-        <Poster
-          className="absolute inset-0 block h-full w-full rounded-md object-cover opacity-0 transition-opacity data-[visible]:opacity-100"
-          src={thumbnail}
-          alt={alt ?? "video"}
-        />
+        {!!thumbnail && (
+          <Poster
+            className="absolute inset-0 block h-full w-full rounded-lg border-0 object-cover opacity-0 outline-none ring-0 transition-opacity data-[visible]:opacity-100"
+            src={thumbnail}
+            alt={alt ?? "video"}
+          />
+        )}
         {textTracks?.map((track) => <Track {...track} key={track.src} />)}
       </MediaProvider>
       {/* <VideoLayout thumbnails="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/storyboard.vtt" /> */}

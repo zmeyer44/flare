@@ -45,8 +45,9 @@ export function relativeTime(timestamp: Date) {
   dayjs.updateLocale("en", {
     relativeTime: {
       future: "in %s",
-      past: "now",
+      past: "%s ago",
       s: "now",
+      ss: "now",
       m: "a minute",
       mm: "%d minutes",
       h: "an hour",

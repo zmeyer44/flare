@@ -53,6 +53,8 @@ export function VideoUpload({
     thumbnail?: string;
     fileType?: string;
     fileHash?: string;
+    fileSize?: number;
+    duration?: number;
   }) => void;
 }) {
   const [loading, setLoading] = useState(false);
@@ -91,6 +93,8 @@ export function VideoUpload({
           getTagValues("image", events[0].tags);
         const fileType = getTagValues("m", events[0].tags);
         const fileHash = getTagValues("x", events[0].tags);
+        const fileSize = getTagValues("size", events[0].tags);
+        const duration = getTagValues("duration", events[0].tags);
         setVideo({
           url,
           title,
@@ -98,6 +102,8 @@ export function VideoUpload({
           thumbnail,
           fileType,
           fileHash,
+          fileSize: fileSize ? parseInt(fileSize) : undefined,
+          duration: duration ? parseInt(duration) : undefined,
         });
       }
     } catch (err) {
@@ -164,12 +170,21 @@ export function VideoUpload({
               accept="video/*"
               folderName="video"
               generateThumbnail={true}
-              onSumbit={(fileUrl, fileType, fileHash, thumbnailUrl) =>
+              onSumbit={({
+                fileUrl,
+                fileType,
+                fileHash,
+                thumbnailUrl,
+                duration,
+                fileSize,
+              }) =>
                 setVideo({
                   url: fileUrl,
                   thumbnail: thumbnailUrl,
                   fileHash,
                   fileType,
+                  duration,
+                  fileSize,
                 })
               }
             />,

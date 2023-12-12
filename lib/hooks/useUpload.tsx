@@ -31,11 +31,13 @@ const useUpload = (props?: UploadProps) => {
     "empty" | "uploading" | "success" | "error"
   >("empty");
 
-  const [fileUrl, setFileUrl] = useState<string | null>();
-  const [fileType, setFileType] = useState<string | null>();
-  const [fileHash, setFileHash] = useState<string | null>();
-  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>();
-  const [imagePreview, setImagePreview] = useState<string | null>();
+  const [fileUrl, setFileUrl] = useState<string | undefined>();
+  const [fileType, setFileType] = useState<string | undefined>();
+  const [fileHash, setFileHash] = useState<string | undefined>();
+  const [fileSize, setFileSize] = useState<number | undefined>();
+  const [videoDuration, setVideoDuration] = useState<number | undefined>();
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | undefined>();
+  const [imagePreview, setImagePreview] = useState<string | undefined>();
 
   const uploadImage = async (file: File, folderName?: string) => {
     if (!file) return;
@@ -95,10 +97,12 @@ const useUpload = (props?: UploadProps) => {
       // load metadata of the video to get video duration and dimensions
       videoPlayer.addEventListener("loadedmetadata", () => {
         // seek to user defined timestamp (in seconds) if possible
-        if (videoPlayer.duration < seekTo) {
-          reject("video is too short.");
-          return;
+        const durationInSeconds = videoPlayer.duration;
+        setVideoDuration(durationInSeconds);
+        if (durationInSeconds < seekTo) {
+          seekTo = 0;
         }
+
         // delay seeking or else 'seeked' event won't fire on Safari
         setTimeout(() => {
           videoPlayer.currentTime = seekTo;
@@ -186,6 +190,7 @@ const useUpload = (props?: UploadProps) => {
     setStatus("uploading");
     uploadImage(file, folderName);
     setFileType(file.type);
+    setFileSize(file.size);
     if (generateThumbnail) {
       handleGenerateThumbnail(file);
     }
@@ -320,9 +325,9 @@ const useUpload = (props?: UploadProps) => {
 
   const clear = () => {
     setStatus("empty");
-    setFileUrl(null);
-    setFileHash(null);
-    setImagePreview(null);
+    setFileUrl(undefined);
+    setFileHash(undefined);
+    setImagePreview(undefined);
   };
 
   return {
@@ -331,6 +336,8 @@ const useUpload = (props?: UploadProps) => {
     fileUrl,
     fileType,
     fileHash,
+    fileSize,
+    videoDuration,
     thumbnailUrl,
     UploadButton,
     ImagePreview,

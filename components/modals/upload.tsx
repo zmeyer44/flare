@@ -15,12 +15,14 @@ type UploadModalProps = {
   accept?: string;
   folderName?: string;
   acceptText?: string;
-  onSumbit: (
-    fileUrl: string,
-    fileType: string,
-    fileHash?: string,
-    thumbnailUrl?: string,
-  ) => void;
+  onSumbit: (props: {
+    fileUrl: string;
+    fileType: string;
+    fileHash?: string;
+    fileSize?: number;
+    duration?: number;
+    thumbnailUrl?: string;
+  }) => void;
   generateThumbnail?: boolean;
 };
 
@@ -40,6 +42,8 @@ export default function UploadModal({
     UploadButton,
     fileUrl,
     fileType,
+    fileSize,
+    videoDuration: duration,
     thumbnailUrl,
     imagePreview,
     fileHash,
@@ -52,12 +56,14 @@ export default function UploadModal({
 
   function handleSubmit() {
     if (!fileUrl || !fileType) return;
-    onSumbit(
+    onSumbit({
       fileUrl,
       fileType,
-      fileHash ?? undefined,
-      thumbnailUrl ?? undefined,
-    );
+      fileHash,
+      thumbnailUrl,
+      duration,
+      fileSize,
+    });
     modal?.hide();
   }
 
