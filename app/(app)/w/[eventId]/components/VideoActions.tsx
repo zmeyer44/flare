@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { RenderText } from "@/components/textRendering";
 import LikeButton from "./LikeButton";
 import LikeToggleButton from "@/components/custom-buttons/LikeToggleButton";
+import { relativeTime } from "@/lib/utils/dates";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -27,6 +28,8 @@ export default function VideoActions({ event }: VideoActionsProps) {
   const summary =
     getTagValues("summary", event.tags) ??
     (getTagValues("about", event.tags) as string);
+  const publishedAt =
+    getTagValues("published_at", event.tags) ?? event.created_at?.toString();
 
   return (
     <div className="space-y-2.5 py-2">
@@ -99,8 +102,13 @@ export default function VideoActions({ event }: VideoActionsProps) {
         )}
       >
         <div className="flex items-center gap-x-1.5 text-[13px] font-semibold text-foreground">
-          <p>44,053 views</p> <span>•</span>
           <p>44,053 views</p>
+          {!!publishedAt && (
+            <>
+              <span>•</span>
+              <p>{relativeTime(new Date(parseInt(publishedAt) * 1000))}</p>
+            </>
+          )}
         </div>
         <div className="whitespace-break-spaces text-sm text-muted-foreground">
           <RenderText text={summary} />
