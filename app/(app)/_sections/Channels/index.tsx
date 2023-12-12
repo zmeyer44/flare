@@ -22,7 +22,7 @@ import { nip19 } from "nostr-tools";
 export default function ChannelsSection() {
   const { events } = useEvents({
     filter: {
-      kinds: [30311 as NDKKind],
+      kinds: [34235 as NDKKind],
       limit: 10,
     },
   });

@@ -21,7 +21,7 @@ import { uniqBy } from "ramda";
 export default function TrendingSection() {
   const { events } = useEvents({
     filter: {
-      kinds: [30311 as NDKKind],
+      kinds: [34235 as NDKKind],
       limit: 10,
     },
   });

@@ -114,6 +114,7 @@ module.exports = {
     require("tailwind-scrollbar"),
     require("@tailwindcss/typography"),
     require("@vidstack/react/tailwind.cjs")({
+      selector: ".media-player",
       prefix: "media",
     }),
     customVariants,

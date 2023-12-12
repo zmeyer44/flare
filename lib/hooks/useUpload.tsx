@@ -39,6 +39,7 @@ const useUpload = (props?: UploadProps) => {
 
   const uploadImage = async (file: File, folderName?: string) => {
     if (!file) return;
+
     try {
       const presignedPost = await fetchWithZod(
         // The schema you want to validate with
@@ -47,7 +48,11 @@ const useUpload = (props?: UploadProps) => {
         "/api/upload",
         {
           method: "POST",
-          body: JSON.stringify({ folderName, fileType: file.type }),
+          body: JSON.stringify({
+            folderName,
+            fileType: file.type,
+            fileName: file.name,
+          }),
         },
       );
 

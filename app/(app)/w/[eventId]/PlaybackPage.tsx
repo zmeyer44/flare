@@ -13,7 +13,7 @@ export default function PlaybackPage({ event }: { event: NDKEvent }) {
   const tagId = event.tagId();
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
-  const url = getTagValues("streaming", event.tags) as string;
+  const url = getTagValues("url", event.tags) as string;
   const title = getTagValues("title", event.tags) as string;
   const image = getTagValues("image", event.tags) as string;
   return (
@@ -37,7 +37,7 @@ export default function PlaybackPage({ event }: { event: NDKEvent }) {
           </Button>
         }
         filter={{
-          kinds: [30311 as NDKKind],
+          kinds: [34235 as NDKKind],
           limit: 5,
         }}
       />
