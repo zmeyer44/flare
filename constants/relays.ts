@@ -1,6 +1,7 @@
 export const RELAYS = [
-  "wss://nostr.mom",
+  "wss://relay.damus.io",
   "wss://nos.lol",
   "wss://nostr.wine",
-  "wss://relay.damus.io",
+  "wss://nostr.mom",
+  "wss://relay.nostr.band",
 ];
