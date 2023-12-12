@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import HorizontalVideoCard, {
   HorizontalVideoCardLoading,
 } from "@/components/cards/videoCard/horizontalCard";
+import VideoCard, { VideoCardLoading } from "@/components/cards/videoCard";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { NDKEvent, type NDKFilter } from "@nostr-dev-kit/ndk";
+import type { NDKEvent, NDKFilter } from "@nostr-dev-kit/ndk";
 import useEvents from "@/lib/hooks/useEvents";
-import Spinner from "@/components/spinner";
 
 type VerticalVideosFeedProps = {
   title?: string;
@@ -55,20 +55,13 @@ export function VerticalVideosFeedLoading({
         </div>
       )}
       <div className="py-3">
-        <ul className="space-y-3">
-          <li>
-            <HorizontalVideoCardLoading />
-          </li>
-          <li>
-            <HorizontalVideoCardLoading />
-          </li>
-          <li>
-            <HorizontalVideoCardLoading />
-          </li>
-          <li>
-            <HorizontalVideoCardLoading />
-          </li>
-        </ul>
+        <div className="md-feed-cols relative mx-auto gap-4">
+          <VideoCardLoading />
+          <VideoCardLoading />
+          <VideoCardLoading />
+          <VideoCardLoading />
+          <VideoCardLoading />
+        </div>
       </div>
     </div>
   );
@@ -97,20 +90,13 @@ function RawFeed({
       return <Loader />;
     }
     return (
-      <ul className="space-y-3">
-        <li>
-          <HorizontalVideoCardLoading />
-        </li>
-        <li>
-          <HorizontalVideoCardLoading />
-        </li>
-        <li>
-          <HorizontalVideoCardLoading />
-        </li>
-        <li>
-          <HorizontalVideoCardLoading />
-        </li>
-      </ul>
+      <div className="md-feed-cols relative mx-auto gap-4">
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+      </div>
     );
   }
   if (Empty && events.length === 0) {
@@ -118,26 +104,22 @@ function RawFeed({
   }
   if (secondaryFilter) {
     return (
-      <ul className="space-y-3">
+      <div className="md-feed-cols relative mx-auto gap-4">
         {events.filter(secondaryFilter).map((e) => (
-          <li key={e.id}>
-            <Link href={`/w/${e.encode()}`}>
-              <HorizontalVideoCard event={e} />
-            </Link>
-          </li>
+          <Link key={e.id} href={`/w/${e.encode()}`}>
+            <VideoCard event={e} />
+          </Link>
         ))}
-      </ul>
+      </div>
     );
   }
   return (
-    <ul className="space-y-3">
+    <div className="md-feed-cols relative mx-auto gap-4">
       {events.map((e) => (
-        <li key={e.id}>
-          <Link href={`/w/${e.encode()}`}>
-            <HorizontalVideoCard event={e} />
-          </Link>
-        </li>
+        <Link key={e.id} href={`/w/${e.encode()}`}>
+          <VideoCard event={e} />
+        </Link>
       ))}
-    </ul>
+    </div>
   );
 }

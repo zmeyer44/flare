@@ -12,7 +12,35 @@ generator client {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id          Int     @id @default(autoincrement())
+  pubkey      String  @unique
+  npub        String  @unique
+  displayName String?
+  name        String?
+  about       String?
+  image       String?
+  banner      String?
+  nip05       String?
+  lud16       String?
+
+  videos Video[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Video {
+  id        Int    @id @default(autoincrement())
+  url       String
+  title     String
+  summary   String
+  pubkey    String
+  author    User   @relation(fields: [pubkey], references: [pubkey])
+  rawEvent  Json
+  thumbnail String
+  kind      Int
+  tagId     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

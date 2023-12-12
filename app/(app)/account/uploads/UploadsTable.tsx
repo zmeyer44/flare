@@ -11,7 +11,12 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { cn } from "@/lib/utils";
+import { cn, formatCount } from "@/lib/utils";
+import useEvents from "@/lib/hooks/useEvents";
+import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import { NDKKind } from "@nostr-dev-kit/ndk";
+import { getTagValues } from "@/lib/nostr/utils";
+
 const invoices = [
   {
     id: 1,
@@ -72,6 +77,29 @@ const invoices = [
 ];
 
 export default function UploadsTable() {
+  const { currentUser } = useCurrentUser();
+  const { events, isLoading } = useEvents({
+    filter: {
+      kinds: [1063 as NDKKind],
+      authors: [currentUser?.pubkey ?? ""],
+    },
+  });
+  const filteredUploads = events
+    .filter((e) => {
+      const fileType = getTagValues("m", e.tags);
+      if (fileType?.startsWith("video")) return true;
+    })
+    .map((e) => {
+      return {
+        id: e.id,
+        thumb: getTagValues("thumb", e.tags) ?? getTagValues("image", e.tags),
+        title: "",
+        summary: getTagValues("summary", e.tags) ?? e.content,
+        status: "Unpublished",
+        totalAmount: 0,
+        viewCount: 0,
+      };
+    });
   return (
     <Table className="w-full">
       <TableCaption>A list of your recent invoices.</TableCaption>
@@ -84,7 +112,7 @@ export default function UploadsTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((upload) => (
+        {filteredUploads.map((upload) => (
           <TableRow key={upload.id}>
             <TableCell className="flex gap-x-2 overflow-hidden">
               <div className="relative h-full w-[90px] shrink-0 overflow-hidden rounded-md">
@@ -114,7 +142,7 @@ export default function UploadsTable() {
               </div>
             </TableCell>
             <TableCell>{upload.status}</TableCell>
-            <TableCell>{upload.metrics}</TableCell>
+            <TableCell>{`${formatCount(upload.viewCount)} views`}</TableCell>
             <TableCell className="text-right">{upload.totalAmount}</TableCell>
           </TableRow>
         ))}

@@ -1,6 +1,8 @@
 import BannerImage from "./components/BannerImage";
 import ProfileInfo from "./components/ProfileInfo";
 import VerticalVideosFeed from "@/containers/feeds/VerticalVideosFeed";
+import VideosGrid from "@/containers/feeds/VideosGrid";
+import type { NDKKind } from "@nostr-dev-kit/ndk";
 
 type ChannelPageProps = {
   user: string;
@@ -10,7 +12,7 @@ export default function ChannelPage({
 }: {
   params: ChannelPageProps;
 }) {
-  const npub = "";
+  const npub = user;
   const profile = {
     name: "Zach",
     displayName: "Zach Meyer",
@@ -27,11 +29,28 @@ export default function ChannelPage({
           }
         />
       </div>
-      <div className="">
+      <div className="lg:pt-1">
         <ProfileInfo profile={profile} npub={npub} />
       </div>
-      <div className="pt-1">
-        <VerticalVideosFeed title="Videos" />
+      <div className="pt-1 md:pt-3">
+        <div className="md:hidden">
+          <VerticalVideosFeed
+            title="Videos"
+            filter={{
+              authors: [npub],
+              kinds: [34235 as NDKKind],
+            }}
+          />
+        </div>
+        <div className="hidden md:block">
+          <VideosGrid
+            title="Videos"
+            filter={{
+              authors: [npub],
+              kinds: [34235 as NDKKind],
+            }}
+          />
+        </div>
       </div>
     </div>
   );
