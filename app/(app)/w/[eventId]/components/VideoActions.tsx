@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import LikeToggleButton from "@/components/custom-buttons/LikeToggleButton";
 import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
 import { RiMore2Fill } from "react-icons/ri";
@@ -14,6 +13,8 @@ import { getTagValues } from "@/lib/nostr/utils";
 import useProfile from "@/lib/hooks/useProfile";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RenderText } from "@/components/textRendering";
+import LikeButton from "./LikeButton";
+import LikeToggleButton from "@/components/custom-buttons/LikeToggleButton";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -27,7 +28,6 @@ export default function VideoActions({ event }: VideoActionsProps) {
     getTagValues("summary", event.tags) ??
     (getTagValues("about", event.tags) as string);
 
-  const [likeCount, setLikeCount] = useState(0);
   return (
     <div className="space-y-2.5 py-2">
       {/* Title Section */}
@@ -86,16 +86,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
         </div>
         {/* Video actions */}
         <div className="ml-auto flex items-center gap-3 text-muted-foreground">
-          <LikeToggleButton
-            likeCount={likeCount}
-            onClick={(action) => {
-              if (action === "+") {
-                setLikeCount((prev) => prev + 1);
-              } else {
-                setLikeCount((prev) => prev - 1);
-              }
-            }}
-          />
+          <LikeButton contentEvent={event} />
           <DropDownOptions />
         </div>
       </div>
