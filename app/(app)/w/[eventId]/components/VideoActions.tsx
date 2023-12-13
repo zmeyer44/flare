@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
+import { cn, getTwoLetters, getNameToShow, formatCount } from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
 import { RiMore2Fill } from "react-icons/ri";
 import DropDownOptions from "@/components/custom-buttons/DropDownOptions";
@@ -27,7 +27,8 @@ export default function VideoActions({ event }: VideoActionsProps) {
   const title = getTagValues("title", event.tags) as string;
   const summary =
     getTagValues("summary", event.tags) ??
-    (getTagValues("about", event.tags) as string);
+    getTagValues("about", event.tags) ??
+    (event.content as string);
   const publishedAt =
     getTagValues("published_at", event.tags) ?? event.created_at?.toString();
 
@@ -68,7 +69,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
                   )}
                 </div>
                 <p className="text-[11px] text-muted-foreground sm:text-xs">
-                  2.5k followers
+                  {`${formatCount(2)} followers`}
                 </p>
               </div>
             </Link>

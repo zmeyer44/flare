@@ -73,6 +73,8 @@ export default function CommentInput({
     } catch (err) {
       console.log("err", err);
     } finally {
+      setContent("");
+      clear();
       setIsLoading(false);
     }
   }
@@ -127,6 +129,7 @@ export default function CommentInput({
                   )}
                   <div className="center mt-auto">
                     <Button
+                      disabled={imageStatus === "uploading"}
                       loading={isLoading}
                       onClick={handleSubmit}
                       className=" rounded-full"

@@ -1,6 +1,11 @@
 "use client";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import {
+  DefaultAudioLayout,
+  defaultLayoutIcons,
+  DefaultVideoLayout,
+} from "@vidstack/react/player/layouts/default";
+import {
   CaptionButton,
   FullscreenButton,
   isTrackCaptionKind,
@@ -21,6 +26,7 @@ import {
   RiFullscreenFill as FullscreenIcon,
   RiFullscreenExitFill as FullscreenExitIcon,
   RiClosedCaptioningFill as SubtitlesIcon,
+  RiSettings3Fill as SettingsIcon,
 } from "react-icons/ri";
 
 export interface MediaButtonProps {
@@ -177,6 +183,29 @@ export function Fullscreen({
         sideOffset={tooltipOffset}
       >
         {isActive ? "Exit Fullscreen" : "Enter Fullscreen"}
+      </Tooltip.Content>
+    </Tooltip.Root>
+  );
+}
+export function Settings({
+  tooltipOffset = 0,
+  tooltipSide = "top",
+  tooltipAlign = "center",
+}: MediaButtonProps) {
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <FullscreenButton className={buttonClass}>
+          <SettingsIcon className="h-7 w-7" />
+        </FullscreenButton>
+      </Tooltip.Trigger>
+      <Tooltip.Content
+        className={tooltipClass}
+        side={tooltipSide}
+        align={tooltipAlign}
+        sideOffset={tooltipOffset}
+      >
+        Settings
       </Tooltip.Content>
     </Tooltip.Root>
   );

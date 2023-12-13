@@ -29,6 +29,9 @@
     --sidebar-width-full: 240px;
     --sidebar-width: 72px;
     --bottom-nav-height: 56px;
+
+    --media-brand: 233, 88, 12;
+    --media-focus: rgb(233, 88, 12);
   }
 
   .dark {

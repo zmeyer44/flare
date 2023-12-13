@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
+import { cn, getTwoLetters, getNameToShow, formatCount } from "@/lib/utils";
 import type { NDKEvent } from "@nostr-dev-kit/ndk";
 import useProfile from "@/lib/hooks/useProfile";
 import { HiCheckBadge } from "react-icons/hi2";
@@ -39,7 +39,9 @@ export default function CommentBody({ event }: CommentBodyProps) {
               <HiCheckBadge className="h-[14px] w-[14px] shrink-0 text-primary" />
             )}
           </div>
-          <p className="mt-0.5 text-xs text-muted-foreground">2.5k followers</p>
+          <p className="mt-0.5 text-xs text-muted-foreground">{`${formatCount(
+            2,
+          )} followers`}</p>
         </div>
         <div className="">
           <RenderText text={event.content} />

@@ -51,8 +51,8 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "media-brand": "rgb(var(--media-brand) / <alpha-value>)",
-        "media-focus": "rgb(var(--media-focus) / <alpha-value>)",
+        "media-brand": "hsl(var(--primary))",
+        "media-focus": "hsl(var(--primary))",
       },
       fontFamily: {
         condensed: ["var(--font-inter-tight)"],

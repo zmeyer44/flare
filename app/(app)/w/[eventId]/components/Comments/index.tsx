@@ -3,6 +3,8 @@
 import CommentInput from "./CommentInput";
 import CommentFeed from "./CommentFeed";
 import useEvents from "@/lib/hooks/useEvents";
+import { formatCount } from "@/lib/utils";
+import { nip19 } from "nostr-tools";
 
 type CommentSectionProps = {
   eventReference: string;
@@ -17,17 +19,20 @@ export default function CommentSection({
       ["#a"]: [eventReference],
     },
   });
+
   return (
     <section className="space-y-2.5 py-2">
       {/* Comments Section */}
       <div className="">
         <div className="flex items-center">
           <h2 className="text-base font-semibold text-foreground">
-            123 Comments
+            {events.length === 1
+              ? "1 Comment"
+              : `${formatCount(events.length)} Comments`}
           </h2>
         </div>
       </div>
-      <CommentInput />
+      <CommentInput initialTags={[["a", eventReference]]} />
       <CommentFeed comments={events} />
     </section>
   );

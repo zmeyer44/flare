@@ -25,6 +25,7 @@ type VideoPlayerProps = {
   title: string;
   thumbnail?: string;
   alt?: string;
+  autoplay?: boolean;
 };
 export default function VideoPlayer({
   textTracks,
@@ -32,6 +33,7 @@ export default function VideoPlayer({
   title,
   thumbnail,
   alt,
+  autoplay = false,
 }: VideoPlayerProps) {
   let player = useRef<MediaPlayerInstance>(null);
 
@@ -71,6 +73,7 @@ export default function VideoPlayer({
       onProviderChange={onProviderChange}
       onCanPlay={onCanPlay}
       ref={player}
+      autoplay={autoplay}
     >
       <MediaProvider>
         {!!thumbnail && (
@@ -82,6 +85,7 @@ export default function VideoPlayer({
         )}
         {textTracks?.map((track) => <Track {...track} key={track.src} />)}
       </MediaProvider>
+
       {/* <VideoLayout thumbnails="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/storyboard.vtt" /> */}
       <VideoLayout />
     </MediaPlayer>

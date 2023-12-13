@@ -1,13 +1,47 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { useCaptionOptions, useMediaPlayer } from "@vidstack/react";
+import {
+  Tooltip as TooltipP,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  DropdownMenu as DropdownMenuP,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu";
+import {
+  useCaptionOptions,
+  useMediaPlayer,
+  Menu,
+  useVideoQualityOptions,
+  usePlaybackRateOptions,
+  useMediaState,
+  useMediaRemote,
+} from "@vidstack/react";
 import {
   LuCircle as CircleIcon,
   LuCheckCircle as CheckCircle,
   LuSubtitles as SubtitlesIcon,
+  LuArrowLeft as ArrowLeftIcon,
+  LuArrowRight as ArrowRightIcon,
 } from "react-icons/lu";
-
+import { RiSettings4Line as SettingsIcon, RiSpeedUpFill } from "react-icons/ri";
 import { buttonClass, tooltipClass } from "./buttons";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export interface MenuProps {
   side?: DropdownMenu.MenuContentProps["side"];
@@ -81,16 +115,163 @@ export function Captions({
     </DropdownMenu.Root>
   );
 }
+export function Settings({
+  side = "top",
+  align = "end",
+  offset = 0,
+  tooltipSide = "top",
+  tooltipAlign = "center",
+  tooltipOffset = 0,
+}: MenuProps) {
+  const player = useMediaPlayer(),
+    options = useCaptionOptions(),
+    hint = options.selectedTrack?.label ?? "Off";
+
+  return (
+    <DropdownMenuP>
+      <TooltipProvider>
+        <TooltipP delayDuration={100}>
+          <TooltipTrigger>
+            <DropdownMenuTrigger asChild>
+              <Button size={"icon"} variant={"ghost"}>
+                <SettingsIcon className="h-7 w-7" />
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent
+            align={tooltipAlign}
+            alignOffset={tooltipOffset}
+            side={tooltipSide}
+            className="bg-black/60"
+          >
+            <p>Settings</p>
+          </TooltipContent>
+        </TooltipP>
+      </TooltipProvider>
+
+      <DropdownMenuContent align={align} side={side} className="w-56">
+        <DropdownMenuLabel>Settings</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <RateSubmenu />
+          <QualitySubmenu />
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenuP>
+  );
+  return (
+    <DropdownMenuP>
+      <DropdownMenuTrigger
+        aria-label="Settings"
+        className={buttonClass}
+        disabled={options.disabled}
+      >
+        <Button>
+          <SettingsIcon className="h-7 w-7" />
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent
+        className={menuClass}
+        side={side}
+        align={align}
+        sideOffset={offset}
+        collisionBoundary={player?.el}
+      >
+        <DropdownMenuLabel className="mb-2 flex w-full items-center px-1.5 text-[15px] font-medium">
+          <SettingsIcon className="mr-1.5 h-5 w-5 translate-y-px" />
+          Settings
+          <span className="ml-auto text-sm text-white/50">{hint}</span>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <RateSubmenu />
+        <DropdownMenuGroup
+          aria-label="Captions"
+          className="flex w-full flex-col"
+          // value={options.selectedValue}
+        >
+          {options.map(({ label, value, select }) => (
+            <Radio value={value} onSelect={select} key={value}>
+              {label}
+            </Radio>
+          ))}
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenuP>
+  );
+}
 
 function Radio({ children, ...props }: DropdownMenu.MenuRadioItemProps) {
   return (
     <DropdownMenu.RadioItem
-      className="ring-media-focus hocus:bg-white/10 group relative flex w-full cursor-pointer select-none items-center justify-start rounded-sm p-2.5 text-sm outline-none data-[focus]:ring-[3px]"
+      className="group relative flex w-full cursor-pointer select-none items-center justify-start rounded-sm p-2.5 text-sm outline-none ring-media-focus data-[focus]:ring-[3px] hocus:bg-white/10"
       {...props}
     >
       <CircleIcon className="h-4 w-4 text-white group-data-[state=checked]:hidden" />
-      <CheckCircle className="text-media-brand hidden h-4 w-4 group-data-[state=checked]:block" />
+      <CheckCircle className="hidden h-4 w-4 text-media-brand group-data-[state=checked]:block" />
       <span className="ml-2">{children}</span>
     </DropdownMenu.RadioItem>
+  );
+}
+
+function RateSubmenu() {
+  const label = "Speed",
+    normalText = "Normal",
+    options = usePlaybackRateOptions({
+      normalLabel: normalText,
+    }),
+    hint =
+      options.selectedValue === "1" ? normalText : options.selectedValue + "x";
+
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>Playback Speed</DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
+          <DropdownMenuRadioGroup value={options.selectedValue}>
+            {options.map(({ label, value, select, rate, selected }) => (
+              <DropdownMenuRadioItem
+                value={value}
+                onSelect={select}
+                key={value}
+              >
+                <span className="text-sm font-medium text-white">{label}</span>
+                {/* <span className="ml-auto bg-white/50 text-xs">{rate}</span> */}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
+  );
+}
+function QualitySubmenu() {
+  const options = useVideoQualityOptions({ sort: "descending" }),
+    autoQuality = useMediaState("autoQuality"),
+    remote = useMediaRemote(),
+    currentQualityText = options.selectedQuality?.height + "p" ?? "",
+    hint = !autoQuality ? currentQualityText : `Auto (${currentQualityText})`;
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>Quality</DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
+          <DropdownMenuRadioGroup value={options.selectedValue}>
+            {options.map(({ label, value, bitrateText, select }) => (
+              <DropdownMenuRadioItem
+                value={value}
+                onSelect={select}
+                key={value}
+              >
+                <span className="text-sm font-medium text-white">{label}</span>
+                <span className="ml-auto bg-white/50 text-xs">
+                  {bitrateText}
+                </span>
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
   );
 }
