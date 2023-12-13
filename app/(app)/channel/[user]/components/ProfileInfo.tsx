@@ -85,7 +85,7 @@ export default function ProfileInfo({
             <div className="hidden w-3/4 pt-2 lg:block">
               <div className="rounded-lg bg-muted">
                 <p className="line-clamp-3 p-2 text-xs text-muted-foreground">
-                  {profile.bio}
+                  {profile.about}
                 </p>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function ProfileInfo({
       {/* Description and data */}
       <div className="lg:hidden">
         <div className="rounded-lg bg-muted">
-          <p className="p-2 text-xs text-muted-foreground">{profile.bio}</p>
+          <p className="p-2 text-xs text-muted-foreground">{profile.about}</p>
         </div>
       </div>
     </div>
