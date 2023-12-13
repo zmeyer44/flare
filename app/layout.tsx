@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Inter_Tight, Monomaniac_One } from "next/font/google";
+import { Inter, Inter_Tight, Poppins, DM_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 import { Providers } from "./_providers";
 
@@ -9,11 +10,24 @@ const interTight = Inter_Tight({
   subsets: ["latin"],
   variable: "--font-inter-tight",
 });
-const monomaniacOne = Monomaniac_One({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-monomaniac-one",
-  weight: ["400"],
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-main",
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+// Font files can be colocated inside of `app`
+const afacad = localFont({
+  src: "./_fonts/Afacad-VariableFont_wght.ttf",
+  display: "swap",
+  variable: "--font-main-one",
+});
+
 const title = "TBD";
 const description = "TBD";
 
@@ -33,8 +47,10 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={cn(
           inter.className,
+          poppins.variable,
+          dmSans.variable,
           interTight.variable,
-          monomaniacOne.variable,
+          afacad.variable,
           "w-full bg-background antialiased scrollbar-none",
         )}
       >

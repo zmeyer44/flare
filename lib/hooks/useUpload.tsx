@@ -54,6 +54,7 @@ const useUpload = (props?: UploadProps) => {
             folderName,
             fileType: file.type,
             fileName: file.name,
+            fileSize: file.size,
           }),
         },
       );
@@ -155,6 +156,8 @@ const useUpload = (props?: UploadProps) => {
           body: JSON.stringify({
             folderName: folderName ? folderName + `/thumbnails` : "thumbnails",
             fileType: "image/jpeg",
+            fileName: thumbnailFile.name,
+            fileSize: thumbnailFile.size,
           }),
         },
       );

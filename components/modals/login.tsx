@@ -115,9 +115,7 @@ export default function LoginModal({}: LoginModalProps) {
   return (
     <div className="p-5">
       <div className="center text-center">
-        <h1 className="font-monomaniac text-[30px] text-primary">
-          Welcome to Flare
-        </h1>
+        <h1 className="font-main text-[30px] text-primary">Welcome to Flare</h1>
       </div>
       <div className="w-full space-y-4 bg-background pt-5">
         <div className="space-y-3">

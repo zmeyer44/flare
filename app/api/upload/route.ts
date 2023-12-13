@@ -7,6 +7,7 @@ const BodySchema = z.object({
   folderName: z.string().optional(),
   fileType: z.string(),
   fileName: z.string().optional(),
+  fileSize: z.number().optional(),
 });
 
 // export const runtime = "edge";

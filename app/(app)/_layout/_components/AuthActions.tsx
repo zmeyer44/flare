@@ -44,7 +44,7 @@ export default function AuthActions() {
 
   useKeyboardShortcut(["shift", "ctrl", "u"], () => {
     if (currentUser) {
-      router.push(`/w/${currentUser?.npub}`);
+      router.push(`/channel/${currentUser?.npub}`);
     } else {
       modal?.show(<LoginModal />);
     }
@@ -227,7 +227,7 @@ export function UserMenu({
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <Link
-              href={`/${user.npub}`}
+              href={`/channel/${user.npub}`}
               className="flex w-full justify-between"
             >
               Profile

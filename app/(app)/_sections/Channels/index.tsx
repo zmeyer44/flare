@@ -32,7 +32,7 @@ export default function ChannelsSection() {
   return (
     <Section className="relative overflow-x-hidden">
       <SectionHeader className="px-5">
-        <SectionTitle className="font-monomaniac text-2xl font-normal sm:text-3xl">
+        <SectionTitle className="font-main text-xl font-semibold sm:text-2xl">
           Channels To Watch
         </SectionTitle>
         <Button variant={"ghost"}>

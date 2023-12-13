@@ -67,7 +67,7 @@ export default function NDKInstance(explicitRelayUrls: string[]) {
   ) {
     const explicitRelayUrls = await getExplicitRelays();
     const dexieAdapter = new NDKCacheAdapterDexie({
-      dbName: "flockstr-ndkcache",
+      dbName: "flare-ndkcache",
     });
     const ndkInstance = new NDK({
       explicitRelayUrls,
