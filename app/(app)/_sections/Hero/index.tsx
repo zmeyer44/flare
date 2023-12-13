@@ -8,8 +8,9 @@ export default function HeroSection() {
           Welcome to Flare, Lets Change the web
         </h1>
       </div>
-      <div className="w-full max-w-[450px] shrink-0 pt-4 md:w-5/12 md:pt-6">
+      <div className="aspect-video max-h-[350px] w-full max-w-[450px] shrink-0 pt-4 md:w-5/12 md:pt-6">
         <VideoPlayer
+          autoplay
           src="https://www.youtube.com/watch?v=aHBGSlJW65w"
           title="Bitkey"
           thumbnail="https://www.nobsbitcoin.com/content/images/size/w2000/2023/12/bitkey-preorder.png"
