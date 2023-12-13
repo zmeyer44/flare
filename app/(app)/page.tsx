@@ -37,7 +37,7 @@ export default function Page() {
           />
         </svg>
         <div
-          className="absolute left-[calc(50%-4rem)] top-10 -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]"
+          className="3left-[calc(50%-4rem)] absolute left-0 top-10 -z-10 transform-gpu blur-3xl max-md:translate-y-[-20%] sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]"
           aria-hidden="true"
         >
           <div
