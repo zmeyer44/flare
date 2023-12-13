@@ -41,7 +41,7 @@ export default function ChannelPage({
           <VerticalVideosFeed
             title="Videos"
             filter={{
-              authors: [npub],
+              authors: [pubkey],
               kinds: [34235 as NDKKind],
             }}
           />
@@ -50,7 +50,7 @@ export default function ChannelPage({
           <VideosGrid
             title="Videos"
             filter={{
-              authors: [npub],
+              authors: [pubkey],
               kinds: [34235 as NDKKind],
             }}
           />

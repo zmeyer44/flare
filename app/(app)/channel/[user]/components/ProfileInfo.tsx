@@ -125,7 +125,9 @@ export default function ProfileInfo({
       {/* Description and data */}
       <div className="lg:hidden">
         <div className="rounded-lg bg-muted">
-          <p className="p-2 text-xs text-muted-foreground">{profile.about}</p>
+          <p className="p-2 text-xs text-muted-foreground sm:text-sm">
+            {profile.about}
+          </p>
         </div>
       </div>
     </div>
