@@ -18,7 +18,7 @@ export default function Player({
     );
   }
   return (
-    <div className="">
+    <div className="aspect-video">
       <VideoPlayer src={url} title={title} thumbnail={image} />
     </div>
   );
