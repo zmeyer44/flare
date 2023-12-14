@@ -25,7 +25,15 @@ type VideoCardProps = {
 export default function VideoCard({ className, event }: VideoCardProps) {
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
-  const image = getTagValues("image", event.tags) as string;
+  const url = getTagValues("url", event.tags);
+  const image =
+    getTagValues("thumb", event.tags) ??
+    getTagValues("thumbnail", event.tags) ??
+    getTagValues("image", event.tags) ??
+    url?.includes("youtu")
+      ? `http://i3.ytimg.com/vi/${url?.split("?v=").pop()}/hqdefault.jpg`
+      : "";
+
   const title = getTagValues("title", event.tags) as string;
   return (
     <div
