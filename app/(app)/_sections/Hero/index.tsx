@@ -8,7 +8,7 @@ export default function HeroSection() {
         <SupporterLabel
           sponsorName="Bitkey Wallet"
           href="https://bitkey.world?ref=flare"
-          className="mb-1"
+          className="mb-2"
         />
         <h1 className="font-main text-foreground">Everything you need</h1>
         <span className="font-main mt-1.5 block text-primary">
