@@ -14,7 +14,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { RiMore2Fill } from "react-icons/ri";
 
-export default function DropDownOptions() {
+type DropDownOptionsProps = {
+  options: { label: string; action: () => void }[];
+};
+
+export default function DropDownOptions({ options }: DropDownOptionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -28,13 +32,11 @@ export default function DropDownOptions() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
-        <DropdownMenuItem>
-          Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        {options.map((o) => (
+          <DropdownMenuItem key={o.label} onClick={o.action}>
+            {o.label}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -4,7 +4,13 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn, getTwoLetters, getNameToShow, formatCount } from "@/lib/utils";
+import {
+  cn,
+  getTwoLetters,
+  getNameToShow,
+  formatCount,
+  copyText,
+} from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
 import { RiMore2Fill } from "react-icons/ri";
 import DropDownOptions from "@/components/custom-buttons/DropDownOptions";
@@ -16,6 +22,7 @@ import { RenderText } from "@/components/textRendering";
 import LikeButton from "./LikeButton";
 import LikeToggleButton from "@/components/custom-buttons/LikeToggleButton";
 import { relativeTime } from "@/lib/utils/dates";
+import { toast } from "sonner";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -31,6 +38,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
     (event.content as string);
   const publishedAt =
     getTagValues("published_at", event.tags) ?? event.created_at?.toString();
+  const rawEvent = event.rawEvent();
 
   return (
     <div className="space-y-2.5 py-2">
@@ -91,7 +99,17 @@ export default function VideoActions({ event }: VideoActionsProps) {
         {/* Video actions */}
         <div className="ml-auto flex items-center gap-3 text-muted-foreground">
           <LikeButton contentEvent={event} />
-          <DropDownOptions />
+          <DropDownOptions
+            options={[
+              {
+                label: "Copy raw event",
+                action: () => {
+                  copyText(JSON.stringify(rawEvent));
+                  toast.success("Copied event");
+                },
+              },
+            ]}
+          />
         </div>
       </div>
 
@@ -165,7 +183,7 @@ export function VideoActionsLoading() {
         {/* Video actions */}
         <div className="ml-auto flex items-center gap-3 text-muted-foreground">
           <LikeToggleButton likeCount={0} onClick={(action) => {}} />
-          <DropDownOptions />
+          <DropDownOptions options={[]} />
         </div>
       </div>
       {/* Metadata Section */}
