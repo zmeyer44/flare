@@ -111,7 +111,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
             </>
           )}
         </div>
-        <div className="whitespace-break-spaces text-sm text-muted-foreground">
+        <div className="overflow-hidden whitespace-break-spaces break-words text-sm text-muted-foreground">
           <RenderText text={summary} />
         </div>
         <button className="text-xs font-medium leading-none">
