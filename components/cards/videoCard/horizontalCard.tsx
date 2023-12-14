@@ -30,7 +30,6 @@ export default function HorizontalVideoCard({
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
   const url = getTagValues("url", event.tags);
-
   const image =
     getTagValues("thumb", event.tags) ??
     getTagValues("thumbnail", event.tags) ??
