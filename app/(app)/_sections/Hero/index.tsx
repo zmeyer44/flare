@@ -15,7 +15,7 @@ export default function HeroSection() {
           in one wallet
         </span>
       </div>
-      <div className="aspect-video max-h-[350px] w-full max-w-[450px] shrink-0 pt-4 md:w-5/12 md:pt-6">
+      <div className="max-h-[350px] w-full max-w-[450px] shrink-0 pt-4 md:mt-10 md:w-5/12 md:pt-6 lg:mt-20">
         <VideoPlayer
           autoplay={false}
           src="https://www.youtube.com/watch?v=aHBGSlJW65w"
