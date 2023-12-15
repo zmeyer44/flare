@@ -34,9 +34,9 @@ export default function HorizontalVideoCard({
     getTagValues("thumb", event.tags) ??
     getTagValues("thumbnail", event.tags) ??
     getTagValues("image", event.tags) ??
-    url?.includes("youtu")
+    (url?.includes("youtu")
       ? `http://i3.ytimg.com/vi/${url?.split("?v=").pop()}/hqdefault.jpg`
-      : "";
+      : "");
   const title = getTagValues("title", event.tags) as string;
   const publishedAt = getTagValues("published_at", event.tags) as string;
   return (
