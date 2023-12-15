@@ -64,6 +64,14 @@ const sponsors: Sponsor[] = [
     thumbnail:
       "https://www.datocms-assets.com/65699/1657605701-defaultopengraph.png?auto=format&fit=crop&h=630&w=1200",
   },
+  {
+    name: "Fedi",
+    href: "https://www.fedi.xyz/?ref=flare",
+    heroText: "The all-in-one",
+    heroTextEmphasis: "Freedom tool",
+    videoUrl: "https://youtu.be/XgUCGALs5y4",
+    thumbnail: "http://i3.ytimg.com/vi/XgUCGALs5y4/hqdefault.jpg",
+  },
 ];
 
 export default function HeroSection() {
