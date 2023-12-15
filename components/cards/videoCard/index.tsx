@@ -29,7 +29,11 @@ export default function VideoCard({ className, event }: VideoCardProps) {
     getTagValues("thumbnail", event.tags) ??
     getTagValues("image", event.tags) ??
     (url?.includes("youtu")
-      ? `http://i3.ytimg.com/vi/${url?.split("?v=").pop()}/hqdefault.jpg`
+      ? `http://i3.ytimg.com/vi/${
+          url.includes("/youtu.be/")
+            ? url.split("youtu.be/").pop()
+            : url.split("?v=").pop()
+        }/hqdefault.jpg`
       : "");
   const title = getTagValues("title", event.tags) as string;
   return (

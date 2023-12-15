@@ -46,6 +46,24 @@ const sponsors: Sponsor[] = [
     videoUrl: "https://www.youtube.com/watch?v=ver_DNla00Q",
     thumbnail: "http://i3.ytimg.com/vi/ver_DNla00Q/hqdefault.jpg",
   },
+  {
+    name: "River",
+    href: "https://river.com/?ref=flare",
+    heroText: "Invest in Bitcoin",
+    heroTextEmphasis: "with confidence",
+    videoUrl: "https://youtu.be/UzHrTwKu2oc",
+    thumbnail:
+      "https://play-lh.googleusercontent.com/qQFiO7OU9OSLlsUtjKuPqBiont37ZK7UNn2CY0oYGPqN1KqLHxLOPaAaNJe8Hf95ZRtv=w526-h296-rw",
+  },
+  {
+    name: "Swan",
+    href: "https://www.swanbitcoin.com/?ref=flare",
+    heroText: "Invest in Bitcoin",
+    heroTextEmphasis: "with Swan",
+    videoUrl: "https://www.youtube.com/watch?v=BB3zbSLuHCA",
+    thumbnail:
+      "https://www.datocms-assets.com/65699/1657605701-defaultopengraph.png?auto=format&fit=crop&h=630&w=1200",
+  },
 ];
 
 export default function HeroSection() {
