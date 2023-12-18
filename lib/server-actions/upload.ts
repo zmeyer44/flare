@@ -7,7 +7,6 @@ export async function generateV4UploadSignedUrl(
   fileType: string,
   maxFileSize?: number,
 ) {
-  console.log("Generating presigned url with", maxFileSize);
   const putCommand = new PutObjectCommand({
     Bucket: process.env.S3_BUCKET_NAME,
     Key: fileName,
