@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-async function handler() {
+async function handler(req: Request) {
+  const rawJson = await req.json();
+  console.log("Raw Json", JSON.stringify(rawJson));
   const response = NextResponse.json({
     data: "hello",
   });
