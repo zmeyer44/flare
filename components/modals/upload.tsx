@@ -6,7 +6,7 @@ import { useConfig } from "@/lib/hooks/useConfig";
 import { copyText } from "@/lib/utils";
 import { useModal } from "@/app/_providers/modal/provider";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import useUpload from "@/lib/hooks/useUpload";
+import useUploadVideo from "@/lib/hooks/useUploadVideo";
 import { RiUploadCloud2Line } from "react-icons/ri";
 import { createEvent } from "@/lib/actions/create";
 
@@ -48,7 +48,7 @@ export default function UploadModal({
     imagePreview,
     fileHash,
     status,
-  } = useUpload({
+  } = useUploadVideo({
     accept,
     folderName,
     generateThumbnail,

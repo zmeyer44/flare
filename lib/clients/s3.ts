@@ -1,9 +1,10 @@
-import S3 from "aws-sdk/clients/s3";
-const s3Client = new S3({
-  signatureVersion: "v4",
+import { S3Client } from "@aws-sdk/client-s3";
+const s3Client = new S3Client({
   region: process.env.REGION,
-  accessKeyId: process.env.MY_AWS_ACCESS_KEY,
-  secretAccessKey: process.env.MY_AWS_SECRET_KEY,
+  credentials: {
+    accessKeyId: process.env.MY_AWS_ACCESS_KEY as string,
+    secretAccessKey: process.env.MY_AWS_SECRET_KEY as string,
+  },
 });
 
 export { s3Client };
