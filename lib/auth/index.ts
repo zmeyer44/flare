@@ -83,10 +83,12 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials, req) {
+        console.log("At authorize");
         if (!credentials?.event) {
           throw new Error("Missing Event");
         }
         const event = EventSchema.parse(JSON.parse(credentials.event));
+        console.log("event", event);
 
         const currentTime = unixTimeNowInSeconds();
         if (
@@ -113,27 +115,27 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: `/login`,
+    signIn: `/`,
     verifyRequest: `/login`,
     error: "/login", // Error code passed in query string as ?error=
   },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
-  cookies: {
-    sessionToken: {
-      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
-        domain: VERCEL_DEPLOYMENT
-          ? `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
-          : undefined,
-        secure: VERCEL_DEPLOYMENT,
-      },
-    },
-  },
+  // cookies: {
+  //   sessionToken: {
+  //     name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //       // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
+  //       domain: VERCEL_DEPLOYMENT
+  //         ? `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+  //         : undefined,
+  //       secure: VERCEL_DEPLOYMENT,
+  //     },
+  //   },
+  // },
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
@@ -165,7 +167,8 @@ export const authOptions: NextAuthOptions = {
       return url;
     },
   },
-  debug: !VERCEL_DEPLOYMENT,
+  // debug: !VERCEL_DEPLOYMENT,
+  debug: true,
 };
 
 export function getSession() {
