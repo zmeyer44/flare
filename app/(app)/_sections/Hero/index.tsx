@@ -82,6 +82,7 @@ export default function HeroSection() {
       ? sponsors[parseInt(searchParams.get("s") ?? "0")] ?? sponsors[0]!
       : sponsors[0]!,
   );
+
   useKeyboardShortcut(["shift", " "], () => {
     const currentIndex =
       sponsors.findIndex((s) => s.name === activeSponsor.name) ?? 0;
