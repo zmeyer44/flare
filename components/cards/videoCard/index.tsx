@@ -45,17 +45,19 @@ export default function VideoCard({ className, event }: VideoCardProps) {
     >
       <div className="relative overflow-hidden rounded-md">
         <AspectRatio ratio={16 / 9} className="bg-muted">
-          <Image
-            src={image}
-            alt={title}
-            width={450}
-            height={250}
-            unoptimized
-            className={cn(
-              "h-full w-full object-cover transition-all group-hover:scale-105",
-              "aspect-video",
-            )}
-          />
+          {!!image && (
+            <Image
+              src={image}
+              alt={title}
+              width={450}
+              height={250}
+              unoptimized
+              className={cn(
+                "h-full w-full object-cover transition-all group-hover:scale-105",
+                "aspect-video",
+              )}
+            />
+          )}
         </AspectRatio>
         {false && (
           <div className="pointer-events-none absolute bottom-0 right-0 p-2">

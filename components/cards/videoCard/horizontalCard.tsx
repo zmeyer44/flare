@@ -47,17 +47,19 @@ export default function HorizontalVideoCard({
     <div className={cn("group flex space-x-3", className)}>
       <div className="relative h-full w-[120px]  overflow-hidden rounded-md">
         <AspectRatio ratio={21 / 14} className="bg-muted">
-          <Image
-            src={image}
-            alt={title}
-            width={150}
-            height={70}
-            unoptimized
-            className={cn(
-              "h-full w-full object-cover transition-all group-hover:scale-105",
-              "aspect-[21/14]",
-            )}
-          />
+          {!!image && (
+            <Image
+              src={image}
+              alt={title}
+              width={150}
+              height={70}
+              unoptimized
+              className={cn(
+                "h-full w-full object-cover transition-all group-hover:scale-105",
+                "aspect-[21/14]",
+              )}
+            />
+          )}
         </AspectRatio>
         {false && (
           <div className="pointer-events-none absolute bottom-0 right-0 p-2">
