@@ -28,12 +28,45 @@ const afacad = localFont({
   variable: "--font-main-one",
 });
 
-const title = "TBD";
-const description = "TBD";
+const title = "Flare";
+const description =
+  "Flare is the next era of video streaming. You host your own content, post it to Nostr, and share it with the world. There's nothing the Commies can do about it";
 
 export const metadata: Metadata = {
   title,
   description,
+  icons: [
+    { rel: "apple-touch-icon", url: "/apple-touch-icon.png" },
+    { rel: "shortcut icon", url: "/favicon.ico" },
+  ],
+  openGraph: {
+    title,
+    description,
+    // images: [image],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    // images: [image],
+    creator: "@zachmeyer_",
+  },
+  metadataBase: new URL("https://www.flare.pub"),
+  viewport:
+    "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: title,
+    statusBarStyle: "default",
+  },
+  applicationName: "Flare",
+  formatDetection: {
+    telephone: false,
+  },
+  themeColor: {
+    color: "#000000",
+  },
 };
 
 export default function RootLayout({
@@ -49,6 +82,13 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Flare" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-config" content="/icons/browserconfig.xml" />
+        <meta name="msapplication-TileColor" content="#e65e1f" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
         <link
           rel="apple-touch-startup-image"
           media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
