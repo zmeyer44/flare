@@ -17,16 +17,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
   };
   useRouteChange(handleRouteChange);
   return (
-    <>
-      <SessionProvider>
-        <TRPCProvider>
-          <NDKProvider relayUrls={RELAYS}>
-            <Toaster richColors className="dark:hidden" />
-            <Toaster theme="dark" className="hidden dark:block" />
-            <ModalProvider>{children}</ModalProvider>
-          </NDKProvider>
-        </TRPCProvider>
-      </SessionProvider>
-    </>
+    <SessionProvider>
+      <TRPCProvider>
+        <NDKProvider relayUrls={RELAYS}>
+          <Toaster richColors className="dark:hidden" />
+          <Toaster theme="dark" className="hidden dark:block" />
+          <ModalProvider>{children}</ModalProvider>
+        </NDKProvider>
+      </TRPCProvider>
+    </SessionProvider>
   );
 }

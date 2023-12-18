@@ -4,6 +4,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import signIn from "./signIn";
+import { EventSchema } from "@/types";
+import { verifySignature, nip19 } from "nostr-tools";
+import { unixTimeNowInSeconds } from "../nostr/dates";
+import { getTagValues } from "../nostr/utils";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -59,6 +63,49 @@ export const authOptions: NextAuthOptions = {
         const user = await signIn(credentials.email, credentials.password);
         if (user) {
           return { ...user, id: user.id.toString() };
+        } else {
+          throw new Error("Invalid Credentials");
+        }
+      },
+    }),
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. 'Sign in with...')
+      name: "Event Auth",
+      id: "nip-98",
+      // The credentials is used to generate a suitable form on the sign in page.
+      // You can specify whatever fields you are expecting to be submitted.
+      // e.g. domain, username, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
+      credentials: {
+        event: {
+          label: "Event",
+          type: "text",
+        },
+      },
+      async authorize(credentials, req) {
+        if (!credentials?.event) {
+          throw new Error("Missing Event");
+        }
+        const event = EventSchema.parse(JSON.parse(credentials.event));
+
+        const currentTime = unixTimeNowInSeconds();
+        if (
+          getTagValues("u", event.tags) !==
+            process.env.NEXT_PUBLIC_AUTH_REQ_URL ||
+          event.kind !== 27235
+        ) {
+          throw new Error("Invalid Event");
+        } else if (event.created_at < currentTime - 60) {
+          throw new Error("Stale Event");
+        }
+        const result = verifySignature(event);
+        if (result) {
+          return {
+            id: event.pubkey,
+            email: event.pubkey,
+            npub: nip19.npubEncode(event.pubkey),
+            pubkey: event.pubkey,
+          };
         } else {
           throw new Error("Invalid Credentials");
         }

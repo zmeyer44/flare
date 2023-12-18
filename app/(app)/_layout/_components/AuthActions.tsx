@@ -31,6 +31,8 @@ import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import LoginModal from "@/components/modals/login";
 import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import { useSession, signIn } from "next-auth/react";
+import { authEvent } from "@/lib/actions/create";
 
 // const LoginModal = dynamic(() => import("@/components/Modals/Login"), {
 //   ssr: false,
@@ -39,6 +41,7 @@ import useCurrentUser from "@/lib/hooks/useCurrentUser";
 export default function AuthActions() {
   const router = useRouter();
   const modal = useModal();
+  const { data, status } = useSession();
   const { currentUser, logout, attemptLogin } = useCurrentUser();
   const { ndk } = useNDK();
 
@@ -58,7 +61,24 @@ export default function AuthActions() {
     if (ndk && !currentUser) {
       void attemptLogin();
     }
-  }, [ndk]);
+    if (ndk?.activeUser?.pubkey && status === "unauthenticated") {
+      void attemptHttpLogin();
+    }
+  }, [ndk, status]);
+
+  async function attemptHttpLogin() {
+    if (!ndk) return;
+    try {
+      const event = await authEvent(ndk);
+      if (!event) return;
+      await signIn("nip-98", {
+        event: JSON.stringify(event),
+        redirect: false,
+      });
+    } catch (err) {
+      console.log("Error http login");
+    }
+  }
 
   if (currentUser) {
     return (
