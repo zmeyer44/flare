@@ -5,15 +5,16 @@ import { RiCloseFill } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
 import useLocalStorage from "@/lib/hooks/useLocalStorage";
 // import Logo from "@/assets/Logo";
-// import InstallPWAModal from "@/components/Modals/PWAInstall";
+import InstallPWAModal from "@/components/modals/pwaInstall";
 import { useModal } from "@/app/_providers/modal/provider";
+import Image from "next/image";
 
 export default function MobileBanner() {
   const modal = useModal();
   const [showPWAPrompt, setShowPWAPrompt] = useState(false);
   const [hidePWA, setHidePWA] = useLocalStorage<boolean | undefined>(
     "hidePWA",
-    undefined
+    undefined,
   );
   useEffect(() => {
     if (!hidePWA) {
@@ -26,13 +27,19 @@ export default function MobileBanner() {
     setShowPWAPrompt(false);
   }
   function handleShowModal() {
-    // modal?.show(<InstallPWAModal />);
+    modal?.show(<InstallPWAModal />);
   }
   if (!showPWAPrompt) return null;
   return (
     <div className="standalone-hide fixed bottom-[var(--bottom-nav-height)] flex w-screen items-center gap-3 border-t bg-card px-3 py-2.5 sm:hidden">
       <div className="center h-[32px] w-[32px] shrink-0 rounded-[6px] border bg-white shadow">
         {/* <Logo className="h-[20px] w-[20px] text-primary" /> */}
+        <Image
+          src={"/icons/icon-192x192.png"}
+          width={32}
+          height={32}
+          alt="app icon"
+        />
       </div>
       <div className="flex-1 text-sm font-medium text-foreground">
         Get our PWA
