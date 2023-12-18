@@ -75,7 +75,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true} className="dark">
+    <html
+      lang="en"
+      suppressHydrationWarning={true}
+      className="dark bg-background"
+    >
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
