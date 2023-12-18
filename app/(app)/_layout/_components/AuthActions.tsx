@@ -71,10 +71,12 @@ export default function AuthActions() {
     try {
       const event = await authEvent(ndk);
       if (!event) return;
-      await signIn("nip-98", {
+      console.log("Submitting", event);
+      const authRes = await signIn("nip-98", {
         event: JSON.stringify(event),
         redirect: false,
       });
+      console.log("authRes", authRes);
     } catch (err) {
       console.log("Error http login");
     }
