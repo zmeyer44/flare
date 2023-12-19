@@ -1,18 +1,14 @@
 "use client";
+import { useState } from "react";
+import LandingPage from "./LandingPage";
 // import HeroSection from "../_sections/Hero";
 // import TrendingSection from "../_sections/Trending";
 // import ChannelSection from "../_sections/Channels";
 
 export default function Page() {
-  return (
-    <div className="relative">
-      <div className="fixed inset-x-0 top-0 h-[80svh] w-full"></div>
-      <div className="relative space-y-6 pt-5 sm:pt-7">
-        {/* <HeroSection />
-        <TrendingSection />
-        <ChannelSection /> */}
-        test
-      </div>
-    </div>
-  );
+  const [mounted] = useState(true);
+  if (!mounted) {
+    return <div className="h-full w-full bg-red-300"></div>;
+  }
+  return <LandingPage />;
 }
