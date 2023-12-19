@@ -153,3 +153,6 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+img:not([src]) {
+  visibility: hidden;
+}

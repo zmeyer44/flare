@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <Sidebar />
       </div>
       <div className="relative flex flex-1 shrink-0 grow justify-center sm:w-[calc(100vw_-_var(--sidebar-width))] ">
-        <div className="w-[100vw] flex-1 pb-5 sm:w-[calc(100vw_-_var(--sidebar-width))] ">
+        <div className="isolate z-0 w-[100vw] flex-1 pb-5 sm:w-[calc(100vw_-_var(--sidebar-width))] ">
           {children}
         </div>
       </div>

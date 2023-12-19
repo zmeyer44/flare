@@ -5,11 +5,11 @@ import ChannelSection from "./_sections/Channels";
 
 export default function Page() {
   return (
-    <div className="relative">
-      <div className="fixed inset-x-0 top-0 h-[80svh] w-full">
+    <div className="relative isolate">
+      <div className="absolute inset-x-0 top-0 h-[80svh] w-full ">
         <div className="relative isolate h-full w-full overflow-hidden">
           <svg
-            className="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+            className="absolute inset-0 z-10 h-full w-full  stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
             aria-hidden="true"
           >
             <defs>

@@ -19,8 +19,6 @@ export default function useCurrentUser() {
     follows,
     setFollows,
     addFollow,
-    calendars,
-    setCalendars,
   } = currentUserStore();
   const { loginWithNip07, ndk } = useNDK();
 
@@ -82,23 +80,13 @@ export default function useCurrentUser() {
 
   useEffect(() => {
     if (!currentUser) return;
-    console.log("fetching follows & calendar");
+    console.log("fetching follows");
     (async () => {
       const following = await currentUser.follows();
       console.log("Follows", following);
       setFollows(following);
-      await fetchCalendars();
     })();
   }, [currentUser]);
-
-  async function fetchCalendars() {
-    if (!ndk || !currentUser) return;
-    const calendars = await ndk.fetchEvents({
-      authors: [currentUser.pubkey],
-      kinds: [31924 as NDKKind],
-    });
-    setCalendars(new Set(calendars));
-  }
 
   return {
     currentUser,
@@ -111,7 +99,5 @@ export default function useCurrentUser() {
     attemptLogin,
     addFollow,
     setFollows,
-    calendars,
-    fetchCalendars,
   };
 }
