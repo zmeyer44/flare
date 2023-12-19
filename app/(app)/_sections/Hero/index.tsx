@@ -14,6 +14,14 @@ type Sponsor = {
 };
 const sponsors: Sponsor[] = [
   {
+    name: "OpenSats",
+    href: "https://opensats.org?ref=flare",
+    heroText: "Support Bitcoin_",
+    heroTextEmphasis: "And so much more...",
+    videoUrl: "https://www.youtube.com/watch?v=ver_DNla00Q",
+    thumbnail: "http://i3.ytimg.com/vi/ver_DNla00Q/hqdefault.jpg",
+  },
+  {
     name: "Bitkey Wallet",
     href: "https://bitkey.world?ref=flare",
     heroText: "Everything you need",
@@ -39,14 +47,7 @@ const sponsors: Sponsor[] = [
     videoUrl: "https://www.youtube.com/watch?v=CfsF0JAMUJM",
     thumbnail: "http://i3.ytimg.com/vi/CfsF0JAMUJM/hqdefault.jpg",
   },
-  {
-    name: "OpenSats",
-    href: "https://opensats.org?ref=flare",
-    heroText: "Support Bitcoin_",
-    heroTextEmphasis: "And so much more...",
-    videoUrl: "https://www.youtube.com/watch?v=ver_DNla00Q",
-    thumbnail: "http://i3.ytimg.com/vi/ver_DNla00Q/hqdefault.jpg",
-  },
+
   {
     name: "River",
     href: "https://river.com/?ref=flare",
