@@ -72,7 +72,7 @@ export default function VideoPlayer({
       //   src: src,
       //   type: "video/mp4",
       // }}
-      crossorigin
+      // crossorigin
       playsinline
       onProviderChange={onProviderChange}
       onCanPlay={onCanPlay}
