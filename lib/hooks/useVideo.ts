@@ -6,6 +6,9 @@ import useEvents from "./useEvents";
 import useCurrentUser from "./useCurrentUser";
 import type { NDKKind, NDKEvent } from "@nostr-dev-kit/ndk";
 import { createEvent } from "@/lib/actions/create";
+import { getTagValues } from "@/lib/nostr/utils";
+import { unixTimeNowInSeconds } from "../nostr/dates";
+
 // import videosStore from "../stores/videos";
 
 // export default function useVideos({
@@ -102,14 +105,24 @@ import { createEvent } from "@/lib/actions/create";
 //     videos: videos,
 //   };
 // }
-export default function useVideos({
+
+type VideoType = {
+  url: string;
+  thumbnail: string;
+  title: string;
+  publishedAt: number;
+  author: string;
+};
+export default function useVideo({
   eventIdentifier,
+  event: _event,
 }: {
   eventIdentifier: string;
+  event?: NDKEvent;
 }) {
   const [shouldAddView, setShouldAddView] = useState(false);
   const [requestingView, setRequestingView] = useState(false);
-  const [video, setVideo] = useState<NDKEvent>();
+  const [event, setEvent] = useState<NDKEvent | undefined>(_event);
   const { ndk } = useNDK();
   const { currentUser } = useCurrentUser();
   const { events: viewEvents } = useEvents({
@@ -120,8 +133,7 @@ export default function useVideos({
   });
 
   useEffect(() => {
-    if (ndk && !video) {
-      console.log("Fetching video");
+    if (ndk && !event) {
       handleFetchVideo();
     }
   }, [eventIdentifier, ndk]);
@@ -129,16 +141,15 @@ export default function useVideos({
   async function handleFetchVideo() {
     if (!ndk) return;
     const [kind, pubkey, d] = eventIdentifier.split(":");
-
     if (!kind || !pubkey || !d) return;
-    const video = await ndk?.fetchEvent({
+    const videoEvent = await ndk?.fetchEvent({
       kinds: [parseInt(kind) as NDKKind],
       authors: [pubkey],
       ["#d"]: [d],
     });
-    console.log("Video", video);
-    if (video) {
-      setVideo(video);
+    console.log("Video", videoEvent);
+    if (videoEvent) {
+      setEvent(videoEvent);
     }
   }
 
@@ -180,6 +191,32 @@ export default function useVideos({
   return {
     addView: () => setShouldAddView(true),
     views: viewEvents,
-    video: video,
+    video: event ? getVideoDetails(event) : null,
+    event: event,
+  };
+}
+
+export function getVideoDetails(event: NDKEvent) {
+  const url = getTagValues("url", event.tags) ?? "";
+  return {
+    url: url,
+    author: event.author.pubkey,
+    publishedAt: parseInt(
+      getTagValues("published_at", event.tags) ??
+        event.created_at?.toString() ??
+        unixTimeNowInSeconds().toString(),
+    ),
+    thumbnail:
+      getTagValues("thumb", event.tags) ??
+      getTagValues("thumbnail", event.tags) ??
+      getTagValues("image", event.tags) ??
+      (url?.includes("youtu")
+        ? `http://i3.ytimg.com/vi/${
+            url.includes("/youtu.be/")
+              ? url.split("youtu.be/").pop()
+              : url.split("?v=").pop()
+          }/hqdefault.jpg`
+        : ""),
+    title: getTagValues("title", event.tags) ?? "Untitled",
   };
 }

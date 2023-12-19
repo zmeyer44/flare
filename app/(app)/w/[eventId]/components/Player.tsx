@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Spinner from "@/components/spinner";
 import VideoPlayer from "@/components/videoPlayer";
-import useVideos from "@/lib/hooks/useVideos";
+import useVideo from "@/lib/hooks/useVideo";
 
 export default function Player({
   url,
@@ -15,7 +15,7 @@ export default function Player({
   image: string;
   eventIdentifier: string;
 }) {
-  const { addView } = useVideos({ eventIdentifier: eventIdentifier });
+  const { addView } = useVideo({ eventIdentifier: eventIdentifier });
   useEffect(() => {
     if (eventIdentifier) {
       addView();

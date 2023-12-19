@@ -13,10 +13,11 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
-import { NDKEvent } from "@nostr-dev-kit/ndk";
+import type { NDKEvent } from "@nostr-dev-kit/ndk";
 import { getTagValues } from "@/lib/nostr/utils";
 import useProfile from "@/lib/hooks/useProfile";
 import { relativeTime } from "@/lib/utils/dates";
+import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
 
 type VideoCardProps = {
   className?: string;
@@ -27,29 +28,21 @@ export default function HorizontalVideoCard({
   className,
   event,
 }: VideoCardProps) {
+  const { views, video } = useVideo({
+    eventIdentifier: event.tagId(),
+    event: event,
+  });
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
-  const url = getTagValues("url", event.tags);
-  const image =
-    getTagValues("thumb", event.tags) ??
-    getTagValues("thumbnail", event.tags) ??
-    getTagValues("image", event.tags) ??
-    (url?.includes("youtu")
-      ? `http://i3.ytimg.com/vi/${
-          url.includes("/youtu.be/")
-            ? url.split("youtu.be/").pop()
-            : url.split("?v=").pop()
-        }/hqdefault.jpg`
-      : "");
-  const title = getTagValues("title", event.tags) as string;
-  const publishedAt = getTagValues("published_at", event.tags) as string;
+  const { url, author, publishedAt, thumbnail, title } =
+    video ?? getVideoDetails(event);
   return (
     <div className={cn("group flex space-x-3", className)}>
       <div className="relative h-full w-[120px]  overflow-hidden rounded-md">
         <AspectRatio ratio={21 / 14} className="bg-muted">
-          {!!image && (
+          {!!thumbnail && (
             <Image
-              src={image}
+              src={thumbnail}
               alt={title}
               width={150}
               height={70}
@@ -73,11 +66,11 @@ export default function HorizontalVideoCard({
         </h3>
         <div className="flex flex-col items-start gap-y-1">
           <div className="flex items-center gap-x-1 text-xs text-muted-foreground">
-            <p>2.7k views</p>
+            <p>{`${formatCount(views.length)} views`}</p>
             {!!publishedAt && (
               <>
                 <span>•</span>
-                <p>{relativeTime(new Date(parseInt(publishedAt) * 1000))}</p>
+                <p>{relativeTime(new Date(publishedAt * 1000))}</p>
               </>
             )}
           </div>
