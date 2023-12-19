@@ -1,7 +1,7 @@
 "use client";
-import HeroSection from "../_sections/Hero";
-import TrendingSection from "../_sections/Trending";
-import ChannelSection from "../_sections/Channels";
+// import HeroSection from "../_sections/Hero";
+// import TrendingSection from "../_sections/Trending";
+// import ChannelSection from "../_sections/Channels";
 
 export default function Page() {
   return (
