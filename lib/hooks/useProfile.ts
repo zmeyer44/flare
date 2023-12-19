@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { nip19 } from "nostr-tools";
 import { NOSTR_BECH32_REGEXP } from "@/lib/nostr/utils";
 import { useNDK } from "@/app/_providers/ndk";
@@ -11,6 +11,7 @@ export default function useProfile(
     fetchFollowerCount?: boolean;
   },
 ) {
+  const [fetchingFollowers, setFetchingFollowers] = useState(false);
   const pubkey = NOSTR_BECH32_REGEXP.test(key)
     ? nip19.decode(key).data.toString()
     : key;
@@ -29,7 +30,7 @@ export default function useProfile(
 
   useEffect(() => {
     if (ndk && options?.fetchFollowerCount) {
-      if (!followers.has(pubkey)) {
+      if (!followers.has(pubkey) && !fetchingFollowers) {
         console.log("Should fetch followers");
         void handleFetchFollowerCount(pubkey);
       }
@@ -38,6 +39,7 @@ export default function useProfile(
 
   async function handleFetchFollowerCount(pubkey: string) {
     if (!ndk) return;
+    setFetchingFollowers(true);
     const followers = await fetchEvents({
       kinds: [3],
       ["#p"]: [pubkey],
@@ -49,6 +51,7 @@ export default function useProfile(
         Array.from(followers).map((p) => p.pubkey),
       );
     }
+    setFetchingFollowers(false);
   }
 
   return {
