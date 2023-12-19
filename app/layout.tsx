@@ -10,11 +10,11 @@ const interTight = Inter_Tight({
   subsets: ["latin"],
   variable: "--font-inter-tight",
 });
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
+// const dmSans = DM_Sans({
+//   subsets: ["latin"],
+//   variable: "--font-dm-sans",
+//   weight: ["400", "500", "600", "700", "800", "900"],
+// });
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-main",
@@ -262,7 +262,6 @@ export default function RootLayout({
         className={cn(
           inter.className,
           poppins.variable,
-          dmSans.variable,
           interTight.variable,
           "min-h-screen w-full bg-background antialiased scrollbar-none",
         )}
