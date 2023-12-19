@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import VideoPlayer from "@/components/videoPlayer";
 import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import SupporterLabel from "./components/supporterLabel";
+
 type Sponsor = {
   name: string;
   href: string;
@@ -78,11 +79,48 @@ const sponsors: Sponsor[] = [
 
 export default function HeroSection() {
   const searchParams = useSearchParams();
+
   const [activeSponsor, setActiveSponsor] = useState<Sponsor>(
     searchParams.has("s")
       ? sponsors[parseInt(searchParams.get("s") ?? "0")] ?? sponsors[0]!
       : sponsors[0]!,
   );
+
+  useKeyboardShortcut(["shift", " "], () => {
+    const currentIndex =
+      sponsors.findIndex((s) => s.name === activeSponsor.name) ?? 0;
+    if (currentIndex === sponsors.length - 1) {
+      setActiveSponsor(sponsors[0]!);
+    } else {
+      setActiveSponsor(sponsors[currentIndex + 1]!);
+    }
+  });
+  return (
+    <div className="mx-auto flex max-w-7xl flex-col items-center gap-x-4 gap-y-5 px-5 pb-10 md:flex-row md:pb-20">
+      <div className="mt-12 flex-1 text-6xl font-semibold sm:mt-8 md:px-6 md:text-6xl lg:text-7xl">
+        <SupporterLabel
+          sponsorName={activeSponsor.name}
+          href={activeSponsor.href}
+          className="mb-6"
+        />
+        <h1 className="font-main text-foreground">{activeSponsor.heroText}</h1>
+        <span className="font-main mt-1.5 block text-primary">
+          {activeSponsor.heroTextEmphasis}
+        </span>
+      </div>
+      <div className="max-h-[350px] w-full max-w-[450px] shrink-0 pt-4 md:mt-10 md:w-5/12 md:pt-6 lg:mt-20">
+        <VideoPlayer
+          autoplay={false}
+          src={activeSponsor.videoUrl}
+          title={activeSponsor.name}
+          thumbnail={activeSponsor.thumbnail}
+        />
+      </div>
+    </div>
+  );
+}
+export function HeroSectionFallback() {
+  const [activeSponsor, setActiveSponsor] = useState<Sponsor>(sponsors[0]!);
 
   useKeyboardShortcut(["shift", " "], () => {
     const currentIndex =
