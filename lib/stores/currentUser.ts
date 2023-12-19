@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { type NDKUser } from "@nostr-dev-kit/ndk";
+import type { NDKUser } from "@nostr-dev-kit/ndk";
 
 type Settings = {};
 

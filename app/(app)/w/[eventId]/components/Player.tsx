@@ -1,11 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useNDK } from "@/app/_providers/ndk";
 import Spinner from "@/components/spinner";
 import VideoPlayer from "@/components/videoPlayer";
-import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import { createEvent } from "@/lib/actions/create";
-import type { NDKKind } from "@nostr-dev-kit/ndk";
+import useVideos from "@/lib/hooks/useVideos";
 
 export default function Player({
   url,
@@ -18,39 +15,12 @@ export default function Player({
   image: string;
   eventIdentifier: string;
 }) {
-  const [requestingView, setRequestingView] = useState(false);
-  const { ndk } = useNDK();
-  const { currentUser } = useCurrentUser();
+  const { addView } = useVideos({ eventIdentifier: eventIdentifier });
   useEffect(() => {
-    if (ndk && currentUser && url && !requestingView) {
-      setRequestingView(true);
-      handleRecordView();
+    if (eventIdentifier) {
+      addView();
     }
-  }, [url, currentUser, ndk]);
-
-  async function handleRecordView() {
-    if (!ndk || !currentUser) return;
-    try {
-      const viewEvent = await ndk.fetchEvent({
-        authors: [currentUser.pubkey],
-        kinds: [34237 as NDKKind],
-        ["#a"]: [eventIdentifier],
-      });
-      if (!viewEvent) {
-        await createEvent(ndk, {
-          content: "",
-          kind: 34237,
-          tags: [
-            ["a", eventIdentifier],
-            ["d", eventIdentifier],
-            ["viewed", "0"],
-          ],
-        });
-      }
-    } catch (err) {
-      console.log("Error recoring view");
-    }
-  }
+  }, [eventIdentifier]);
   if (!url || !title) {
     return (
       <div className="center relative aspect-video h-full w-full overflow-hidden rounded-md bg-muted text-primary">

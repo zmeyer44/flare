@@ -25,7 +25,7 @@ import useProfile from "@/lib/hooks/useProfile";
 import { relativeTime } from "@/lib/utils/dates";
 import { toast } from "sonner";
 import useEvents from "@/lib/hooks/useEvents";
-
+import useVideos from "@/lib/hooks/useVideos";
 import type { NDKKind, NDKEvent } from "@nostr-dev-kit/ndk";
 
 type VideoActionsProps = {
@@ -43,12 +43,8 @@ export default function VideoActions({ event }: VideoActionsProps) {
   const publishedAt =
     getTagValues("published_at", event.tags) ?? event.created_at?.toString();
   const rawEvent = event.rawEvent();
-  const { events: viewEvents } = useEvents({
-    filter: {
-      kinds: [34237 as NDKKind],
-      ["#a"]: [event.tagId()],
-    },
-  });
+
+  const { views } = useVideos({ eventIdentifier: event.tagId() });
 
   return (
     <div className="space-y-2.5 py-2">
@@ -133,7 +129,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
         )}
       >
         <div className="flex items-center gap-x-1.5 text-[13px] font-semibold text-foreground">
-          <p>{`${formatNumber(viewEvents?.length ?? 0)} views`}</p>
+          <p>{`${formatNumber(views.length ?? 0)} views`}</p>
           {!!publishedAt && (
             <>
               <span>•</span>
