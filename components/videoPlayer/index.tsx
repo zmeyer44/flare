@@ -67,7 +67,11 @@ export default function VideoPlayer({
     <MediaPlayer
       className="bg-muted-background group relative aspect-video h-auto w-full overflow-hidden rounded-md font-sans text-foreground ring-media-focus @container data-[focus]:ring-4"
       title={title}
-      src={src}
+      // src={src}
+      src={{
+        src: src,
+        type: "video/mp4",
+      }}
       crossorigin
       playsinline
       onProviderChange={onProviderChange}
