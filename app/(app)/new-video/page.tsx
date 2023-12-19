@@ -25,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useRouter } from "next/navigation";
+import Thumbnail from "./components/thumbnail";
 
 export default function Page() {
   const router = useRouter();
@@ -199,33 +200,12 @@ export default function Page() {
           )}
         >
           <Label className="font-semibold">Thumbnail image</Label>
-          {videoData?.thumbnail ? (
-            <div className="">
-              <div className={cn("relative overflow-hidden rounded-xl")}>
-                <div className="">
-                  <Image
-                    alt="Image"
-                    height="288"
-                    width="288"
-                    src={videoData.thumbnail}
-                    unoptimized
-                    className={cn(
-                      "bg-bckground h-full rounded-xl object-cover object-center",
-                    )}
-                  />
-                </div>
-                <Button
-                  className="absolute right-1 top-1 font-semibold"
-                  variant={"secondary"}
-                  size={"sm"}
-                >
-                  Change
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <Button variant={"secondary"}>Upload</Button>
-          )}
+          <Thumbnail
+            url={videoData?.thumbnail}
+            onChange={(newThumbnailUrl) => {
+              setVideoData((prev) => ({ ...prev, thumbnail: newThumbnailUrl }));
+            }}
+          />
         </div>
         <div className="flex items-center justify-between rounded-lg border p-2">
           <Label className="font-semibold">Text tracks</Label>
