@@ -78,7 +78,9 @@ export default function VideoActions({ event }: VideoActionsProps) {
                   )}
                 </div>
                 <p className="text-[11px] text-muted-foreground sm:text-xs">
-                  {`${formatCount(followers.length)} followers`}
+                  {`${
+                    !!followers.length && formatCount(followers.length)
+                  } followers`}
                 </p>
               </div>
             </Link>
