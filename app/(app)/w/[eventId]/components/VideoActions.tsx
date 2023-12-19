@@ -24,8 +24,7 @@ import { getTagValues } from "@/lib/nostr/utils";
 import useProfile from "@/lib/hooks/useProfile";
 import { relativeTime } from "@/lib/utils/dates";
 import { toast } from "sonner";
-import useEvents from "@/lib/hooks/useEvents";
-import useVideo from "@/lib/hooks/useVideo";
+import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
 import type { NDKKind, NDKEvent } from "@nostr-dev-kit/ndk";
 
 type VideoActionsProps = {
@@ -34,17 +33,11 @@ type VideoActionsProps = {
 export default function VideoActions({ event }: VideoActionsProps) {
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
+  const { views, video } = useVideo({ eventIdentifier: event.tagId() });
+  const { url, author, publishedAt, summary, title } =
+    video ?? getVideoDetails(event);
 
-  const title = getTagValues("title", event.tags) as string;
-  const summary =
-    getTagValues("summary", event.tags) ??
-    getTagValues("about", event.tags) ??
-    (event.content as string);
-  const publishedAt =
-    getTagValues("published_at", event.tags) ?? event.created_at?.toString();
   const rawEvent = event.rawEvent();
-
-  const { views } = useVideo({ eventIdentifier: event.tagId() });
 
   return (
     <div className="space-y-2.5 py-2">
@@ -133,7 +126,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
           {!!publishedAt && (
             <>
               <span>•</span>
-              <p>{relativeTime(new Date(parseInt(publishedAt) * 1000))}</p>
+              <p>{relativeTime(new Date(publishedAt * 1000))}</p>
             </>
           )}
         </div>

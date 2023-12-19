@@ -218,5 +218,9 @@ export function getVideoDetails(event: NDKEvent) {
           }/hqdefault.jpg`
         : ""),
     title: getTagValues("title", event.tags) ?? "Untitled",
+    summary:
+      getTagValues("summary", event.tags) ??
+      getTagValues("about", event.tags) ??
+      (event.content as string),
   };
 }
