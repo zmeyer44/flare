@@ -107,7 +107,7 @@ export function Notifications({ user }: { user: NDKUser }) {
   return (
     <TooltipProvider>
       <Tooltip delayDuration={100}>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
