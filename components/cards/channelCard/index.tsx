@@ -26,7 +26,9 @@ export default function ChannelCard({
   channelPubkey,
 }: ChannelCardProps) {
   const npub = nip19.npubEncode(channelPubkey);
-  const { profile } = useProfile(channelPubkey);
+  const { profile, followers } = useProfile(channelPubkey, {
+    fetchFollowerCount: true,
+  });
   if (!profile) {
     return <ChannelCardLoading className={className} />;
   }
@@ -80,7 +82,9 @@ export default function ChannelCard({
                   <HiCheckBadge className="h-[14px] w-[14px] shrink-0 text-primary" />
                 )}
               </div>
-              <p className="text-xs text-muted-foreground">2.5k followers</p>
+              <p className="text-xs text-muted-foreground">{`${formatCount(
+                followers.length,
+              )} followers`}</p>
             </div>
           </Link>
         </div>
