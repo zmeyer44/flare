@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import type { NDKUserProfile } from "@nostr-dev-kit/ndk";
 import { uniq } from "ramda";
 
 interface UsersState {

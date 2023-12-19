@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import { nip19 } from "nostr-tools";
 import { NOSTR_BECH32_REGEXP } from "@/lib/nostr/utils";
 import { useNDK } from "@/app/_providers/ndk";
@@ -39,7 +39,6 @@ export default function useProfile(
       kinds: [3],
       ["#p"]: [pubkey],
     });
-    console.log("Found", followers);
     if (followers) {
       console.log("Found followers", followers);
       addFollowers(
