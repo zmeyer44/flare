@@ -11,25 +11,28 @@ export default function useProfile(
     fetchFollowerCount?: boolean;
   },
 ) {
+  const pubkey = NOSTR_BECH32_REGEXP.test(key)
+    ? nip19.decode(key).data.toString()
+    : key;
   const { followers, addFollowers } = followersStore();
   const { ndk, getProfile, fetchEvents } = useNDK();
 
   useEffect(() => {
     if (!ndk) return;
-    if (NOSTR_BECH32_REGEXP.test(key)) {
-      key = nip19.decode(key).data.toString();
-    }
+
     return () => {
       if (ndk) {
-        void ndk.getUser({ pubkey: key }).fetchProfile();
+        void ndk.getUser({ pubkey: pubkey }).fetchProfile();
       }
     };
-  }, [key, ndk, options]);
+  }, [pubkey, ndk, options]);
 
   useEffect(() => {
     if (ndk && options?.fetchFollowerCount) {
-      console.log("Should fetch followers");
-      void handleFetchFollowerCount(key);
+      if (!followers.has(pubkey)) {
+        console.log("Should fetch followers");
+        void handleFetchFollowerCount(pubkey);
+      }
     }
   }, [key, ndk, options]);
 
@@ -49,7 +52,7 @@ export default function useProfile(
   }
 
   return {
-    profile: getProfile(key),
-    followers: followers.get(key) ?? [],
+    profile: getProfile(pubkey),
+    followers: followers.get(pubkey) ?? [],
   };
 }
