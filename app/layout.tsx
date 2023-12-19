@@ -21,13 +21,6 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-// Font files can be colocated inside of `app`
-const afacad = localFont({
-  src: "./_fonts/Afacad-VariableFont_wght.ttf",
-  display: "swap",
-  variable: "--font-main-one",
-});
-
 const title = "Flare";
 const description =
   "Flare is the next era of video streaming. You host your own content, post it to Nostr, and share it with the world. There's nothing the Commies can do about it";
@@ -77,7 +70,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      // suppressHydrationWarning={true}
+      suppressHydrationWarning={true}
       className="dark bg-background"
     >
       <head>
@@ -265,13 +258,12 @@ export default function RootLayout({
         />
       </head>
       <body
-        // suppressHydrationWarning={true}
+        suppressHydrationWarning={true}
         className={cn(
           inter.className,
           poppins.variable,
           dmSans.variable,
           interTight.variable,
-          afacad.variable,
           "min-h-screen w-full bg-background antialiased scrollbar-none",
         )}
       >
