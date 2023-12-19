@@ -26,6 +26,8 @@ type VideoPlayerProps = {
   thumbnail?: string;
   alt?: string;
   autoplay?: boolean;
+  recordView?: (timeInSeconds: number) => void;
+  lastRecordedTime?: number;
 };
 export default function VideoPlayer({
   textTracks,
@@ -34,15 +36,24 @@ export default function VideoPlayer({
   thumbnail,
   alt,
   autoplay = false,
+  recordView,
+  lastRecordedTime,
 }: VideoPlayerProps) {
   let player = useRef<MediaPlayerInstance>(null);
 
   useEffect(() => {
     // Subscribe to state updates.
-    return player.current!.subscribe(({ paused, viewType }) => {
-      // console.log('is paused?', '->', state.paused);
-      // console.log('is audio view?', '->', state.viewType === 'audio');
-    });
+    return player.current!.subscribe(
+      ({ paused, viewType, currentTime: currentTimeInSeconds }) => {
+        if (recordView) {
+          if (currentTimeInSeconds - (lastRecordedTime ?? 0) > 10) {
+            recordView(currentTimeInSeconds);
+          }
+        }
+        // console.log('is paused?', '->', state.paused);
+        // console.log('is audio view?', '->', state.viewType === 'audio');
+      },
+    );
   }, []);
 
   function onProviderChange(

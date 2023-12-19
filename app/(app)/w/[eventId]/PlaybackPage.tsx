@@ -16,12 +16,18 @@ export default function PlaybackPage({ event }: { event: NDKEvent }) {
   const url = getTagValues("url", event.tags) as string;
   const title = getTagValues("title", event.tags) as string;
   const image = getTagValues("image", event.tags) as string;
+
   return (
     <div className="flex flex-col gap-6 lg:flex-row">
       <div className="shrink-1 flex-1 md:min-w-[500px]">
         {/* Video Player */}
         <div className="aspect-video max-h-[calc(61vw-32px)] w-full overflow-hidden rounded-xl">
-          <Player url={url} title={title} image={image} />
+          <Player
+            url={url}
+            title={title}
+            image={image}
+            eventIdentifier={event.tagId()}
+          />
         </div>
         <div className="pt-1">
           <VideoActions event={event} />

@@ -1,29 +1,32 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+
 import {
   cn,
   getTwoLetters,
   getNameToShow,
   formatCount,
   copyText,
+  formatNumber,
 } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { HiCheckBadge } from "react-icons/hi2";
-import { RiMore2Fill } from "react-icons/ri";
 import DropDownOptions from "@/components/custom-buttons/DropDownOptions";
-import { NDKEvent } from "@nostr-dev-kit/ndk";
-import { getTagValues } from "@/lib/nostr/utils";
-import useProfile from "@/lib/hooks/useProfile";
-import { Skeleton } from "@/components/ui/skeleton";
-import { RenderText } from "@/components/textRendering";
 import LikeButton from "./LikeButton";
 import LikeToggleButton from "@/components/custom-buttons/LikeToggleButton";
+import FollowButton from "@/components/custom-buttons/FollowButton";
+import { Skeleton } from "@/components/ui/skeleton";
+import { RenderText } from "@/components/textRendering";
+
+import { getTagValues } from "@/lib/nostr/utils";
+import useProfile from "@/lib/hooks/useProfile";
 import { relativeTime } from "@/lib/utils/dates";
 import { toast } from "sonner";
-import FollowButton from "@/components/custom-buttons/FollowButton";
+import useEvents from "@/lib/hooks/useEvents";
+
+import type { NDKKind, NDKEvent } from "@nostr-dev-kit/ndk";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -31,7 +34,7 @@ type VideoActionsProps = {
 export default function VideoActions({ event }: VideoActionsProps) {
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
-  console.log(event.rawEvent());
+
   const title = getTagValues("title", event.tags) as string;
   const summary =
     getTagValues("summary", event.tags) ??
@@ -40,6 +43,12 @@ export default function VideoActions({ event }: VideoActionsProps) {
   const publishedAt =
     getTagValues("published_at", event.tags) ?? event.created_at?.toString();
   const rawEvent = event.rawEvent();
+  const { events: viewEvents } = useEvents({
+    filter: {
+      kinds: [34237 as NDKKind],
+      ["#a"]: [event.tagId()],
+    },
+  });
 
   return (
     <div className="space-y-2.5 py-2">
@@ -124,7 +133,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
         )}
       >
         <div className="flex items-center gap-x-1.5 text-[13px] font-semibold text-foreground">
-          <p>44,053 views</p>
+          <p>{`${formatNumber(viewEvents?.length ?? 0)} views`}</p>
           {!!publishedAt && (
             <>
               <span>•</span>
