@@ -272,7 +272,7 @@ export default function RootLayout({
           dmSans.variable,
           interTight.variable,
           afacad.variable,
-          "w-full bg-background antialiased scrollbar-none",
+          "w-full bg-red-300 antialiased scrollbar-none",
         )}
       >
         <Providers>{children}</Providers>
