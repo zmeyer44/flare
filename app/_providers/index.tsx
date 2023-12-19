@@ -2,7 +2,7 @@
 
 import { Toaster } from "sonner";
 import { ModalProvider } from "./modal/provider";
-import useRouteChange from "@/lib/hooks/useRouteChange";
+// import useRouteChange from "@/lib/hooks/useRouteChange";
 import { NDKProvider } from "./ndk";
 import { RELAYS } from "@/constants";
 import TRPCProvider from "./trpc/Provider";
@@ -15,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       sessionStorage.setItem("RichHistory", "true");
     }
   };
-  useRouteChange(handleRouteChange);
+  // useRouteChange(handleRouteChange);
   return (
     <SessionProvider>
       <TRPCProvider>
