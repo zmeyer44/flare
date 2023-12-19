@@ -24,7 +24,7 @@ export function VideoLayout({ thumbnails }: VideoLayoutProps) {
         className={`${captionStyles.captions} absolute inset-0 bottom-2 z-10 select-none break-words opacity-0 transition-[opacity,bottom] duration-300 media-captions:opacity-100 media-controls:bottom-[85px] media-preview:opacity-0`}
       />
 
-      <Controls.Root className="absolute inset-0 z-10 flex h-full w-full flex-col bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-10 transition-opacity  group-hover:opacity-70 media-controls:opacity-100">
+      <Controls.Root className="absolute inset-0 z-10 flex h-full w-full flex-col bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 transition-opacity  group-hover:opacity-70 group-hover:delay-1000 media-controls:opacity-100">
         <Tooltip.Provider>
           <div className="flex-1" />
           <Controls.Group className="absolute right-0 top-0 flex items-center px-2">
