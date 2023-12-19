@@ -1,4 +1,3 @@
-"use client";
 import HeroSection from "./_sections/Hero";
 import TrendingSection from "./_sections/Trending";
 import ChannelSection from "./_sections/Channels";
@@ -52,9 +51,9 @@ export default function Page() {
         </div>
       </div>
       <div className="relative space-y-6 pt-5 sm:pt-7">
-        {/* <HeroSection />
+        <HeroSection />
         <TrendingSection />
-        <ChannelSection /> */}
+        <ChannelSection />
       </div>
     </div>
   );
