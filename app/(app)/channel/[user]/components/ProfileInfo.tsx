@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HiCheckBadge } from "react-icons/hi2";
 import FollowButton from "@/components/custom-buttons/FollowButton";
+import useProfile from "@/lib/hooks/useProfile";
 
 export default function ProfileInfo({
   profile,
@@ -18,6 +19,9 @@ export default function ProfileInfo({
   npub: string;
   pubkey: string;
 }) {
+  const { followers } = useProfile(pubkey, {
+    fetchFollowerCount: true,
+  });
   return (
     <div className="space-y-3">
       {/* Profile Image and name */}
@@ -43,7 +47,7 @@ export default function ProfileInfo({
               )}
             </div>
             <p className="text-xs text-muted-foreground lg:text-sm">
-              {`${formatCount(2) ?? 0} followers`}
+              {`${formatCount(followers.length) ?? 0} followers`}
             </p>
             <div className="hidden w-3/4 pt-2 lg:block">
               <div className="rounded-lg bg-muted">

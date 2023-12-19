@@ -32,7 +32,9 @@ type VideoActionsProps = {
 };
 export default function VideoActions({ event }: VideoActionsProps) {
   const npub = event.author.npub;
-  const { profile } = useProfile(event.author.pubkey);
+  const { profile, followers } = useProfile(event.author.pubkey, {
+    fetchFollowerCount: true,
+  });
   const { views, video } = useVideo({ eventIdentifier: event.tagId() });
   const { url, author, publishedAt, summary, title } =
     video ?? getVideoDetails(event);
@@ -76,7 +78,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
                   )}
                 </div>
                 <p className="text-[11px] text-muted-foreground sm:text-xs">
-                  {`${formatCount(2)} followers`}
+                  {`${formatCount(followers.length)} followers`}
                 </p>
               </div>
             </Link>
