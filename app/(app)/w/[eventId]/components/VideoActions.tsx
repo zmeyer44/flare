@@ -23,6 +23,7 @@ import LikeButton from "./LikeButton";
 import LikeToggleButton from "@/components/custom-buttons/LikeToggleButton";
 import { relativeTime } from "@/lib/utils/dates";
 import { toast } from "sonner";
+import FollowButton from "@/components/custom-buttons/FollowButton";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -84,9 +85,11 @@ export default function VideoActions({ event }: VideoActionsProps) {
           </div>
           {/* Channel Action Section */}
           <div className="flex items-center gap-2">
-            <Button size={"sm"} className="px-4 font-bold">
-              Follow
-            </Button>
+            <FollowButton
+              size={"sm"}
+              className="px-4 font-bold"
+              pubkey={event.author.pubkey}
+            />
             <Button
               size={"sm"}
               className="px-4 font-bold"
