@@ -77,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning={true}
+      // suppressHydrationWarning={true}
       className="dark bg-background"
     >
       <head>
@@ -265,7 +265,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        suppressHydrationWarning={true}
+        // suppressHydrationWarning={true}
         className={cn(
           inter.className,
           poppins.variable,
