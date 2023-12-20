@@ -35,9 +35,9 @@ export default function ChannelsSection() {
         <SectionTitle className="font-main text-xl font-semibold sm:text-2xl">
           Channels To Watch
         </SectionTitle>
-        <Button variant={"ghost"}>
+        {/* <Button variant={"ghost"}>
           View all <RiArrowRightLine className="ml-1 h-4 w-4" />
-        </Button>
+        </Button> */}
       </SectionHeader>
       <SectionContent className="relative overflow-x-hidden">
         <HorizontalCarousel channels={channels} />
