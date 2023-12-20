@@ -1,12 +1,50 @@
-"use client";
+import { Metadata, ResolvingMetadata } from "next";
 import { nip19 } from "nostr-tools";
-import { redirect } from "next/navigation";
 import PlaybackPage from "./PlaybackPage";
-import Spinner from "@/components/spinner";
-import { useEvent } from "@/lib/hooks/useEvents";
-import LoadingPage from "./loading";
+import { getVideo } from "@/lib/server-actions/video/get";
 
-export default function Page({
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: { eventId: string };
+  },
+  parent: ResolvingMetadata,
+): Promise<Metadata | null | undefined> {
+  const { data, type } = nip19.decode(params.eventId);
+  if (type !== "naddr") {
+    throw new Error("Invalid event");
+  }
+
+  try {
+    const video = await getVideo(data);
+    const title = video.title ?? "Video on Flare";
+    const description =
+      video.summary ??
+      "Flare is the next era of video streaming. You host your own content, post it to Nostr, and share it with the world. There's nothing the Commies can do about it";
+
+    const image = video.thumbnail ?? "";
+    return {
+      title: title,
+      openGraph: {
+        title: title,
+        description: description,
+        images: [image],
+      },
+      twitter: {
+        title: title,
+        description: description,
+        images: [image],
+        card: "summary_large_image",
+        creator: "@zachmeyer_",
+      },
+    };
+  } catch (err) {
+    console.log("Error generating metadata");
+  }
+}
+
+export default function VideoPage({
   params: { eventId },
 }: {
   params: {
@@ -17,17 +55,6 @@ export default function Page({
   if (type !== "naddr") {
     throw new Error("Invalid event");
   }
-  const { identifier, kind, pubkey } = data;
-  const { event, isLoading } = useEvent({
-    filter: {
-      kinds: [kind],
-      authors: [pubkey],
-      ["#d"]: [identifier],
-    },
-  });
-  if (isLoading || !event) {
-    return <LoadingPage />;
-  }
 
-  return <PlaybackPage event={event} />;
+  return <PlaybackPage {...data} />;
 }

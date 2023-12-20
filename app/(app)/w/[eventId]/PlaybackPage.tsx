@@ -8,8 +8,33 @@ import { nip19 } from "nostr-tools";
 import type { NDKEvent, NDKKind } from "@nostr-dev-kit/ndk";
 import useProfile from "@/lib/hooks/useProfile";
 import { getTagValues } from "@/lib/nostr/utils";
+import { useEvent } from "@/lib/hooks/useEvents";
+import LoadingPage from "./loading";
 
-export default function PlaybackPage({ event }: { event: NDKEvent }) {
+export default function Page({
+  identifier,
+  kind,
+  pubkey,
+}: {
+  identifier: string;
+  kind: number;
+  pubkey: string;
+}) {
+  const { event, isLoading } = useEvent({
+    filter: {
+      kinds: [kind],
+      authors: [pubkey],
+      ["#d"]: [identifier],
+    },
+  });
+  if (isLoading || !event) {
+    return <LoadingPage />;
+  }
+
+  return <PlaybackPage event={event} />;
+}
+
+export function PlaybackPage({ event }: { event: NDKEvent }) {
   const tagId = event.tagId();
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);

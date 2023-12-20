@@ -11,61 +11,34 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Account {
-  id                 String    @id @default(cuid())
-  userId             String
-  providerType       String
-  providerId         String
-  providerAccountId  String
-  refreshToken       String?
-  accessToken        String?
-  accessTokenExpires DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  user               User      @relation(fields: [userId], references: [pubkey])
-
-  @@unique([providerId, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  userId       String
-  expires      DateTime
-  sessionToken String   @unique
-  accessToken  String   @unique
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  user         User     @relation(fields: [userId], references: [pubkey])
-}
-
 model User {
-  id     Int    @id @default(autoincrement())
-  pubkey String @unique
-  nip05  String @unique
-
-  videos         Video[]
+  id             Int             @id @default(autoincrement())
+  pubkey         String          @unique
+  nip05          String          @unique
   storageCredits StorageCredit[]
   uploads        Upload[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  accounts  Account[]
-  sessions  Session[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Video {
-  id        Int    @id @default(autoincrement())
-  url       String
-  title     String
-  summary   String
-  pubkey    String
-  author    User   @relation(fields: [pubkey], references: [pubkey])
-  thumbnail String
-  kind      Int
-  tagId     String
+  id           Int     @id @default(autoincrement())
+  url          String
+  title        String?
+  summary      String?
+  thumbnail    String?
+  pubkey       String
+  kind         Int
+  d            String
+  tags         Json
+  published_at Int
+  viewCount    Int     @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([pubkey, d])
 }
 
 model StorageCredit {
