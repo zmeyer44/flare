@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { signOut, useSession, signIn } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import currentUserStore from "@/lib/stores/currentUser";
 // import useEvents from "@/lib/hooks/useEvents";
 import { UserSchema } from "@/types";
@@ -8,7 +8,6 @@ import { useNDK } from "@/app/_providers/ndk";
 import { nip19 } from "nostr-tools";
 import { type NDKKind } from "@nostr-dev-kit/ndk";
 import { webln } from "@getalby/sdk";
-import { authEvent } from "@/lib/actions/create";
 
 const loadNWCUrl = "";
 const nwc = new webln.NWC({ nostrWalletConnectUrl: loadNWCUrl });
@@ -23,8 +22,6 @@ export default function useCurrentUser() {
     addFollow,
   } = currentUserStore();
   const { loginWithNip07, ndk } = useNDK();
-  const { data: session, status: httpAuthStatus } = useSession();
-  const [promptShown, setPromptShown] = useState(false);
   async function attemptLogin() {
     try {
       const shouldReconnect = localStorage.getItem("shouldReconnect");
@@ -80,29 +77,6 @@ export default function useCurrentUser() {
     //   createdAt: unixTimeNowInSeconds(),
     // });
     setCurrentUser(user);
-  }
-
-  useEffect(() => {
-    if (!currentUser || session || promptShown) return;
-    if (ndk?.activeUser?.pubkey && httpAuthStatus === "unauthenticated") {
-      void attemptHttpLogin();
-      setPromptShown(true);
-    }
-  }, [currentUser, ndk, httpAuthStatus, session]);
-
-  async function attemptHttpLogin() {
-    if (!ndk || !currentUser || !ndk?.activeUser?.pubkey) return;
-    try {
-      const event = await authEvent(ndk);
-      if (!event) return;
-      const authRes = await signIn("nip-98", {
-        event: JSON.stringify(event),
-        redirect: false,
-      });
-      console.log("authRes", authRes);
-    } catch (err) {
-      console.log("Error http login");
-    }
   }
 
   useEffect(() => {
