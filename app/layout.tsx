@@ -24,10 +24,11 @@ const poppins = Poppins({
 const title = "Flare";
 const description =
   "Flare is the next era of video streaming. You host your own content, post it to Nostr, and share it with the world. There's nothing the Commies can do about it";
-
+const image = "https://flare-pub.s3.amazonaws.com/sponsors/664shots_so.png";
 export const metadata: Metadata = {
   title,
   description,
+
   icons: [
     { rel: "apple-touch-icon", url: "/apple-touch-icon.png" },
     { rel: "shortcut icon", url: "/favicon.ico" },
@@ -35,13 +36,13 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    // images: [image],
+    images: [image],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    // images: [image],
+    images: [image],
     creator: "@zachmeyer_",
   },
   metadataBase: new URL("https://www.flare.pub"),
