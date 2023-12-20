@@ -57,7 +57,7 @@ export default function useProfile(
   }
 
   return {
-    profile: pubkey ? getProfile(pubkey) : null,
+    profile: getProfile(pubkey ?? ""),
     followers: pubkey ? followers.get(pubkey) ?? [] : [],
   };
 }
