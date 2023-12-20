@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
 import type { NDKKind, NDKEvent } from "@nostr-dev-kit/ndk";
 import useExpandableContainer from "@/lib/hooks/useExpandableContainer";
+import ZapButton from "@/components/custom-buttons/ZapButton";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -95,13 +96,12 @@ export default function VideoActions({ event }: VideoActionsProps) {
               className="px-4 font-bold"
               pubkey={event.author.pubkey}
             />
-            <Button
+            <ZapButton
+              event={event.rawEvent()}
               size={"sm"}
               className="px-4 font-bold"
               variant={"secondary"}
-            >
-              Zap
-            </Button>
+            />
           </div>
         </div>
         {/* Video actions */}
