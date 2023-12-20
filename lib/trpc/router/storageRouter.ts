@@ -30,7 +30,8 @@ export const storageRouter = createTRPCRouter({
       },
     });
     const remainingCredits =
-      (storageCredits._sum.bytes ?? 0) - (uploadsUsed._sum.size ?? 0);
+      (Number(storageCredits._sum.bytes) ?? 0) -
+      (Number(uploadsUsed._sum.size) ?? 0);
     return remainingCredits;
   }),
   purchaseCredits: protectedProcedure
@@ -72,6 +73,12 @@ export const storageRouter = createTRPCRouter({
         console.log("Unable to find amount tag");
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
+      const paymentEventId = input.paymentEvent.id;
+
+      if (!paymentEventId) {
+        console.log("Missing ID");
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
       if (
         nostrPubkey !== input.paymentEvent.pubkey ||
         Math.floor(amount / 1000) < 10_000
@@ -79,10 +86,12 @@ export const storageRouter = createTRPCRouter({
         console.log("Invalid zap");
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
+
       const newCredits = await ctx.prisma.storageCredit.create({
         data: {
           bytes: 2_147_483_648,
           pubkey: ctx.session.user.pubkey,
+          paymentEventId: paymentEventId,
           paymentEvent: JSON.stringify(input.paymentEvent),
         },
       });

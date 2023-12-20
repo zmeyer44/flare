@@ -88,7 +88,6 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing Event");
         }
         const event = EventSchema.parse(JSON.parse(credentials.event));
-        console.log("event", event);
 
         const currentTime = unixTimeNowInSeconds();
         if (
@@ -104,9 +103,9 @@ export const authOptions: NextAuthOptions = {
         }
         const result = verifySignature({
           ...event,
-          id: event.id,
-          sig: event.id,
-          kind: event.kind,
+          id: event.id as string,
+          sig: event.sig as string,
+          kind: event.kind as number,
         });
         if (result) {
           const user = await prisma.user.findFirst({
@@ -196,7 +195,10 @@ export function getSession() {
 
 export async function getCurrentUserSession() {
   try {
+    console.log("At create session");
     const session = await getSession();
+    console.log("Session", session);
+
     if (!session?.user?.id) {
       return null;
     }

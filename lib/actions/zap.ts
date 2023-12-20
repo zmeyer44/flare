@@ -45,10 +45,12 @@ export async function checkUserZap(
   sender: string,
   recipient: string,
   amountCheck: number,
+  createdAt?: number,
 ) {
   const paymentEvents = await ndk.fetchEvents({
     kinds: [9735],
     ["#p"]: [recipient],
+    since: createdAt,
   });
   if (!paymentEvents) return;
   const paymentEvent = Array.from(paymentEvents).find(

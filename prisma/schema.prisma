@@ -42,11 +42,12 @@ model Video {
 }
 
 model StorageCredit {
-  id           Int    @id @default(autoincrement())
-  bytes        Int
-  paymentEvent String
-  pubkey       String
-  user         User   @relation(fields: [pubkey], references: [pubkey])
+  id             Int    @id @default(autoincrement())
+  bytes          BigInt
+  paymentEventId String @unique
+  paymentEvent   String
+  pubkey         String
+  user           User   @relation(fields: [pubkey], references: [pubkey])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -57,7 +58,7 @@ model Upload {
   url    String
   pubkey String
   user   User   @relation(fields: [pubkey], references: [pubkey])
-  size   Int
+  size   BigInt
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

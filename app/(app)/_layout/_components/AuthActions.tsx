@@ -191,11 +191,9 @@ export function SearchButton({ className }: { className?: string }) {
   );
 }
 export function NewUploadButton({ className }: { className?: string }) {
-  const [open, setOpen] = useAtom(commandDialogAtom);
   return (
     <Link href="/new-video">
       <Button
-        onClick={() => setOpen(true)}
         variant="default"
         size="icon"
         className={cn("center relative h-8 w-8 rounded-full", className)}

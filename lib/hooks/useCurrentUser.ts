@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { signOut, useSession, signIn } from "next-auth/react";
 import currentUserStore from "@/lib/stores/currentUser";
 // import useEvents from "@/lib/hooks/useEvents";
@@ -24,7 +24,7 @@ export default function useCurrentUser() {
   } = currentUserStore();
   const { loginWithNip07, ndk } = useNDK();
   const { data: session, status: httpAuthStatus } = useSession();
-
+  const [promptShown, setPromptShown] = useState(false);
   async function attemptLogin() {
     try {
       const shouldReconnect = localStorage.getItem("shouldReconnect");
@@ -83,11 +83,12 @@ export default function useCurrentUser() {
   }
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || session || promptShown) return;
     if (ndk?.activeUser?.pubkey && httpAuthStatus === "unauthenticated") {
       void attemptHttpLogin();
+      setPromptShown(true);
     }
-  }, [currentUser, httpAuthStatus]);
+  }, [currentUser, ndk, httpAuthStatus, session]);
 
   async function attemptHttpLogin() {
     if (!ndk) return;

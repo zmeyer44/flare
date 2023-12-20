@@ -14,6 +14,7 @@ import { formatCount, formatNumber } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { api } from "@/lib/trpc/api";
+import { unixTimeNowInSeconds } from "@/lib/nostr/dates";
 
 type ModalProps = {};
 export default function ZapModal({}: ModalProps) {
@@ -78,8 +79,8 @@ export default function ZapModal({}: ModalProps) {
         currentUser.pubkey,
         process.env.NEXT_PUBLIC_ZAP_ADDRESS as string,
         10_000,
+        unixTimeNowInSeconds() - 60 * 5,
       );
-      console.log("Payment result", result);
       if (result) {
         mutate({
           paymentEvent: result.paymentEvent,

@@ -53,6 +53,7 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
 export const createTRPCContext = async (opts: FetchCreateContextFnOptions) => {
   // Get the session from the server using the getServerSession wrapper function
   const session = await getCurrentUserSession();
+  console.log("Creating trpc sesstion", session);
   return createInnerTRPCContext({
     session,
   });
