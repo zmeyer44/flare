@@ -43,7 +43,15 @@ export default function ZapModal({}: ModalProps) {
     featured: false,
   };
 
-  const { mutate } = api.storage.purchaseCredits.useMutation();
+  const { mutate } = api.storage.purchaseCredits.useMutation({
+    onError: () => {
+      toast.error("An error has occured");
+    },
+    onSuccess: () => {
+      toast.success("Credits received!");
+      modal?.hide();
+    },
+  });
 
   async function handleSendZap() {
     if (!ndk || !currentUser) return;
