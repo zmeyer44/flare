@@ -14,6 +14,14 @@ type Sponsor = {
   thumbnail?: string;
 };
 const sponsors: Sponsor[] = [
+  // {
+  //   name: "Welcome to Flare",
+  //   href: "https://opensats.org?ref=flare",
+  //   heroText: "Welcome to Flare",
+  //   heroTextEmphasis: "Unleash the web",
+  //   videoUrl: "https://www.youtube.com/watch?v=ver_DNla00Q",
+  //   thumbnail: "http://i3.ytimg.com/vi/ver_DNla00Q/hqdefault.jpg",
+  // },
   {
     name: "OpenSats",
     href: "https://opensats.org?ref=flare",
@@ -104,7 +112,7 @@ export default function HeroSection() {
           className="mb-6"
         />
         <h1 className="font-main text-foreground">{activeSponsor.heroText}</h1>
-        <span className="font-main mt-1.5 block text-primary">
+        <span className="mt-1.5 block font-main text-primary">
           {activeSponsor.heroTextEmphasis}
         </span>
       </div>
@@ -140,7 +148,7 @@ export function HeroSectionFallback() {
           className="mb-6"
         />
         <h1 className="font-main text-foreground">{activeSponsor.heroText}</h1>
-        <span className="font-main mt-1.5 block text-primary">
+        <span className="mt-1.5 block font-main text-primary">
           {activeSponsor.heroTextEmphasis}
         </span>
       </div>

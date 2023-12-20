@@ -26,6 +26,7 @@ import { relativeTime } from "@/lib/utils/dates";
 import { toast } from "sonner";
 import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
 import type { NDKKind, NDKEvent } from "@nostr-dev-kit/ndk";
+import useExpandableContainer from "@/lib/hooks/useExpandableContainer";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -34,6 +35,9 @@ export default function VideoActions({ event }: VideoActionsProps) {
   const npub = event.author.npub;
   const { profile, followers } = useProfile(event.author.pubkey, {
     fetchFollowerCount: true,
+  });
+  const { ExpandButton, contentRef, containerStyles } = useExpandableContainer({
+    maxHeight: 200,
   });
   const { views, video } = useVideo({ eventIdentifier: event.tagId() });
   const { url, author, publishedAt, summary, title } =
@@ -120,10 +124,13 @@ export default function VideoActions({ event }: VideoActionsProps) {
 
       {/* Metadata Section */}
       <div
+        ref={contentRef}
         className={cn(
-          "rounded-xl bg-muted p-3",
-          true && "cursor-pointer transition-all hover:bg-muted-foreground/30",
+          "relative rounded-xl bg-muted p-3",
+          false &&
+            " cursor-pointer transition-all hover:bg-muted-foreground/30",
         )}
+        style={containerStyles}
       >
         <div className="flex items-center gap-x-1.5 text-[13px] font-semibold text-foreground">
           <p>{`${formatNumber(views.length ?? 0)} views`}</p>
@@ -137,9 +144,12 @@ export default function VideoActions({ event }: VideoActionsProps) {
         <div className="overflow-hidden whitespace-break-spaces break-words text-sm text-muted-foreground">
           <RenderText text={summary} />
         </div>
-        <button className="text-xs font-medium leading-none">
-          <span>See more...</span>
-        </button>
+        <ExpandButton className="absolute inset-x-0 bottom-0 z-20 mt-[-55px]">
+          <div className="h-[40px] w-full bg-gradient-to-b from-transparent to-muted"></div>
+          <div className="h-[25px] bg-muted text-xs font-medium leading-none">
+            <span>See more...</span>
+          </div>
+        </ExpandButton>
       </div>
     </div>
   );
