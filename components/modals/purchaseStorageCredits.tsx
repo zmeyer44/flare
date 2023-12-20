@@ -55,6 +55,7 @@ export default function ZapModal({}: ModalProps) {
     try {
       setIsLoading(true);
       const result = await zapUser(
+        ndk,
         10_000,
         process.env.NEXT_PUBLIC_ZAP_ADDRESS as string,
         `Purchasing 2 Gb ${currentUser.npub}`,

@@ -20,12 +20,16 @@ const ZapEndpointResponseSchema = z.object({
 });
 
 export async function zapUser(
+  ndk: NDK,
   amount: number,
   pubkey: string,
   comment?: string,
 ) {
   log("func", "zapUser");
-  const user = await new NDKUser({ pubkey });
+  const user = await ndk.getUser({
+    pubkey,
+  });
+  // const user = await new NDKUser({ pubkey });
   log("info", JSON.stringify(user));
   const pr = await user.zap(amount * 1000, comment);
   if (!pr) {
