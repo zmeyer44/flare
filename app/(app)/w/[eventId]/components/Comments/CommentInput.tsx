@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import useAutosizeTextArea from "@/lib/hooks/useAutoSizeTextArea";
-import { useModal } from "@/app/_providers/modal/provider";
 import { useNDK } from "@/app/_providers/ndk";
 import useUpload from "@/lib/hooks/useUpload";
 import { toast } from "sonner";
@@ -28,7 +27,6 @@ export default function CommentInput({
   onBlur?: () => void;
   initialTags?: string[][];
 }) {
-  const modal = useModal();
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
 
@@ -66,7 +64,6 @@ export default function CommentInput({
       const event = await createEvent(ndk, preEvent);
       if (event) {
         toast.success("Comment created!");
-        modal?.hide();
       } else {
         toast.error("An error occured");
       }
