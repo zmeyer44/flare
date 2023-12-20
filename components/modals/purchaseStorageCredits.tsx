@@ -6,7 +6,6 @@ import useAuthGuard from "./hooks/useAuthGuard";
 import { useModal } from "@/app/_providers/modal/provider";
 import { useNDK } from "@/app/_providers/ndk";
 import { checkUserZap, zapUser } from "@/lib/actions/zap";
-import { type NostrEvent } from "@nostr-dev-kit/ndk";
 import { toast } from "sonner";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { HiOutlineLightningBolt, HiCheck } from "react-icons/hi";
@@ -29,8 +28,6 @@ export default function ZapModal({}: ModalProps) {
 
   const tier = {
     name: "Basic",
-    id: "tier-enterprise",
-    href: "#",
     size: "2 GB",
     price: 10000,
     description: "Dedicated storage space for video uploads on Flare.",

@@ -99,8 +99,15 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid Event");
         } else if (event.created_at < currentTime - 60) {
           throw new Error("Stale Event");
+        } else if (!event.id || !event.sig || !event.kind) {
+          throw new Error("Missing signature");
         }
-        const result = verifySignature(event);
+        const result = verifySignature({
+          ...event,
+          id: event.id,
+          sig: event.id,
+          kind: event.kind,
+        });
         if (result) {
           const user = await prisma.user.findFirst({
             where: {
