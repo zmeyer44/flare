@@ -3,6 +3,7 @@
 import { commandDialogAtom } from "./CommandDialog";
 import { useAtom } from "jotai";
 import { Button } from "@/components/ui/button";
+
 export default function Search() {
   const [open, setOpen] = useAtom(commandDialogAtom);
   return (

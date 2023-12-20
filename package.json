@@ -41,6 +41,7 @@
     "@vercel/og": "^0.5.20",
     "@vercel/postgres": "^0.5.1",
     "@vidstack/react": "next",
+    "algoliasearch": "^4.22.0",
     "aws-sdk": "^2.1514.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

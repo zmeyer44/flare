@@ -7,6 +7,7 @@ import { HiCheckBadge } from "react-icons/hi2";
 import { RenderText } from "@/components/textRendering";
 import { Button } from "@/components/ui/button";
 import { HiOutlineHandThumbUp, HiOutlineHandThumbDown } from "react-icons/hi2";
+import { relativeTime } from "@/lib/utils/dates";
 
 type CommentBodyProps = {
   event: NDKEvent;
@@ -39,9 +40,9 @@ export default function CommentBody({ event }: CommentBodyProps) {
               <HiCheckBadge className="h-[14px] w-[14px] shrink-0 text-primary" />
             )}
           </div>
-          <p className="mt-0.5 text-xs text-muted-foreground">{`${formatCount(
-            2,
-          )} followers`}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            {relativeTime(new Date((event.created_at ?? 0) * 1000))}
+          </p>
         </div>
         <div className="">
           <RenderText text={event.content} />
