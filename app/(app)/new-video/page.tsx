@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useRouter } from "next/navigation";
 import Thumbnail from "./components/thumbnail";
+import TextTracks from "./components/textTracks";
 
 export default function Page() {
   const router = useRouter();
@@ -43,7 +44,7 @@ export default function Page() {
     duration?: number;
     hashtags?: string;
     contentWarning?: string;
-  }>();
+  }>({});
 
   const titleRef = useRef<HTMLTextAreaElement>(null);
   useAutosizeTextArea(titleRef.current, videoData?.title ?? "");
@@ -127,18 +128,7 @@ export default function Page() {
               image={videoData.thumbnail}
             />
           ) : (
-            <VideoUpload
-              setVideo={(video) => {
-                console.log("Video data", video);
-                setVideoData((prev) => ({
-                  ...prev,
-                  ...video,
-                  title: prev?.title || video.title,
-                  summary: prev?.summary || video.summary,
-                  thumbnail: prev?.thumbnail || video.thumbnail,
-                }));
-              }}
-            />
+            <VideoUpload setVideo={setVideoData} />
           )}
         </div>
         <div className="space-y-2.5 py-3">
@@ -209,7 +199,7 @@ export default function Page() {
         </div>
         <div className="flex items-center justify-between rounded-lg border p-2">
           <Label className="font-semibold">Text tracks</Label>
-          <Button variant={"secondary"}>Upload</Button>
+          <TextTracks />
         </div>
         <div className="flex flex-col gap-y-2 rounded-lg border p-2">
           <Label className="mb-1 font-semibold">Hashtags</Label>

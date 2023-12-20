@@ -30,8 +30,6 @@ import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import LoginModal from "@/components/modals/login";
 import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import { useSession, signIn } from "next-auth/react";
-import { authEvent } from "@/lib/actions/create";
 import { commandDialogAtom } from "./CommandDialog";
 import { useAtom } from "jotai";
 import { cn } from "@/lib/utils";
@@ -43,7 +41,6 @@ import { cn } from "@/lib/utils";
 export default function AuthActions() {
   const router = useRouter();
   const modal = useModal();
-  const { data, status } = useSession();
   const { currentUser, logout, attemptLogin } = useCurrentUser();
   const { ndk } = useNDK();
 
@@ -63,26 +60,7 @@ export default function AuthActions() {
     if (ndk && !currentUser) {
       void attemptLogin();
     }
-    if (ndk?.activeUser?.pubkey && status === "unauthenticated") {
-      void attemptHttpLogin();
-    }
-  }, [ndk, status]);
-
-  async function attemptHttpLogin() {
-    if (!ndk) return;
-    try {
-      const event = await authEvent(ndk);
-      if (!event) return;
-      console.log("Submitting", event);
-      const authRes = await signIn("nip-98", {
-        event: JSON.stringify(event),
-        redirect: false,
-      });
-      console.log("authRes", authRes);
-    } catch (err) {
-      console.log("Error http login");
-    }
-  }
+  }, [ndk]);
 
   if (currentUser) {
     return (
@@ -91,12 +69,18 @@ export default function AuthActions() {
         <Notifications className="max-md:hidden" user={currentUser} />
         <Relays />
         <NewUploadButton className="sm:hidden" />
-        <UserMenu user={currentUser} logout={logout} />
+        <UserMenu
+          user={currentUser}
+          logout={() => {
+            logout();
+          }}
+        />
       </>
     );
   }
   return (
     <>
+      <SearchButton className="md:hidden" />
       <Button
         onClick={() => modal?.show(<LoginModal />)}
         className="rounded-sm px-5 font-medium"

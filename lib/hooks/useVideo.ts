@@ -210,7 +210,7 @@ export function getVideoDetails(event: NDKEvent) {
       getTagValues("thumb", event.tags) ??
       getTagValues("thumbnail", event.tags) ??
       getTagValues("image", event.tags) ??
-      (url?.includes("youtu")
+      (url.includes("youtu")
         ? `http://i3.ytimg.com/vi/${
             url.includes("/youtu.be/")
               ? url.split("youtu.be/").pop()

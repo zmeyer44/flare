@@ -17,8 +17,10 @@ import { toast } from "sonner";
 import { useModal } from "@/app/_providers/modal/provider";
 import type { NDKEvent } from "@nostr-dev-kit/ndk";
 import UploadModal from "@/components/modals/upload";
+import PurchseStorageCreditsModal from "@/components/modals/purchaseStorageCredits";
 import { createEvent } from "@/lib/actions/create";
 import { getTagValues } from "@/lib/nostr/utils";
+import useStorageCredits from "@/lib/hooks/useStorageCredits";
 
 export default function Player({
   url,
@@ -46,23 +48,27 @@ export default function Player({
 export function VideoUpload({
   setVideo,
 }: {
-  setVideo: (video: {
-    url: string;
-    title?: string;
-    summary?: string;
-    thumbnail?: string;
-    fileType?: string;
-    fileHash?: string;
-    fileSize?: number;
-    duration?: number;
-  }) => void;
+  setVideo: React.Dispatch<
+    React.SetStateAction<{
+      url?: string;
+      title?: string;
+      summary?: string;
+      thumbnail?: string;
+      fileType?: string;
+      fileHash?: string;
+      fileSize?: number;
+      duration?: number;
+      hashtags?: string;
+      contentWarning?: string;
+    }>
+  >;
 }) {
   const [loading, setLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [showEventInput, setShowEventInput] = useState(false);
   const [eventTagId, setEventTagId] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
-
+  const { remainingCredits } = useStorageCredits();
   const { fetchEvents, ndk } = useNDK();
   const modal = useModal();
   const { currentUser } = useCurrentUser();
@@ -145,7 +151,19 @@ export function VideoUpload({
               placeholder={"https://..."}
             />
             <Button
-              onClick={() => setVideo({ url: videoUrl })}
+              onClick={() =>
+                setVideo((prev) => ({
+                  ...prev,
+                  url: videoUrl,
+                  thumbnail: videoUrl.includes("youtu")
+                    ? `http://i3.ytimg.com/vi/${
+                        videoUrl.includes("/youtu.be/")
+                          ? videoUrl.split("youtu.be/").pop()
+                          : videoUrl.split("?v=").pop()
+                      }/hqdefault.jpg`
+                    : prev.thumbnail,
+                }))
+              }
               loading={isSearching}
               disabled={isSearching}
               size="icon"
@@ -164,40 +182,44 @@ export function VideoUpload({
   return (
     <div className="center relative aspect-video h-full w-full flex-col gap-y-3 overflow-hidden rounded-md bg-muted">
       <button
-        onClick={() =>
-          modal?.show(
-            <UploadModal
-              accept="video/*"
-              folderName="video"
-              generateThumbnail={true}
-              onSumbit={({
-                fileUrl,
-                fileType,
-                fileHash,
-                thumbnailUrl,
-                duration,
-                fileSize,
-              }) =>
-                setVideo({
-                  url: fileUrl,
-                  thumbnail: thumbnailUrl,
-                  fileHash,
+        onClick={() => {
+          if (!remainingCredits || remainingCredits < 10_000) {
+            modal?.show(<PurchseStorageCreditsModal />);
+          } else {
+            modal?.show(
+              <UploadModal
+                accept="video/*"
+                folderName="video"
+                generateThumbnail={true}
+                onSumbit={({
+                  fileUrl,
                   fileType,
+                  fileHash,
+                  thumbnailUrl,
                   duration,
                   fileSize,
-                })
-              }
-            />,
-          )
-        }
-        className="mt-2 flex w-full max-w-[300px] justify-center rounded-lg border border-dashed border-foreground/25 px-6 py-10 hover:bg-background/40"
+                }) =>
+                  setVideo({
+                    url: fileUrl,
+                    thumbnail: thumbnailUrl,
+                    fileHash,
+                    fileType,
+                    duration,
+                    fileSize,
+                  })
+                }
+              />,
+            );
+          }
+        }}
+        className="mt-2 flex w-full max-w-[300px] justify-center rounded-lg border border-dashed border-foreground/25 px-6 py-7 hover:bg-background/40 sm:py-10"
       >
         <div className="text-center">
           <RiUploadCloud2Line
-            className="mx-auto h-12 w-12 text-muted-foreground"
+            className="mx-auto h-10 w-10 text-muted-foreground sm:h-12 sm:w-12"
             aria-hidden="true"
           />
-          <div className="mt-4 flex text-sm leading-6 text-muted-foreground">
+          <div className="mt-2 flex text-sm leading-6 text-muted-foreground sm:mt-4">
             <span className="relative rounded-md font-semibold text-foreground focus-within:outline-none">
               Upload a file
             </span>

@@ -102,6 +102,18 @@ export const authOptions: NextAuthOptions = {
         }
         const result = verifySignature(event);
         if (result) {
+          const user = await prisma.user.findFirst({
+            where: {
+              pubkey: event.pubkey,
+            },
+          });
+          if (!user) {
+            await prisma.user.create({
+              data: {
+                pubkey: event.pubkey,
+              },
+            });
+          }
           return {
             id: event.pubkey,
             email: event.pubkey,
@@ -183,7 +195,7 @@ export async function getCurrentUserSession() {
     }
     const currentUser = await prisma.user.findFirst({
       where: {
-        id: parseInt(session.user.id),
+        pubkey: session.user.id,
       },
     });
     return { ...session, user: currentUser };
@@ -200,7 +212,7 @@ export async function getCurrentUser() {
     }
     const currentUser = await prisma.user.findFirst({
       where: {
-        id: parseInt(session.user.id),
+        pubkey: session.user.id,
       },
     });
     return currentUser;

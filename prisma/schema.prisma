@@ -14,7 +14,7 @@ generator client {
 model User {
   id             Int             @id @default(autoincrement())
   pubkey         String          @unique
-  nip05          String          @unique
+  nip05          String?         @unique
   storageCredits StorageCredit[]
   uploads        Upload[]
 
