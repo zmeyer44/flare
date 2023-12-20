@@ -21,7 +21,7 @@ const useSearch = () => {
     try {
       const queries = [
         {
-          indexName: "videos",
+          indexName: "Videos",
           query: input,
           params: {
             hitsPerPage: 10,
