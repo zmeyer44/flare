@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import {
@@ -18,15 +19,20 @@ import { atom, useAtom } from "jotai";
 import useSearch from "@/lib/hooks/useSearch";
 import { cn } from "@/lib/utils";
 import Spinner from "@/components/spinner";
+import SearchVideoCard, {
+  SearchVideoCardLoading,
+} from "@/components/cards/videoCard/searchCard";
 
 type SearchSuggestionObject = {
   index: string;
   hits: {
+    tagId: string;
     title: string;
     summary?: string;
+    thumbnail?: string;
     kind: number;
-    identifier: string;
     pubkey: string;
+    published_at: number;
   }[];
 };
 export const commandDialogAtom = atom(false);
@@ -49,11 +55,13 @@ export default function CommandDialogComponent() {
     const processedResults = results?.map((r) => ({
       index: r.index,
       hits: r.hits as unknown as {
+        tagId: string;
         title: string;
         summary?: string;
+        thumbnail?: string;
         kind: number;
-        identifier: string;
         pubkey: string;
+        published_at: number;
       }[],
     }));
     setSuggestions(processedResults ?? []);
@@ -92,18 +100,32 @@ export default function CommandDialogComponent() {
           return (
             <CommandGroup key={s.index} heading={s.index}>
               {s.hits.map((h) => (
-                <CommandItem key={`${h.kind}:${h.pubkey}:${h.identifier}`}>
-                  {/* <CalendarIcon className="mr-2 h-4 w-4" /> */}
-                  <span>{h.title}</span>
-                </CommandItem>
+                <Link key={h.tagId} href={`/w/${h.tagId}`}>
+                  <CommandItem>
+                    <SearchVideoCard video={h} />
+                  </CommandItem>
+                </Link>
               ))}
             </CommandGroup>
           );
         })}
         {!suggestions.flatMap((e) => e.hits)?.length && (
-          <div className="center py-6 text-muted-foreground/80 sm:min-h-[200px]">
+          <div className="center w-full py-6 text-muted-foreground/80 sm:min-h-[200px]">
             {searching ? (
-              <Spinner />
+              <CommandGroup heading="Videos">
+                <CommandItem>
+                  <SearchVideoCardLoading className="w-full" />
+                </CommandItem>
+                <CommandItem>
+                  <SearchVideoCardLoading className="w-full" />
+                </CommandItem>
+                <CommandItem>
+                  <SearchVideoCardLoading className="w-full" />
+                </CommandItem>
+                <CommandItem>
+                  <SearchVideoCardLoading className="w-full" />
+                </CommandItem>
+              </CommandGroup>
             ) : searchInput ? (
               <div className="text-center text-sm sm:text-base">
                 No results found.

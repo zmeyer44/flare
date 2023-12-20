@@ -29,6 +29,7 @@ export const updateVideo = async ({
         thumbnail,
         kind,
         pubkey,
+        tagId: `${kind}:${pubkey}:${d}`,
         objectID: `${kind}:${pubkey}:${d}`,
       },
       {
