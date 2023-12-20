@@ -46,9 +46,9 @@ export default function useCurrentUser() {
   }
 
   function logout() {
-    signOut();
     localStorage.removeItem("shouldReconnect");
     setCurrentUser(null);
+    signOut();
     window.location.reload();
   }
   function handleUpdateUser(userInfo: string) {
@@ -91,7 +91,7 @@ export default function useCurrentUser() {
   }, [currentUser, ndk, httpAuthStatus, session]);
 
   async function attemptHttpLogin() {
-    if (!ndk) return;
+    if (!ndk || !currentUser || !ndk?.activeUser?.pubkey) return;
     try {
       const event = await authEvent(ndk);
       if (!event) return;
