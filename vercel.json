@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/crons/search-sync",
+      "schedule": "2-59/5 * * * *"
+    }
+  ]
+}
