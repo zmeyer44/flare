@@ -17,73 +17,15 @@ import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { NDKKind } from "@nostr-dev-kit/ndk";
 import { getTagValues } from "@/lib/nostr/utils";
 
-const invoices = [
-  {
-    id: 1,
-    thumb: "",
-    title: "Youtube Video title",
-    summary:
-      "lorem ipsum and more a want this to overflow a bit so I could then think it back down to a reasonable size.",
-    status: "Live",
-    totalAmount: "$250.00",
-    metrics: "2.2k views",
-  },
-  {
-    id: 2,
-    thumb: "",
-    title: "",
-    summary: "",
-    status: "Live",
-    totalAmount: "$150.00",
-    metrics: "1.2k views",
-  },
-  {
-    id: 3,
-    thumb: "",
-    title: "",
-    summary: "",
-    status: "Unpublished",
-    totalAmount: "$350.00",
-    metrics: "1.3k views",
-  },
-  {
-    id: 4,
-    thumb: "",
-    title: "",
-    summary: "",
-    status: "Published",
-    totalAmount: "$450.00",
-    metrics: "200 views",
-  },
-  {
-    id: 5,
-
-    thumb: "",
-    title: "",
-    summary: "",
-    status: "Scheduled",
-    totalAmount: "$550.00",
-    metrics: "421 views",
-  },
-  {
-    id: 6,
-    thumb: "",
-    title: "",
-    summary: "",
-    status: "Pending",
-    totalAmount: "$200.00",
-    metrics: "661 views",
-  },
-];
-
 export default function UploadsTable() {
   const { currentUser } = useCurrentUser();
   const { events, isLoading } = useEvents({
     filter: {
-      kinds: [1063 as NDKKind],
+      kinds: [34235 as NDKKind, 34236 as NDKKind],
       authors: [currentUser?.pubkey ?? ""],
     },
   });
+
   const filteredUploads = events
     .filter((e) => {
       const fileType = getTagValues("m", e.tags);
@@ -93,22 +35,24 @@ export default function UploadsTable() {
       return {
         id: e.id,
         thumb: getTagValues("thumb", e.tags) ?? getTagValues("image", e.tags),
-        title: "",
+        title: getTagValues("title", e.tags) ?? getTagValues("name", e.tags),
         summary: getTagValues("summary", e.tags) ?? e.content,
-        status: "Unpublished",
+        status: "Published",
         totalAmount: 0,
         viewCount: 0,
       };
     });
   return (
     <Table className="w-full">
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>A list of your recent uploads.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[350px]">Video</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Metrics</TableHead>
-          <TableHead className="text-right">Sats Earned</TableHead>
+          <TableHead className="text-right">
+            Sats Earned (comming soon)
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -120,7 +64,7 @@ export default function UploadsTable() {
                   {!!upload.thumb && (
                     <Image
                       src={upload.thumb}
-                      alt={upload.title}
+                      alt={upload.title ?? ""}
                       width={150}
                       height={70}
                       unoptimized
@@ -134,10 +78,10 @@ export default function UploadsTable() {
               </div>
               <div className="min-w-[150px]">
                 <h3 className="line-clamp-1 text-base font-medium">
-                  {upload.title}
+                  {upload.title ?? ""}
                 </h3>
                 <p className="line-clamp-2 text-xs font-normal text-muted-foreground">
-                  {upload.summary}
+                  {upload.summary ?? ""}
                 </p>
               </div>
             </TableCell>
@@ -147,12 +91,12 @@ export default function UploadsTable() {
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter>
+      {/* <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total Earnings</TableCell>
           <TableCell className="text-right">$2,500.00</TableCell>
         </TableRow>
-      </TableFooter>
+      </TableFooter> */}
     </Table>
   );
 }
