@@ -207,7 +207,7 @@ export function VideoUpload({
       </button>
 
       <Button onClick={() => setShowEventInput(true)} variant={"ghost"}>
-        Or, enter existing event
+        Or, enter existing video
       </Button>
     </div>
   );
