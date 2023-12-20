@@ -26,6 +26,7 @@ export async function zapUser(
   comment?: string,
 ) {
   log("func", "zapUser");
+  console.log("called zapUser", pubkey);
   const user = await ndk.getUser({
     pubkey,
   });
