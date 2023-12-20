@@ -13,20 +13,19 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
-import { RiSearchLine } from "react-icons/ri";
 
 import { atom, useAtom } from "jotai";
 import useSearch from "@/lib/hooks/useSearch";
 import { cn } from "@/lib/utils";
-import Spinner from "@/components/spinner";
 import SearchVideoCard, {
   SearchVideoCardLoading,
 } from "@/components/cards/videoCard/searchCard";
+import { nip19 } from "nostr-tools";
 
 type SearchSuggestionObject = {
   index: string;
   hits: {
-    tagId: string;
+    identifier: string;
     title: string;
     summary?: string;
     thumbnail?: string;
@@ -55,7 +54,7 @@ export default function CommandDialogComponent() {
     const processedResults = results?.map((r) => ({
       index: r.index,
       hits: r.hits as unknown as {
-        tagId: string;
+        identifier: string;
         title: string;
         summary?: string;
         thumbnail?: string;
@@ -100,7 +99,10 @@ export default function CommandDialogComponent() {
           return (
             <CommandGroup key={s.index} heading={s.index}>
               {s.hits.map((h) => (
-                <Link key={h.tagId} href={`/w/${h.tagId}`}>
+                <Link
+                  key={nip19.naddrEncode(h)}
+                  href={`/w/${nip19.naddrEncode(h)}`}
+                >
                   <CommandItem>
                     <SearchVideoCard video={h} />
                   </CommandItem>
