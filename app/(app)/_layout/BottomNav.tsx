@@ -13,12 +13,12 @@ export default function BottomNav() {
       icon: RiFireLine,
     },
     {
-      href: "/",
+      href: "/feed",
       name: "activity",
       icon: RiWindyFill,
     },
     {
-      href: "/",
+      href: "/account",
       name: "settings",
       icon: RiSettings4Line,
     },

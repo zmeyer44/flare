@@ -15,7 +15,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { RiNotification4Line, RiSearchLine } from "react-icons/ri";
+import { RiNotification4Line, RiSearchLine, RiAddFill } from "react-icons/ri";
 import { SiRelay } from "react-icons/si";
 import StatusIndicator from "@/components/statusIndicator";
 import type { NDKUser } from "@nostr-dev-kit/ndk";
@@ -90,6 +90,7 @@ export default function AuthActions() {
         <SearchButton className="md:hidden" />
         <Notifications className="max-md:hidden" user={currentUser} />
         <Relays />
+        <NewUploadButton className="sm:hidden" />
         <UserMenu user={currentUser} logout={logout} />
       </>
     );
@@ -203,6 +204,21 @@ export function SearchButton({ className }: { className?: string }) {
     >
       <RiSearchLine className="h-[18px] w-[18px] text-foreground" />
     </Button>
+  );
+}
+export function NewUploadButton({ className }: { className?: string }) {
+  const [open, setOpen] = useAtom(commandDialogAtom);
+  return (
+    <Link href="/new-video">
+      <Button
+        onClick={() => setOpen(true)}
+        variant="default"
+        size="icon"
+        className={cn("center relative h-8 w-8 rounded-full", className)}
+      >
+        <RiAddFill className="h-[18px] w-[18px] text-foreground" />
+      </Button>
+    </Link>
   );
 }
 export function Relays() {

@@ -12,7 +12,7 @@ export default function Header() {
     <header className="flex h-[var(--header-height)] shrink-0 grow-0">
       <div className="fixed z-header flex h-[var(--header-height)] w-full grow flex-col justify-between border-b-0 bg-background shadow">
         <div className="flex flex-1 items-stretch justify-between gap-x-4 px-5">
-          <div className="flex w-[150px] items-center">
+          <div className="flex w-[160px] items-center">
             <Link
               href="/"
               className="center justify-between gap-x-3 text-foreground sm:gap-x-5"
@@ -28,7 +28,7 @@ export default function Header() {
               <Search />
             </div>
           </div>
-          <div className="flex w-[150px] items-center justify-end gap-x-4">
+          <div className="flex items-center justify-end gap-x-4 sm:w-[160px]">
             <AuthActions />
           </div>
         </div>

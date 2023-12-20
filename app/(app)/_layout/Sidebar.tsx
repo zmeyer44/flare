@@ -18,6 +18,12 @@ import { usePathname } from "next/navigation";
 const ZapButton = dynamic(() => import("./_components/ZapButton"), {
   ssr: false,
 });
+const UploadVideoButton = dynamic(
+  () => import("./_components/UploadVideoButton"),
+  {
+    ssr: false,
+  },
+);
 // const AddNoteButton = dynamic(() => import("./components/AddNoteButton"), {
 //   ssr: false,
 // });
@@ -49,7 +55,7 @@ export default function Sidebar() {
       type: "link",
     },
     {
-      href: "/activity",
+      href: "/feed",
       name: "activity",
       label: "Activity",
       icon: RiWindyFill,
@@ -98,22 +104,18 @@ export default function Sidebar() {
               }
             })}
             <ZapButton />
-            <div className="center py-2">{/* <AddNoteButton /> */}</div>
+            <div className="center py-2">
+              <UploadVideoButton />
+            </div>
           </div>
         </div>
         <div className="flex flex-1 flex-col items-center justify-end p-4">
-          <button
-            className={cn(
-              "center relative min-h-[48px] min-w-[48px] rounded-lg hover:bg-muted",
-
-              "text-muted-foreground group-hover:text-foreground",
-            )}
-          >
-            <RiSettings4Line
-              className={cn("h-6 w-6 shrink-0")}
-              aria-hidden="true"
-            />
-          </button>
+          <NavItem
+            href="/account"
+            name="settings"
+            active={false}
+            icon={RiSettings4Line}
+          />
         </div>
       </div>
     </nav>
@@ -128,13 +130,15 @@ type NavItemProps = {
 };
 
 function NavItem({ name, href, active, icon: Icon }: NavItemProps) {
+  const pathname = usePathname();
+
   return (
     <div className="center relative w-full">
       <Link
         href={href}
         className={cn(
           "center group relative min-h-[48px] min-w-[48px] rounded-lg  hover:bg-muted",
-          active
+          href === pathname
             ? "text-foreground"
             : "text-muted-foreground hover:text-foreground",
         )}
