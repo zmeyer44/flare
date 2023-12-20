@@ -60,7 +60,7 @@ export default function ChannelCard({
       <div className="flex-1 space-y-3 text-base">
         <div className="flex rounded-[10px] bg-muted p-2">
           <Link
-            href={`/${npub}`}
+            href={`/channel/${npub}`}
             className="center group gap-x-2 text-foreground"
           >
             <Avatar className="center h-[34px] w-[34px] overflow-hidden rounded-[.35rem] bg-muted">
