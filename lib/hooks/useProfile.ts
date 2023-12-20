@@ -45,7 +45,7 @@ export default function useProfile(
       ["#p"]: [pubkey],
     });
     if (followers) {
-      console.log("Found followers", followers);
+      // console.log("Found followers", followers);
       addFollowers(
         pubkey,
         Array.from(followers).map((p) => p.pubkey),
