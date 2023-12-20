@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
 import { useModal } from "@/app/_providers/modal/provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -16,10 +15,10 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { RiNotification4Line } from "react-icons/ri";
+import { RiNotification4Line, RiSearchLine } from "react-icons/ri";
 import { SiRelay } from "react-icons/si";
 import StatusIndicator from "@/components/statusIndicator";
-import { type NDKUser } from "@nostr-dev-kit/ndk";
+import type { NDKUser } from "@nostr-dev-kit/ndk";
 import { truncateText, getTwoLetters } from "@/lib/utils";
 import {
   Tooltip,
@@ -33,6 +32,9 @@ import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { useSession, signIn } from "next-auth/react";
 import { authEvent } from "@/lib/actions/create";
+import { commandDialogAtom } from "./CommandDialog";
+import { useAtom } from "jotai";
+import { cn } from "@/lib/utils";
 
 // const LoginModal = dynamic(() => import("@/components/Modals/Login"), {
 //   ssr: false,
@@ -85,7 +87,8 @@ export default function AuthActions() {
   if (currentUser) {
     return (
       <>
-        <Notifications user={currentUser} />
+        <SearchButton className="md:hidden" />
+        <Notifications className="max-md:hidden" user={currentUser} />
         <Relays />
         <UserMenu user={currentUser} logout={logout} />
       </>
@@ -103,7 +106,13 @@ export default function AuthActions() {
   );
 }
 
-export function Notifications({ user }: { user: NDKUser }) {
+export function Notifications({
+  user,
+  className,
+}: {
+  user: NDKUser;
+  className?: string;
+}) {
   return (
     <TooltipProvider>
       <Tooltip delayDuration={100}>
@@ -111,7 +120,10 @@ export function Notifications({ user }: { user: NDKUser }) {
           <Button
             variant="ghost"
             size="icon"
-            className="center relative h-8 w-8 rounded-full bg-muted text-foreground"
+            className={cn(
+              "center relative h-8 w-8 rounded-full bg-muted text-foreground",
+              className,
+            )}
           >
             <RiNotification4Line className="h-[18px] w-[18px] text-foreground" />
           </Button>
@@ -176,6 +188,22 @@ export function Notifications({ user }: { user: NDKUser }) {
   //       </DropdownMenuContent>
   //     </DropdownMenu>
   //   );
+}
+export function SearchButton({ className }: { className?: string }) {
+  const [open, setOpen] = useAtom(commandDialogAtom);
+  return (
+    <Button
+      onClick={() => setOpen(true)}
+      variant="ghost"
+      size="icon"
+      className={cn(
+        "center relative h-8 w-8 rounded-full bg-muted text-foreground",
+        className,
+      )}
+    >
+      <RiSearchLine className="h-[18px] w-[18px] text-foreground" />
+    </Button>
+  );
 }
 export function Relays() {
   const { ndk } = useNDK();
