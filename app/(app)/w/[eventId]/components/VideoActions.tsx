@@ -59,7 +59,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
           {/* Channel Section */}
           <div className="flex">
             <Link
-              href={`/${npub}`}
+              href={`/channel/${npub}`}
               className="center group gap-x-3 rounded-sm rounded-r-full pr-1 text-foreground hover:shadow"
             >
               <Avatar className="center h-[34px] w-[34px] overflow-hidden rounded-[.5rem] bg-muted sm:h-[40px] sm:w-[40px]">
