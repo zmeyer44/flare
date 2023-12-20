@@ -6,20 +6,22 @@ import { useNDK } from "@/app/_providers/ndk";
 import followersStore from "../stores/followers";
 
 export default function useProfile(
-  key: string,
+  key?: string,
   options?: {
     fetchFollowerCount?: boolean;
   },
 ) {
   const [fetchingFollowers, setFetchingFollowers] = useState(false);
-  const pubkey = NOSTR_BECH32_REGEXP.test(key)
-    ? nip19.decode(key).data.toString()
-    : key;
+  const pubkey = key
+    ? NOSTR_BECH32_REGEXP.test(key)
+      ? nip19.decode(key).data.toString()
+      : key
+    : null;
   const { followers, addFollowers } = followersStore();
   const { ndk, getProfile, fetchEvents } = useNDK();
 
   useEffect(() => {
-    if (!ndk) return;
+    if (!ndk || !pubkey) return;
 
     return () => {
       if (ndk) {
@@ -29,7 +31,7 @@ export default function useProfile(
   }, [pubkey, ndk, options]);
 
   useEffect(() => {
-    if (ndk && options?.fetchFollowerCount) {
+    if (ndk && pubkey && options?.fetchFollowerCount) {
       if (!followers.has(pubkey) && !fetchingFollowers) {
         console.log("Should fetch followers");
         void handleFetchFollowerCount(pubkey);
@@ -55,7 +57,7 @@ export default function useProfile(
   }
 
   return {
-    profile: getProfile(pubkey),
-    followers: followers.get(pubkey) ?? [],
+    profile: pubkey ? getProfile(pubkey) : null,
+    followers: pubkey ? followers.get(pubkey) ?? [] : [],
   };
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
 import { cn } from "@/lib/utils";
@@ -25,56 +26,89 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import useProfile from "@/lib/hooks/useProfile";
+import { useNDK } from "@/app/_providers/ndk";
+import { createEvent } from "@/lib/actions/create";
+import { useSession } from "next-auth/react";
 
 const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Username must not be longer than 30 characters.",
-    }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      }),
-    )
-    .optional(),
+  display_name: z.string().optional(),
+  name: z.string().optional(),
+  about: z.string().optional(),
+  website: z.string().optional(),
+  nip05: z.string().optional(),
+  lud16: z.string().optional(),
+  // urls: z
+  //   .array(
+  //     z.object({
+  //       value: z.string().url({ message: "Please enter a valid URL." }),
+  //     }),
+  //   )
+  //   .optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
-  bio: "I own a computer.",
-  urls: [
-    { value: "https://shadcn.com" },
-    { value: "http://twitter.com/shadcn" },
-  ],
+  about: "I own a computer.",
 };
 
 export function ProfileForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const { data } = useSession();
+  const { currentUser, updateUser } = useCurrentUser();
+  const { profile } = useProfile(currentUser?.pubkey ?? data?.user.id);
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues,
+    defaultValues: { ...profile, display_name: profile?.displayName },
     mode: "onChange",
   });
+  const { setValue, getValues } = form;
+  useEffect(() => {
+    if (profile) {
+      if (!getValues("display_name")) {
+        setValue("display_name", profile.displayName);
+      }
+      if (!getValues("name")) {
+        setValue("name", profile.name);
+      }
+      if (!getValues("about")) {
+        setValue("about", profile.about);
+      }
+      if (!getValues("website")) {
+        setValue("website", profile.website);
+      }
+      if (!getValues("nip05")) {
+        setValue("nip05", profile.nip05);
+      }
+      if (!getValues("lud16")) {
+        setValue("lud16", profile.lud16);
+      }
+    }
+  }, [profile]);
 
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  });
+  // const { fields, append } = useFieldArray({
+  //   name: "urls",
+  //   control: form.control,
+  // });
+  const { ndk } = useNDK();
 
-  function onSubmit(data: ProfileFormValues) {
-    toast.success("You submitted the following values");
+  async function onSubmit(data: ProfileFormValues) {
+    if (!ndk || !currentUser) return;
+    setIsLoading(true);
+    const content = JSON.stringify({ ...profile, ...data });
+    const result = await createEvent(ndk, {
+      content,
+      kind: 0,
+      tags: [],
+    });
+    if (result) {
+      updateUser(JSON.stringify({ ...data, npub: currentUser.npub }));
+    }
+    setIsLoading(false);
+    toast.success("Profile updated!");
   }
 
   return (
@@ -82,53 +116,42 @@ export function ProfileForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="display_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Display name</FormLabel>
+              <FormControl>
+                <Input placeholder="John Gault" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name. It can be your real name or a
+                pseudonym. You can change this whenever.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="john" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
+              <FormDescription>This is your short username.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name="email"
+          name="about"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <FormLabel>About</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
@@ -136,15 +159,62 @@ export function ProfileForm() {
                   {...field}
                 />
               </FormControl>
+              <FormDescription>You can include links here.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Website</FormLabel>
+              <FormControl>
+                <Input placeholder="https://..." {...field} />
+              </FormControl>
+              {/* <FormDescription>This is your short username.</FormDescription> */}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="nip05"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nip-05</FormLabel>
+              <FormControl>
+                <Input placeholder="[name]@[site].[ext]" {...field} />
+              </FormControl>
               <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
+                Add a Nip-05 identifier so others can find you.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div>
+        <FormField
+          control={form.control}
+          name="lud16"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Bitcoin lightning address (lud16)</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="[name]@[lightning_provider].[ext]"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Add a lightning address to start getting zapped!
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* <div>
           {fields.map((field, index) => (
             <FormField
               control={form.control}
@@ -153,10 +223,10 @@ export function ProfileForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className={cn(index !== 0 && "sr-only")}>
-                    URLs
+                    Relay
                   </FormLabel>
                   <FormDescription className={cn(index !== 0 && "sr-only")}>
-                    Add links to your website, blog, or social media profiles.
+                    Add the relays that you use most often
                   </FormDescription>
                   <FormControl>
                     <Input {...field} />
@@ -175,8 +245,10 @@ export function ProfileForm() {
           >
             Add URL
           </Button>
-        </div>
-        <Button type="submit">Update profile</Button>
+        </div> */}
+        <Button type="submit" loading={isLoading}>
+          Update profile
+        </Button>
       </form>
     </Form>
   );
