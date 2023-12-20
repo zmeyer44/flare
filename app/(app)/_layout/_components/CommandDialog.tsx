@@ -102,6 +102,8 @@ export default function CommandDialogComponent() {
                 <Link
                   key={nip19.naddrEncode(h)}
                   href={`/w/${nip19.naddrEncode(h)}`}
+                  className="cursor-pointer"
+                  onClick={() => setOpen(false)}
                 >
                   <CommandItem>
                     <SearchVideoCard video={h} />
