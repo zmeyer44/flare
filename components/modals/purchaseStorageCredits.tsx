@@ -5,24 +5,27 @@ import { useState } from "react";
 import useAuthGuard from "./hooks/useAuthGuard";
 import { useModal } from "@/app/_providers/modal/provider";
 import { useNDK } from "@/app/_providers/ndk";
-import { sendZap } from "@/lib/actions/zap";
+import { checkUserZap, zapUser } from "@/lib/actions/zap";
 import { type NostrEvent } from "@nostr-dev-kit/ndk";
 import { toast } from "sonner";
-
+import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { HiOutlineLightningBolt, HiCheck } from "react-icons/hi";
 import { RiSubtractFill, RiAddFill } from "react-icons/ri";
 import { formatCount, formatNumber } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { api } from "@/lib/trpc/api";
 
 type ModalProps = {};
 export default function ZapModal({}: ModalProps) {
   useAuthGuard();
   const [isLoading, setIsLoading] = useState(false);
+  const [checkingPayment, setCheckingPayment] = useState(false);
   const [note, setNote] = useState("");
   const modal = useModal();
   const [sats, setSats] = useState(2000);
   const { ndk } = useNDK();
+  const { currentUser } = useCurrentUser();
 
   const tier = {
     name: "Basic",
@@ -40,17 +43,51 @@ export default function ZapModal({}: ModalProps) {
     featured: false,
   };
 
+  const { mutate } = api.storage.purchaseCredits.useMutation();
+
   async function handleSendZap() {
+    if (!ndk || !currentUser) return;
     try {
       setIsLoading(true);
-      // const result = await sendZap(ndk!, sats, event, note);
+      const result = await zapUser(
+        10_000,
+        process.env.NEXT_PUBLIC_ZAP_ADDRESS as string,
+        `Purchasing 2 Gb ${currentUser.npub}`,
+      );
       toast.success("Zap Sent!");
+      await handleCheckPayment();
     } catch (err) {
       console.log("error sending zap", err);
     } finally {
       setIsLoading(false);
     }
   }
+  async function handleCheckPayment() {
+    if (!currentUser || !ndk) return;
+    setCheckingPayment(true);
+    console.log("Checking payment");
+    try {
+      const result = await checkUserZap(
+        ndk,
+        currentUser.pubkey,
+        process.env.NEXT_PUBLIC_ZAP_ADDRESS as string,
+        10_000,
+      );
+      console.log("Payment result", result);
+      if (result) {
+        mutate({
+          paymentEvent: result.paymentEvent,
+          zapEndpoint: result.zapEndpoint,
+        });
+        toast.success("Payment confirmed!");
+      }
+    } catch (err) {
+      console.log("error sending zap", err);
+    } finally {
+      setCheckingPayment(false);
+    }
+  }
+
   return (
     <div className="pb-1">
       <div className="flex pb-5">

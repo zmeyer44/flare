@@ -20,7 +20,6 @@ import FollowButton from "@/components/custom-buttons/FollowButton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RenderText } from "@/components/textRendering";
 
-import { getTagValues } from "@/lib/nostr/utils";
 import useProfile from "@/lib/hooks/useProfile";
 import { relativeTime } from "@/lib/utils/dates";
 import { toast } from "sonner";

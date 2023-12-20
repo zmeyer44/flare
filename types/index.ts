@@ -29,13 +29,13 @@ const UserSchema = z.object({
   nip05: z.string().optional(),
 });
 const EventSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   content: z.string(),
   pubkey: z.string(),
   tags: z.string().array().array(),
-  kind: z.number(),
+  kind: z.number().optional(),
   created_at: z.number(),
-  sig: z.string(),
+  sig: z.string().optional(),
 });
 
 type Account = NDKUserProfile & {
