@@ -32,7 +32,7 @@ export default function TrendingSection() {
       <Section className="px-5">
         <SectionHeader>
           <SectionTitle className="font-main text-xl font-semibold sm:text-2xl">
-            Trending Trending
+            Top Trending
           </SectionTitle>
           <Link href="/feed">
             <Button variant={"ghost"}>
@@ -56,7 +56,7 @@ export default function TrendingSection() {
     <Section className="px-5">
       <SectionHeader>
         <SectionTitle className="font-main text-2xl font-normal sm:text-3xl">
-          Trending Trending
+          Top Trending
         </SectionTitle>
         <Link href="/feed">
           <Button variant={"ghost"}>
