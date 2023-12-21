@@ -114,9 +114,9 @@ export default function CommandDialogComponent() {
           );
         })}
         {!suggestions.flatMap((e) => e.hits)?.length && (
-          <div className="center w-full py-6 text-muted-foreground/80 sm:min-h-[200px]">
+          <div className="center w-full py-6  text-muted-foreground/80 sm:min-h-[200px]">
             {searching ? (
-              <CommandGroup heading="Videos">
+              <CommandGroup heading="Videos" className="w-full">
                 <CommandItem>
                   <SearchVideoCardLoading className="w-full" />
                 </CommandItem>
