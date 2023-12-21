@@ -35,7 +35,6 @@ export async function createEvent(
     return eventToPublish;
   } catch (err) {
     log("error", err);
-    alert("An error has occured");
     return false;
   }
 }

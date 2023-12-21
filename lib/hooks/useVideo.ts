@@ -121,7 +121,7 @@ export default function useVideo({
   event?: NDKEvent;
 }) {
   const [shouldAddView, setShouldAddView] = useState(false);
-  const [requestingView, setRequestingView] = useState(false);
+  const [requestedView, setRequestedView] = useState(false);
   const [event, setEvent] = useState<NDKEvent | undefined>(_event);
   const { ndk } = useNDK();
   const { currentUser } = useCurrentUser();
@@ -159,12 +159,14 @@ export default function useVideo({
       ndk &&
       currentUser &&
       eventIdentifier &&
-      !requestingView
+      !requestedView
     ) {
-      setRequestingView(true);
+      console.log("requesting view", requestedView);
+      setRequestedView(true);
       recordView();
     }
   }, [currentUser, ndk, shouldAddView]);
+
   async function recordView() {
     if (!ndk || !currentUser) return;
     try {
