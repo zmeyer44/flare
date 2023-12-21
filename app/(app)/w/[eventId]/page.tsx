@@ -47,8 +47,6 @@ export async function generateMetadata(
     };
   } catch (err) {
     console.log("Error generating metadata");
-  } finally {
-    console.log("Running finially");
   }
 }
 
