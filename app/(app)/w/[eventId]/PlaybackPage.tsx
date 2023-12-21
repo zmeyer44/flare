@@ -57,7 +57,7 @@ export function PlaybackPage({ event }: { event: NDKEvent }) {
         <div className="pt-1">
           <VideoActions event={event} />
         </div>
-        <CommentSection eventReference={tagId} />
+        <CommentSection eventReference={tagId} eventId={event.id} />
       </div>
       <VerticalVideosFeed
         className="w-full lg:max-w-[400px]"
