@@ -81,7 +81,7 @@ export default function HorizontalVideoCard({
         </div>
         <div className="flex">
           <Link
-            href={`/${npub}`}
+            href={`/channel/${npub}`}
             className="center group gap-x-2 rounded-sm rounded-r-full pr-1 text-muted-foreground hover:shadow"
           >
             <Avatar className="center h-[20px] w-[20px] overflow-hidden rounded-[.35rem] bg-muted">

@@ -70,7 +70,7 @@ export default function SearchVideoCard({
             <p className="line-clamp-1 break-words">{summary}</p>
             <div className="flex">
               <Link
-                href={`/${npub}`}
+                href={`/channel/${npub}`}
                 className="center group gap-x-1.5 rounded-sm rounded-r-full pr-1 text-muted-foreground hover:shadow"
               >
                 <Avatar className="center h-[16px] w-[16px] overflow-hidden rounded-[.3rem] bg-muted">

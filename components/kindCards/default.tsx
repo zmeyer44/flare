@@ -20,7 +20,7 @@ export default function KindDefault(props: KindCardProps) {
       actionOptions={[
         {
           label: "View profile",
-          href: `/${npub}`,
+          href: `/channel/${npub}`,
           type: "link",
         },
         {

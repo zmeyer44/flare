@@ -14,7 +14,7 @@ export default function ProfileHeader({ pubkey, locked }: ProfileHeaderProps) {
   const { profile } = useProfile(pubkey);
   const npub = nip19.npubEncode(pubkey);
   return (
-    <Link href={`/${npub}`} className="center group gap-x-3">
+    <Link href={`/channel/${npub}`} className="center group gap-x-3">
       <Avatar className="center h-9 w-9 overflow-hidden rounded-sm bg-muted @md:h-10 @md:w-10">
         <AvatarImage src={profile?.image} alt={profile?.displayName} />
         <AvatarFallback className="text-xs">

@@ -73,7 +73,7 @@ export default function VideoCard({ className, event }: VideoCardProps) {
       </div> */}
       <div className="flex justify-between pr-2">
         <Link
-          href={`/${npub}`}
+          href={`/channel/${npub}`}
           className="center group gap-x-2 rounded-sm rounded-r-full pr-1 text-muted-foreground hover:shadow"
         >
           <Avatar className="center h-[24px] w-[24px] overflow-hidden rounded-[.35rem] bg-muted">
