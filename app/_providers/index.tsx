@@ -8,6 +8,8 @@ import { RELAYS } from "@/constants";
 import TRPCProvider from "./trpc/Provider";
 import { SessionProvider } from "next-auth/react";
 import { HttpAuthProvider } from "./httpAuth";
+import { GoogleAnalyticsInit } from "@/lib/analytics";
+
 export function Providers({ children }: { children: React.ReactNode }) {
   const handleRouteChange = (url: string) => {
     const RichHistory = sessionStorage.getItem("RichHistory");
@@ -17,15 +19,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
   };
   // useRouteChange(handleRouteChange);
   return (
-    <SessionProvider>
-      <TRPCProvider>
-        <NDKProvider relayUrls={RELAYS}>
-          <Toaster richColors className="dark:hidden" />
-          <Toaster theme="dark" className="hidden dark:block" />
-          <HttpAuthProvider />
-          <ModalProvider>{children}</ModalProvider>
-        </NDKProvider>
-      </TRPCProvider>
-    </SessionProvider>
+    <>
+      <SessionProvider>
+        <TRPCProvider>
+          <NDKProvider relayUrls={RELAYS}>
+            <Toaster richColors className="dark:hidden" />
+            <Toaster theme="dark" className="hidden dark:block" />
+            <HttpAuthProvider />
+            <ModalProvider>{children}</ModalProvider>
+          </NDKProvider>
+        </TRPCProvider>
+      </SessionProvider>
+      <GoogleAnalyticsInit />
+    </>
   );
 }
