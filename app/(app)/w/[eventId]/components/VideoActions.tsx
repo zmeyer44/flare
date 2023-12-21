@@ -39,7 +39,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
   const { ExpandButton, contentRef, containerStyles } = useExpandableContainer({
     maxHeight: 200,
   });
-  const { views, video } = useVideo({ eventIdentifier: event.tagId() });
+  const { viewCount, video } = useVideo({ eventIdentifier: event.tagId() });
   const { url, author, publishedAt, summary, title } =
     video ?? getVideoDetails(event);
 
@@ -131,7 +131,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
         style={containerStyles}
       >
         <div className="flex items-center gap-x-1.5 text-[13px] font-semibold text-foreground">
-          <p>{`${formatNumber(views.length ?? 0)} views`}</p>
+          <p>{`${formatNumber(viewCount)} views`}</p>
           {!!publishedAt && (
             <>
               <span>•</span>

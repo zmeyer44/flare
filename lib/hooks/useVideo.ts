@@ -8,6 +8,8 @@ import type { NDKKind, NDKEvent } from "@nostr-dev-kit/ndk";
 import { createEvent } from "@/lib/actions/create";
 import { getTagValues } from "@/lib/nostr/utils";
 import { unixTimeNowInSeconds } from "../nostr/dates";
+import { api } from "../trpc/api";
+import { nip19 } from "nostr-tools";
 
 // import videosStore from "../stores/videos";
 
@@ -125,11 +127,21 @@ export default function useVideo({
   const [event, setEvent] = useState<NDKEvent | undefined>(_event);
   const { ndk } = useNDK();
   const { currentUser } = useCurrentUser();
-  const { events: viewEvents } = useEvents({
-    filter: {
-      kinds: [34237 as NDKKind],
-      ["#a"]: [eventIdentifier],
-    },
+  // const { events: viewEvents } = useEvents({
+  //   filter: {
+  //     kinds: [34237 as NDKKind],
+  //     ["#a"]: [eventIdentifier],
+  //   },
+  // });
+  const [kind, pubkey, d] = eventIdentifier.split(":") as [
+    number,
+    string,
+    string,
+  ];
+  const { data: voteCount } = api.view.getCount.useQuery({
+    d: d,
+    kind: kind,
+    pubkey: pubkey,
   });
 
   useEffect(() => {
@@ -192,7 +204,8 @@ export default function useVideo({
   }
   return {
     addView: () => setShouldAddView(true),
-    views: viewEvents,
+    // views: viewEvents,
+    viewCount: voteCount ?? 0,
     video: event ? getVideoDetails(event) : null,
     event: event,
   };

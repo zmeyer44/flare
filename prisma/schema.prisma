@@ -34,11 +34,30 @@ model Video {
   tags         Json
   published_at Int
   viewCount    Int     @default(0)
+  views        View[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([pubkey, d])
+}
+
+model View {
+  id           Int    @id @default(autoincrement())
+  a            String
+  pubkey       String
+  startSeconds Int    @default(0)
+  endSeconds   Int?
+
+  video   Video? @relation(fields: [videoId], references: [id])
+  videoId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([a, pubkey])
+  @@index(a)
+  @@index(pubkey)
 }
 
 model StorageCredit {

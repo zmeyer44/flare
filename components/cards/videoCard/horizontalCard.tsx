@@ -28,7 +28,7 @@ export default function HorizontalVideoCard({
   className,
   event,
 }: VideoCardProps) {
-  const { views, video } = useVideo({
+  const { viewCount, video } = useVideo({
     eventIdentifier: event.tagId(),
     event: event,
   });
@@ -67,7 +67,7 @@ export default function HorizontalVideoCard({
         <div className="flex flex-col items-start gap-y-1">
           <div className="flex items-center gap-x-1 text-xs text-muted-foreground">
             <p className="whitespace-nowrap">{`${formatCount(
-              views.length,
+              viewCount,
             )} views`}</p>
             {!!publishedAt && (
               <>

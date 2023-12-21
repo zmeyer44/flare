@@ -22,7 +22,7 @@ type VideoCardProps = {
 };
 
 export default function VideoCard({ className, event }: VideoCardProps) {
-  const { views, video } = useVideo({
+  const { viewCount, video } = useVideo({
     eventIdentifier: event.tagId(),
     event: event,
   });
@@ -97,7 +97,7 @@ export default function VideoCard({ className, event }: VideoCardProps) {
         </Link>
         <div className="flex items-center gap-x-1 text-xs text-muted-foreground">
           <p className="whitespace-nowrap">{`${formatCount(
-            views.length,
+            viewCount,
           )} views`}</p>
           {!!publishedAt && (
             <>
