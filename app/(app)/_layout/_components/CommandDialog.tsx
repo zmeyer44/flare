@@ -21,6 +21,7 @@ import SearchVideoCard, {
   SearchVideoCardLoading,
 } from "@/components/cards/videoCard/searchCard";
 import { nip19 } from "nostr-tools";
+import { toast } from "sonner";
 
 type SearchSuggestionObject = {
   index: string;
@@ -35,8 +36,21 @@ type SearchSuggestionObject = {
   }[];
 };
 export const commandDialogAtom = atom(false);
+export const anonModeAtom = atom(false);
 
 export default function CommandDialogComponent() {
+  const [anon, setAnon] = useAtom(anonModeAtom);
+  useKeyboardShortcut(["ctrl", "a"], () =>
+    setAnon((a) => {
+      if (a) {
+        toast.success("Anon mode deactivated 👀");
+      } else {
+        toast.success("Anon mode activated 🥷");
+      }
+      return !a;
+    }),
+  );
+
   const [open, setOpen] = useAtom(commandDialogAtom);
   useKeyboardShortcut(["ctrl", "k"], () => setOpen((open) => !open));
 

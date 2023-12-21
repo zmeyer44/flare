@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Spinner from "@/components/spinner";
 import VideoPlayer from "@/components/videoPlayer";
 import useVideo from "@/lib/hooks/useVideo";
+import { anonModeAtom } from "@/app/(app)/_layout/_components/CommandDialog";
+import { useAtom } from "jotai";
 
 export default function Player({
   url,
@@ -15,9 +17,10 @@ export default function Player({
   image: string;
   eventIdentifier: string;
 }) {
+  const [anon] = useAtom(anonModeAtom);
   const { addView } = useVideo({ eventIdentifier: eventIdentifier });
   useEffect(() => {
-    if (eventIdentifier) {
+    if (eventIdentifier && !anon) {
       addView();
     }
   }, [eventIdentifier]);
