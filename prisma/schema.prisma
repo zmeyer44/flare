@@ -1,10 +1,19 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// datasource db {
+//   provider  = "postgresql"
+//   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+//   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+// }
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 generator client {
@@ -24,9 +33,9 @@ model User {
 
 model Video {
   id           Int     @id @default(autoincrement())
-  url          String
-  title        String?
-  summary      String?
+  url          String  @db.VarChar(255)
+  title        String? @db.VarChar(255)
+  summary      String? @db.Text
   thumbnail    String?
   pubkey       String
   kind         Int
@@ -62,9 +71,9 @@ model View {
 
 model StorageCredit {
   id             Int    @id @default(autoincrement())
-  bytes          BigInt
+  bytes          BigInt @db.UnsignedBigInt
   paymentEventId String @unique
-  paymentEvent   String
+  paymentEvent   Json
   pubkey         String
   user           User   @relation(fields: [pubkey], references: [pubkey])
 
@@ -77,7 +86,7 @@ model Upload {
   url    String
   pubkey String
   user   User   @relation(fields: [pubkey], references: [pubkey])
-  size   BigInt
+  size   BigInt @db.UnsignedBigInt
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
