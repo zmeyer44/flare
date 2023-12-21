@@ -118,9 +118,11 @@ type VideoType = {
 export default function useVideo({
   eventIdentifier,
   event: _event,
+  getViewCount = false,
 }: {
   eventIdentifier: string;
   event?: NDKEvent;
+  getViewCount?: boolean;
 }) {
   const [shouldAddView, setShouldAddView] = useState(false);
   const [requestedView, setRequestedView] = useState(false);
@@ -134,15 +136,20 @@ export default function useVideo({
   //   },
   // });
   const [kind, pubkey, d] = eventIdentifier.split(":") as [
-    number,
+    string,
     string,
     string,
   ];
-  const { data: voteCount } = api.view.getCount.useQuery({
-    d: d,
-    kind: kind,
-    pubkey: pubkey,
-  });
+  const { data: voteCount } = api.view.getCount.useQuery(
+    {
+      d: d,
+      kind: parseInt(kind),
+      pubkey: pubkey,
+    },
+    {
+      enabled: getViewCount,
+    },
+  );
 
   useEffect(() => {
     if (ndk && !event) {

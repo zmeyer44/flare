@@ -39,7 +39,10 @@ export default function VideoActions({ event }: VideoActionsProps) {
   const { ExpandButton, contentRef, containerStyles } = useExpandableContainer({
     maxHeight: 200,
   });
-  const { viewCount, video } = useVideo({ eventIdentifier: event.tagId() });
+  const { viewCount, video } = useVideo({
+    eventIdentifier: event.tagId(),
+    getViewCount: true,
+  });
   const { url, author, publishedAt, summary, title } =
     video ?? getVideoDetails(event);
 

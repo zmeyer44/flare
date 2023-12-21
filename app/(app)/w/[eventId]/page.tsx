@@ -2,6 +2,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import { nip19 } from "nostr-tools";
 import PlaybackPage from "./PlaybackPage";
 import { getVideo } from "@/lib/server-actions/video/get";
+import { syncViews } from "@/lib/server-actions/video/viewSync";
 
 export async function generateMetadata(
   {
@@ -15,7 +16,6 @@ export async function generateMetadata(
   if (type !== "naddr") {
     throw new Error("Invalid event");
   }
-
   try {
     const video = await getVideo(data);
     const title = video.title ?? "Video on Flare";
@@ -41,6 +41,11 @@ export async function generateMetadata(
     };
   } catch (err) {
     console.log("Error generating metadata");
+  } finally {
+    console.log("Running finially");
+    void syncViews({
+      naddr: params.eventId,
+    });
   }
 }
 

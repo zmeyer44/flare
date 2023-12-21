@@ -24,7 +24,7 @@ export const viewRouter = createTRPCRouter({
           viewCount: true,
         },
       });
-
+      console.log("At viewcount", viewCount?.viewCount);
       return viewCount?.viewCount ?? 0;
     }),
 });
