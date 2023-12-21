@@ -46,7 +46,7 @@ export function relativeTime(timestamp: Date) {
     relativeTime: {
       future: "in %s",
       past: "%s ago",
-      s: "%s seconds",
+      s: "%d seconds",
       m: "a minute",
       mm: "%d minutes",
       h: "an hour",

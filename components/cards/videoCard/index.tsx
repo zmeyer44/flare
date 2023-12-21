@@ -71,7 +71,7 @@ export default function VideoCard({ className, event }: VideoCardProps) {
           <Badge key={tag}>{tag}</Badge>
         ))}
       </div> */}
-      <div className="flex">
+      <div className="flex justify-between pr-2">
         <Link
           href={`/${npub}`}
           className="center group gap-x-2 rounded-sm rounded-r-full pr-1 text-muted-foreground hover:shadow"
@@ -86,8 +86,8 @@ export default function VideoCard({ className, event }: VideoCardProps) {
               {getTwoLetters({ npub, profile })}
             </AvatarFallback>
           </Avatar>
-          <div className="flex items-center gap-1">
-            <span className="text-[14px] font-semibold">
+          <div className=" flex items-center gap-1">
+            <span className="line-clamp-1 break-all text-[14px] font-semibold">
               {getNameToShow({ npub, profile })}
             </span>
             {!!profile?.nip05 && (
@@ -96,11 +96,15 @@ export default function VideoCard({ className, event }: VideoCardProps) {
           </div>
         </Link>
         <div className="flex items-center gap-x-1 text-xs text-muted-foreground">
-          <p>{`${formatCount(views.length)} views`}</p>
+          <p className="whitespace-nowrap">{`${formatCount(
+            views.length,
+          )} views`}</p>
           {!!publishedAt && (
             <>
               <span>•</span>
-              <p>{relativeTime(new Date(publishedAt * 1000))}</p>
+              <p className="whitespace-nowrap">
+                {relativeTime(new Date(publishedAt * 1000))}
+              </p>
             </>
           )}
         </div>

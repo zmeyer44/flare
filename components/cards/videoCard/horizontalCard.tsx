@@ -66,11 +66,15 @@ export default function HorizontalVideoCard({
         </h3>
         <div className="flex flex-col items-start gap-y-1">
           <div className="flex items-center gap-x-1 text-xs text-muted-foreground">
-            <p>{`${formatCount(views.length)} views`}</p>
+            <p className="whitespace-nowrap">{`${formatCount(
+              views.length,
+            )} views`}</p>
             {!!publishedAt && (
               <>
                 <span>•</span>
-                <p>{relativeTime(new Date(publishedAt * 1000))}</p>
+                <p className="whitespace-nowrap">
+                  {relativeTime(new Date(publishedAt * 1000))}
+                </p>
               </>
             )}
           </div>
