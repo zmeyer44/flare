@@ -27,7 +27,6 @@ export default function useCurrentUser() {
       const shouldReconnect = localStorage.getItem("shouldReconnect");
       if (!shouldReconnect || typeof window.nostr === "undefined") return;
       const user = await loginWithNip07();
-      console.log("Called loginWithNip07");
       if (!user) {
         throw new Error("NO auth");
       }
@@ -80,14 +79,17 @@ export default function useCurrentUser() {
   }
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || follows.size) return;
     console.log("fetching follows");
-    (async () => {
-      const following = await currentUser.follows();
-      console.log("Follows", following);
-      setFollows(following);
-    })();
+    handleFetchFollows();
   }, [currentUser]);
+
+  async function handleFetchFollows() {
+    if (!currentUser || follows.size) return;
+    const following = await currentUser.follows();
+    console.log("Follows", following);
+    setFollows(following);
+  }
 
   return {
     currentUser,
