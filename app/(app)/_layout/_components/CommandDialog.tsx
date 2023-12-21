@@ -40,7 +40,7 @@ export const anonModeAtom = atom(false);
 
 export default function CommandDialogComponent() {
   const [anon, setAnon] = useAtom(anonModeAtom);
-  useKeyboardShortcut(["ctrl", "a"], () =>
+  useKeyboardShortcut(["ctrl", "shift", "a"], () =>
     setAnon((a) => {
       if (a) {
         toast.success("Anon mode deactivated 👀");
