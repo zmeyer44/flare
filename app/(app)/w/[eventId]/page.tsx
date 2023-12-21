@@ -24,6 +24,12 @@ export async function generateMetadata(
       "Flare is the next era of video streaming. You host your own content, post it to Nostr, and share it with the world. There's nothing the Commies can do about it";
 
     const image = video.thumbnail ?? "";
+    const FiveMinsAgo = new Date(Date.now() - 1000 * 60 * 5);
+    if (video.updatedAt < FiveMinsAgo) {
+      void syncViews({
+        naddr: params.eventId,
+      });
+    }
     return {
       title: title,
       openGraph: {
@@ -43,9 +49,6 @@ export async function generateMetadata(
     console.log("Error generating metadata");
   } finally {
     console.log("Running finially");
-    void syncViews({
-      naddr: params.eventId,
-    });
   }
 }
 
