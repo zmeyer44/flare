@@ -18,6 +18,7 @@ import { getTagValues } from "@/lib/nostr/utils";
 import useProfile from "@/lib/hooks/useProfile";
 import { relativeTime } from "@/lib/utils/dates";
 import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
+import useElementOnScreen from "@/lib/hooks/useElementOnScreen";
 
 type VideoCardProps = {
   className?: string;
@@ -28,16 +29,18 @@ export default function HorizontalVideoCard({
   className,
   event,
 }: VideoCardProps) {
+  const { containerRef, isVisible } = useElementOnScreen();
   const { viewCount, video } = useVideo({
     eventIdentifier: event.tagId(),
     event: event,
+    getViewCount: isVisible,
   });
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
   const { url, author, publishedAt, thumbnail, title } =
     video ?? getVideoDetails(event);
   return (
-    <div className={cn("group flex space-x-3", className)}>
+    <div ref={containerRef} className={cn("group flex space-x-3", className)}>
       <div className="relative h-full w-[120px]  overflow-hidden rounded-md">
         <AspectRatio ratio={21 / 14} className="bg-muted">
           {!!thumbnail && (

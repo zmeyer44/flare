@@ -15,6 +15,7 @@ import type { NDKEvent } from "@nostr-dev-kit/ndk";
 import { relativeTime } from "@/lib/utils/dates";
 import useProfile from "@/lib/hooks/useProfile";
 import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
+import useElementOnScreen from "@/lib/hooks/useElementOnScreen";
 
 type VideoCardProps = {
   className?: string;
@@ -22,9 +23,11 @@ type VideoCardProps = {
 };
 
 export default function VideoCard({ className, event }: VideoCardProps) {
+  const { containerRef, isVisible } = useElementOnScreen();
   const { viewCount, video } = useVideo({
     eventIdentifier: event.tagId(),
     event: event,
+    getViewCount: isVisible,
   });
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
