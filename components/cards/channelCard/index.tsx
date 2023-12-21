@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import Split from "@/components/spread/Split";
 import { Button } from "@/components/ui/button";
-import { formatCount } from "@/lib/utils";
+import { formatCount, truncateText } from "@/lib/utils";
 import { useMarket } from "@/lib/hooks/useMarket";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -27,14 +27,19 @@ export default function ChannelCard({
 }: ChannelCardProps) {
   const npub = nip19.npubEncode(channelPubkey);
   const { profile, followers } = useProfile(channelPubkey, {
-    fetchFollowerCount: true,
+    fetchFollowerCount: false,
   });
   if (!profile) {
     return <ChannelCardLoading className={className} />;
   }
 
   return (
-    <div className={cn("group flex h-full flex-col space-y-2", className)}>
+    <div
+      className={cn(
+        "group flex h-full w-[200px] flex-col space-y-2 overflow-hidden",
+        className,
+      )}
+    >
       <div className="relative overflow-hidden rounded-md">
         <AspectRatio ratio={3 / 4} className="bg-muted">
           {!!profile.image && (
@@ -61,7 +66,7 @@ export default function ChannelCard({
         <div className="flex rounded-[10px] bg-muted p-2">
           <Link
             href={`/channel/${npub}`}
-            className="center group gap-x-2 text-foreground"
+            className="center group gap-x-2 overflow-hidden text-foreground"
           >
             <Avatar className="center h-[34px] w-[34px] overflow-hidden rounded-[.35rem] bg-muted">
               <AvatarImage
@@ -73,18 +78,27 @@ export default function ChannelCard({
                 {getTwoLetters({ npub, profile })}
               </AvatarFallback>
             </Avatar>
-            <div className="">
+            <div className="overflow-hidden">
               <div className="flex items-center gap-1">
-                <span className="line-clamp-1 text-[14px] font-semibold">
+                <span className="line-clamp-1 break-all text-[14px] font-semibold">
                   {getNameToShow({ npub, profile })}
                 </span>
                 {!!profile?.nip05 && (
                   <HiCheckBadge className="h-[14px] w-[14px] shrink-0 text-primary" />
                 )}
               </div>
-              <p className="text-xs text-muted-foreground">{`${formatCount(
+              {/* <p className="text-xs text-muted-foreground">{`${formatCount(
                 followers.length,
-              )} followers`}</p>
+              )} followers`}</p> */}
+              {profile.nip05 ? (
+                <p className="truncate text-xs text-muted-foreground">
+                  {profile.nip05}
+                </p>
+              ) : (
+                <p className="truncate text-xs text-muted-foreground">
+                  {truncateText(npub)}
+                </p>
+              )}
             </div>
           </Link>
         </div>
