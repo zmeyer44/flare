@@ -39,6 +39,7 @@ export default function HorizontalVideoCard({
   const { profile } = useProfile(event.author.pubkey);
   const { url, author, publishedAt, thumbnail, title } =
     video ?? getVideoDetails(event);
+
   return (
     <div ref={containerRef} className={cn("group flex space-x-3", className)}>
       <div className="relative h-full w-[120px]  overflow-hidden rounded-md">

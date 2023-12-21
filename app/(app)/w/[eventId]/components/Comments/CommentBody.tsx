@@ -5,9 +5,9 @@ import type { NDKEvent } from "@nostr-dev-kit/ndk";
 import useProfile from "@/lib/hooks/useProfile";
 import { HiCheckBadge } from "react-icons/hi2";
 import { RenderText } from "@/components/textRendering";
-import { Button } from "@/components/ui/button";
-import { HiOutlineHandThumbUp, HiOutlineHandThumbDown } from "react-icons/hi2";
+
 import { relativeTime } from "@/lib/utils/dates";
+import ReactionButtons from "./ReactionButtons";
 
 type CommentBodyProps = {
   event: NDKEvent;
@@ -47,14 +47,7 @@ export default function CommentBody({ event }: CommentBodyProps) {
         <div className="">
           <RenderText text={event.content} />
         </div>
-        <div className="flex items-center gap-1">
-          <Button size={"sm"} variant={"ghost"} className="gap-x-1.5 px-2">
-            <HiOutlineHandThumbUp className="h-4 w-4" />
-          </Button>
-          <Button size={"sm"} variant={"ghost"} className="gap-x-1.5 px-2">
-            <HiOutlineHandThumbDown className="h-4 w-4" />
-          </Button>
-        </div>
+        <ReactionButtons event={event} />
       </div>
     </div>
   );
