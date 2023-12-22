@@ -9,11 +9,13 @@ import { nip19 } from "nostr-tools";
 type CommentSectionProps = {
   eventReference: string;
   eventId: string;
+  pubkey: string;
 };
 
 export default function CommentSection({
   eventReference,
   eventId,
+  pubkey,
 }: CommentSectionProps) {
   const { events } = useEvents({
     filter: {
@@ -37,7 +39,8 @@ export default function CommentSection({
       <CommentInput
         initialTags={[
           ["a", eventReference],
-          ["e", eventId],
+          ["e", eventId, "", "reply"],
+          ["p", pubkey],
         ]}
       />
       <CommentFeed comments={events} />
