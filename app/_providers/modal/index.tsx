@@ -23,7 +23,14 @@ import type {
   ModalT,
 } from "./types";
 import { modal, ModalState } from "./state";
-import { Drawer } from "vaul";
+
+import {
+  Drawer,
+  DrawerPortal,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerNestedRoot,
+} from "@/components/ui/drawer";
 
 function cn(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -89,35 +96,28 @@ const ModalDrawer = ({
       return null;
     }
     return (
-      <Drawer.NestedRoot
+      <DrawerNestedRoot
         open={!!nestedModals.length}
         onClose={() => {
           setTimeout(() => removeModal(nestedModals[0]!), 300);
         }}
       >
-        <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 z-overlay bg-black/40" />
+        <DrawerContent>
           <ModalDrawer
             modal={nestedModals[0]!}
             layer={layer + 1}
             nestedModals={nestedModals.slice(1)}
             removeModal={removeModal}
           />
-        </Drawer.Portal>
-      </Drawer.NestedRoot>
+        </DrawerContent>
+      </DrawerNestedRoot>
     );
   };
   return (
-    <Drawer.Content
-      className="fixed bottom-0 left-0 right-0 z-modal mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background outline-none focus-visible:outline-none"
-      style={{
-        maxHeight: `${maxHeight}%`,
-      }}
-    >
-      <div className="mx-auto mb-3 mt-4 h-1.5 w-12 flex-shrink-0 rounded-full bg-muted px-4" />
+    <>
       {modal.jsx}
       <NestedModal />
-    </Drawer.Content>
+    </>
   );
 };
 const Modstr = (props: ToasterProps) => {
@@ -185,20 +185,19 @@ const Modstr = (props: ToasterProps) => {
     // Remove item from normal navigation flow, only available via hotkey
     <>
       <section aria-label={`modal-provider`} tabIndex={-1}>
-        <Drawer.Root
+        <Drawer
           open={!!modals.length}
           onClose={() => setModals([])}
-          shouldScaleBackground
+          shouldScaleBackground={true}
         >
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 z-overlay bg-black/40" />
+          <DrawerContent>
             <ModalDrawer
               modal={rootModal}
               nestedModals={modals.slice(1)}
               removeModal={removeModal}
             />
-          </Drawer.Portal>
-        </Drawer.Root>
+          </DrawerContent>
+        </Drawer>
       </section>
       {/* <section
         aria-label={`${containerAriaLabel} ${hotkeyLabel}`}

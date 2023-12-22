@@ -2,9 +2,6 @@
 import { Separator } from "@/components/ui/separator";
 import UploadsTable from "./UploadsTable";
 import UploadButton from "./components/UploadButton";
-// import { SDrawer } from "@/app/_providers/alt-modal";
-import { modal } from "@/app/_providers/modal";
-import { Button } from "@/components/ui/button";
 
 export default function VideosPage() {
   return (
