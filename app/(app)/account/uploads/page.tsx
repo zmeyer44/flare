@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import UploadsTable from "./UploadsTable";
 import UploadButton from "./components/UploadButton";
-import { MyDrawer } from "@/app/_providers/alt-modal";
+import { SDrawer } from "@/app/_providers/alt-modal";
 
 export default function VideosPage() {
   return (
@@ -19,7 +19,7 @@ export default function VideosPage() {
       </div>
       <Separator />
       <UploadsTable />
-      <MyDrawer />
+      <SDrawer />
     </div>
   );
 }
