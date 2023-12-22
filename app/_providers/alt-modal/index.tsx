@@ -15,6 +15,7 @@ export function MyDrawer() {
         <Drawer.Content className="fixed bottom-0 left-0 right-0 mt-24 flex h-full max-h-[96%] flex-col rounded-t-[10px] bg-gray-100">
           <Leaflet openNested={() => setShowNested(true)} />
           <Drawer.Root
+            shouldScaleBackground
             open={showNested}
             nested={true}
             onClose={() => setTimeout(() => setShowNested(true), 300)}
