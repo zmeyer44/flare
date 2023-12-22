@@ -8,7 +8,7 @@ import currentUserStore from "@/lib/stores/currentUser";
 export default function useAuthGuard() {
   const { currentUser } = useCurrentUser();
   useEffect(() => {
-    if (currentUser) {
+    if (!currentUser) {
       modal.show(<LoginModal />, {
         id: "login",
       });

@@ -114,7 +114,7 @@ const ModalDrawer = ({
         maxHeight: `${maxHeight}%`,
       }}
     >
-      <div className="mx-auto mb-3 h-1.5 w-12 flex-shrink-0 rounded-full bg-muted" />
+      <div className="mx-auto mb-3 mt-4 h-1.5 w-12 flex-shrink-0 rounded-full bg-muted px-4" />
       {modal.jsx}
       <NestedModal />
     </Drawer.Content>
