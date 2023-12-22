@@ -58,9 +58,6 @@ export default function Page() {
         </Suspense>
         <TrendingSection />
         <ChannelSection />
-        <div className="md:hidden">
-          <MyDrawer />
-        </div>
       </div>
     </div>
   );
