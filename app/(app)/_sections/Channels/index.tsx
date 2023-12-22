@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   Section,
@@ -13,8 +14,6 @@ import ChannelCard, {
   ChannelCardLoading,
 } from "@/components/cards/channelCard";
 import { cn } from "@/lib/utils";
-import useEvents from "@/lib/hooks/useEvents";
-import { type NDKKind } from "@nostr-dev-kit/ndk";
 import { uniqBy } from "ramda";
 import { getTagValues } from "@/lib/nostr/utils";
 import { nip19 } from "nostr-tools";
@@ -42,6 +41,7 @@ export default function ChannelsSection() {
   );
 }
 function HorizontalCarousel({ channels }: { channels: string[] }) {
+  const [ignoredChannels, setIgnoredChannels] = useState<string[]>([]);
   if (!channels.length) {
     return (
       <div className="scrollbar-thumb-rounded-full mr-auto flex min-w-0 max-w-full snap-x snap-mandatory overflow-x-auto pl-5 pr-[50vw] scrollbar-thin sm:pr-[200px]">
@@ -58,16 +58,22 @@ function HorizontalCarousel({ channels }: { channels: string[] }) {
   }
   return (
     <div className="scrollbar-thumb-rounded-full mr-auto flex min-w-0 max-w-full snap-x snap-mandatory overflow-x-auto pl-5 pr-[50vw] scrollbar-thin sm:pr-[200px]">
-      {channels.map((channel, index) => (
-        <div
-          key={index}
-          className={cn("snap-start pl-3 sm:pl-5", index === 0 && "pl-5")}
-        >
-          <Link href={`/channel/${nip19.npubEncode(channel)}`} className="">
-            <ChannelCard channelPubkey={channel} className="min-w-[200px]" />
-          </Link>
-        </div>
-      ))}
+      {channels
+        .filter((c) => !ignoredChannels.includes(c))
+        .map((channel, index) => (
+          <div
+            key={channel}
+            className={cn("snap-start pl-3 sm:pl-5", index === 0 && "pl-5")}
+          >
+            <Link href={`/channel/${nip19.npubEncode(channel)}`} className="">
+              <ChannelCard
+                channelPubkey={channel}
+                hide={() => setIgnoredChannels((prev) => [...prev, channel])}
+                className="min-w-[200px]"
+              />
+            </Link>
+          </div>
+        ))}
     </div>
   );
 }

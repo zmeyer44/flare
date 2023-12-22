@@ -6,6 +6,8 @@ type Settings = {};
 interface CurrentUserState {
   currentUser: NDKUser | null;
   follows: Set<NDKUser>;
+  fetchingFollows: boolean;
+  setFetchingFollows: (s: boolean) => void;
   settings: Settings;
   setCurrentUser: (user: NDKUser | null) => void;
   updateCurrentUser: (user: Partial<NDKUser>) => void;
@@ -16,6 +18,8 @@ interface CurrentUserState {
 const currentUserStore = create<CurrentUserState>()((set) => ({
   currentUser: null,
   follows: new Set(),
+  fetchingFollows: false,
+  setFetchingFollows: (s) => set((state) => ({ ...state, fetchingFollows: s })),
   settings: {},
   setCurrentUser: (user) => set((state) => ({ ...state, currentUser: user })),
   updateCurrentUser: (user) =>

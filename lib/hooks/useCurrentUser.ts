@@ -17,6 +17,8 @@ export default function useCurrentUser() {
     currentUser,
     setCurrentUser,
     updateCurrentUser,
+    fetchingFollows,
+    setFetchingFollows,
     follows,
     setFollows,
     addFollow,
@@ -78,17 +80,20 @@ export default function useCurrentUser() {
     setCurrentUser(user);
   }
 
-  useEffect(() => {
-    if (!currentUser || follows.size) return;
-    console.log("fetching follows");
-    handleFetchFollows();
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (!currentUser || follows.size) return;
+  //   console.log("fetching follows");
+  //   handleFetchFollows();
+  // }, [currentUser]);
 
   async function handleFetchFollows() {
-    if (!currentUser || follows.size) return;
+    if (!currentUser || follows.size || fetchingFollows) return;
+    setFetchingFollows(true);
     const following = await currentUser.follows();
+    console.log("fetching follows", fetchingFollows);
     console.log("Follows", following);
     setFollows(following);
+    setFetchingFollows(false);
   }
 
   return {

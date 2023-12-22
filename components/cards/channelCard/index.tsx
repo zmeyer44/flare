@@ -15,20 +15,30 @@ import { cn, getTwoLetters, getNameToShow } from "@/lib/utils";
 import { HiCheckBadge } from "react-icons/hi2";
 import useProfile from "@/lib/hooks/useProfile";
 import { nip19 } from "nostr-tools";
+import { useTimeout } from "usehooks-ts";
 
 type ChannelCardProps = {
   className?: string;
   channelPubkey: string;
+  hide?: () => void;
 };
 
 export default function ChannelCard({
   className,
   channelPubkey,
+  hide,
 }: ChannelCardProps) {
   const npub = nip19.npubEncode(channelPubkey);
   const { profile, followers } = useProfile(channelPubkey, {
     fetchFollowerCount: false,
   });
+
+  useTimeout(() => {
+    if (profile === undefined && hide) {
+      hide();
+    }
+  }, 2000);
+
   if (!profile) {
     return <ChannelCardLoading className={className} />;
   }
