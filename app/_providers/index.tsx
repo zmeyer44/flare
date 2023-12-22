@@ -28,8 +28,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <Toaster theme="dark" className="hidden dark:block" />
             <Modstr />
             <HttpAuthProvider />
-            {/* <ModalProvider>{children}</ModalProvider> */}
-            {children}
+            <div vaul-drawer-wrapper="" className="min-h-[100svh]">
+              {children}
+            </div>
           </NDKProvider>
         </TRPCProvider>
       </SessionProvider>
