@@ -1,7 +1,10 @@
 "use client";
 import { Drawer } from "vaul";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export function MyDrawer() {
+  const [showNested, setShowNested] = useState(false);
   return (
     <Drawer.Root shouldScaleBackground>
       <Drawer.Trigger asChild>
@@ -10,51 +13,8 @@ export function MyDrawer() {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
         <Drawer.Content className="fixed bottom-0 left-0 right-0 mt-24 flex h-full max-h-[96%] flex-col rounded-t-[10px] bg-gray-100">
-          <Leaflet />
-        </Drawer.Content>
-      </Drawer.Portal>
-    </Drawer.Root>
-  );
-}
-
-function Leaflet() {
-  return (
-    <div className="">
-      <div className="flex-1 rounded-t-[10px] bg-white p-4">
-        <div className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300" />
-        <div className="mx-auto max-w-md">
-          <Drawer.Title className="mb-4 font-medium">
-            Drawer for React.
-          </Drawer.Title>
-          <p className="mb-2 text-gray-600">
-            This component can be used as a Dialog replacement on mobile and
-            tablet devices.
-          </p>
-          <p className="mb-2 text-gray-600">
-            It comes unstyled and has gesture-driven animations.
-          </p>
-          <p className="mb-6 text-gray-600">
-            It uses{" "}
-            <a
-              href="https://www.radix-ui.com/docs/primitives/components/dialog"
-              className="underline"
-              target="_blank"
-            >
-              Radix&rsquo;s Dialog primitive
-            </a>{" "}
-            under the hood and is inspired by{" "}
-            <a
-              href="https://twitter.com/devongovett/status/1674470185783402496"
-              className="underline"
-              target="_blank"
-            >
-              this tweet.
-            </a>
-          </p>
-          <Drawer.NestedRoot>
-            <Drawer.Trigger className="mb-6 w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
-              Open Second Drawer
-            </Drawer.Trigger>
+          <Leaflet openNested={() => setShowNested(true)} />
+          <Drawer.Root open={showNested} nested={true}>
             <Drawer.Portal>
               <Drawer.Overlay className="fixed inset-0 bg-black/40" />
               <Drawer.Content className="fixed bottom-0 left-0 right-0 mt-24 flex h-full max-h-[94%] flex-col rounded-t-[10px] bg-gray-100">
@@ -137,7 +97,49 @@ function Leaflet() {
                 </div>
               </Drawer.Content>
             </Drawer.Portal>
-          </Drawer.NestedRoot>
+          </Drawer.Root>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
+}
+
+function Leaflet({ openNested }: { openNested: () => void }) {
+  return (
+    <div className="">
+      <div className="flex-1 rounded-t-[10px] bg-white p-4">
+        <div className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-gray-300" />
+        <div className="mx-auto max-w-md">
+          <Drawer.Title className="mb-4 font-medium">
+            Drawer for React.
+          </Drawer.Title>
+          <p className="mb-2 text-gray-600">
+            This component can be used as a Dialog replacement on mobile and
+            tablet devices.
+          </p>
+          <p className="mb-2 text-gray-600">
+            It comes unstyled and has gesture-driven animations.
+          </p>
+          <p className="mb-6 text-gray-600">
+            It uses{" "}
+            <a
+              href="https://www.radix-ui.com/docs/primitives/components/dialog"
+              className="underline"
+              target="_blank"
+            >
+              Radix&rsquo;s Dialog primitive
+            </a>{" "}
+            under the hood and is inspired by{" "}
+            <a
+              href="https://twitter.com/devongovett/status/1674470185783402496"
+              className="underline"
+              target="_blank"
+            >
+              this tweet.
+            </a>
+          </p>
+
+          <Button onClick={openNested}>Open Second Drawer</Button>
         </div>
       </div>
       <div className="mt-auto border-t border-gray-200 bg-gray-100 p-4">
