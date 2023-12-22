@@ -112,6 +112,18 @@ export default function VideoActions({ event }: VideoActionsProps) {
           <DropDownOptions
             options={[
               {
+                label: "Share video",
+                action: () => {
+                  copyText(
+                    `${
+                      process.env.NEXT_PUBLIC_ROOT_DOMAIN ??
+                      "https://www.flare.pub"
+                    }/w/${event.encode()}`,
+                  );
+                  toast.success("Link copied!");
+                },
+              },
+              {
                 label: "Copy raw event",
                 action: () => {
                   copyText(JSON.stringify(rawEvent));
