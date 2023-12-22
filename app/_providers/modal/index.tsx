@@ -96,7 +96,7 @@ const ModalDrawer = ({
         }}
       >
         <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+          <Drawer.Overlay className="fixed inset-0 z-overlay bg-black/40" />
           <ModalDrawer
             modal={nestedModals[0]!}
             layer={layer + 1}
@@ -109,7 +109,7 @@ const ModalDrawer = ({
   };
   return (
     <Drawer.Content
-      className="fixed bottom-0 left-0 right-0 mt-24 flex h-full flex-col rounded-t-[10px] bg-background outline-none focus-visible:outline-none"
+      className="fixed bottom-0 left-0 right-0 z-modal mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background outline-none focus-visible:outline-none"
       style={{
         maxHeight: `${maxHeight}%`,
       }}
@@ -191,7 +191,7 @@ const Modstr = (props: ToasterProps) => {
           shouldScaleBackground
         >
           <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+            <Drawer.Overlay className="fixed inset-0 z-overlay bg-black/40" />
             <ModalDrawer
               modal={rootModal}
               nestedModals={modals.slice(1)}
