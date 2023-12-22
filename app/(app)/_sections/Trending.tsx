@@ -55,7 +55,7 @@ export default function TrendingSection() {
   return (
     <Section className="px-5">
       <SectionHeader>
-        <SectionTitle className="font-main text-2xl font-normal sm:text-3xl">
+        <SectionTitle className="font-main text-xl font-semibold sm:text-2xl">
           Top Trending
         </SectionTitle>
         <Link href="/feed">
