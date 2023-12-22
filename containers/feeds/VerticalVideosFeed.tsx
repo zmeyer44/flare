@@ -15,7 +15,7 @@ type VerticalVideosFeedProps = {
   action?: ReactNode;
   className?: string;
   filter?: NDKFilter;
-  secondaryFilter?: (event: NDKEvent) => Boolean;
+  secondaryFilter?: (event: NDKEvent, index: number) => Boolean;
   loader?: () => JSX.Element;
   empty?: () => JSX.Element;
 };
@@ -85,7 +85,7 @@ function RawFeed({
   ),
 }: {
   filter?: NDKFilter;
-  secondaryFilter?: (event: NDKEvent) => Boolean;
+  secondaryFilter?: (event: NDKEvent, index: number) => Boolean;
   loader?: () => JSX.Element;
   empty?: () => JSX.Element;
 }) {

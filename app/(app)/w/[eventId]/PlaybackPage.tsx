@@ -71,6 +71,7 @@ export function PlaybackPage({ event }: { event: NDKEvent }) {
           kinds: [34235 as NDKKind],
           limit: 5,
         }}
+        secondaryFilter={(_, i) => i < 10}
       />
     </div>
   );
