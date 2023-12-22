@@ -156,3 +156,7 @@ input[type="number"] {
 img:not([src]) {
   visibility: hidden;
 }
+
+html {
+  background-color: black;
+}
