@@ -13,9 +13,7 @@ import { nip19 } from "nostr-tools";
 
 import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import { toast } from "sonner";
-import { useModal } from "@/app/_providers/modal/provider";
-import type { NDKEvent } from "@nostr-dev-kit/ndk";
+import { modal } from "@/app/_providers/modal";
 import UploadModal from "@/components/modals/upload";
 import PurchseStorageCreditsModal from "@/components/modals/purchaseStorageCredits";
 import { createEvent } from "@/lib/actions/create";
@@ -70,8 +68,6 @@ export function VideoUpload({
   const [videoUrl, setVideoUrl] = useState("");
   const { remainingCredits } = useStorageCredits();
   const { fetchEvents, ndk } = useNDK();
-  const modal = useModal();
-  const { currentUser } = useCurrentUser();
 
   async function handleSearch() {
     if (!eventTagId) return;
@@ -184,9 +180,9 @@ export function VideoUpload({
       <button
         onClick={() => {
           if (!remainingCredits || remainingCredits < 10_000) {
-            modal?.show(<PurchseStorageCreditsModal />);
+            modal.show(<PurchseStorageCreditsModal />);
           } else {
-            modal?.show(
+            modal.show(
               <UploadModal
                 accept="video/*"
                 folderName="video"

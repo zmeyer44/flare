@@ -1,16 +1,17 @@
 "use client";
 import { useEffect } from "react";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import LoginModal from "../login";
 import currentUserStore from "@/lib/stores/currentUser";
 
 export default function useAuthGuard() {
-  const modal = useModal();
   const { currentUser } = useCurrentUser();
   useEffect(() => {
-    if (!currentUser) {
-      modal?.swap(<LoginModal />);
+    if (currentUser) {
+      modal.show(<LoginModal />, {
+        id: "login",
+      });
     }
   }, [currentUserStore]);
 }

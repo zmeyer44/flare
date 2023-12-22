@@ -7,7 +7,7 @@ import {
 } from "react-icons/hi2";
 import { HiOutlineLightningBolt } from "react-icons/hi";
 // import ZapPicker from "@/components/Modals/ZapPicker";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import type { NostrEvent } from "@nostr-dev-kit/ndk";
 import { stopPropagation } from "@/lib/utils";
 
@@ -15,7 +15,6 @@ type ActionProps = {
   event: NostrEvent;
 };
 export default function Actions({ event }: ActionProps) {
-  const modal = useModal();
   return (
     <div className="mt-3 flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -31,7 +30,7 @@ export default function Actions({ event }: ActionProps) {
           onClick={(e) => {
             stopPropagation(e);
             console.log("captured");
-            modal?.show(<ZapPicker event={event} />);
+            modal.show(<ZapPicker event={event} />);
           }}
           size={"sm"}
           className="gap-x-1.5"

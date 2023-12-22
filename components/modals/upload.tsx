@@ -4,11 +4,10 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useConfig } from "@/lib/hooks/useConfig";
 import { copyText } from "@/lib/utils";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import useUploadVideo from "@/lib/hooks/useUploadVideo";
 import { RiUploadCloud2Line } from "react-icons/ri";
-import { createEvent } from "@/lib/actions/create";
 
 type UploadModalProps = {
   title?: string;
@@ -35,7 +34,6 @@ export default function UploadModal({
   onSumbit,
 }: UploadModalProps) {
   const { loginWithPubkey, currentUser } = useCurrentUser();
-  const modal = useModal();
   const {
     ThumbnailPreview,
     clear,
@@ -64,7 +62,7 @@ export default function UploadModal({
       duration,
       fileSize,
     });
-    modal?.hide();
+    modal.dismiss();
   }
 
   return (

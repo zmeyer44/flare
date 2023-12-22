@@ -3,7 +3,7 @@ import { ComponentProps } from "react";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import LoginModal from "@/components/modals/login";
 import ZapModal from "@/components/modals/zap";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import type { NostrEvent } from "@nostr-dev-kit/ndk";
 import { Button } from "@/components/ui/button";
 
@@ -17,16 +17,11 @@ export default function ZapButton({
   ...buttonProps
 }: ZapButtonProps) {
   const { currentUser } = useCurrentUser();
-  const modal = useModal();
 
   return (
     <Button
       onClick={() => {
-        if (!currentUser) {
-          modal?.show(<LoginModal />);
-        } else {
-          modal?.show(<ZapModal event={event} />);
-        }
+        modal.show(<ZapModal event={event} />);
       }}
       {...buttonProps}
     >

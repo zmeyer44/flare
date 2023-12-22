@@ -4,7 +4,7 @@ import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { useNDK } from "@/app/_providers/ndk";
 import { toast } from "sonner";
 import LoginModal from "@/components/modals/login";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import { follow } from "@/lib/actions/create";
 import { NDKUser } from "@nostr-dev-kit/ndk";
 
@@ -20,7 +20,6 @@ export default function FollowButton({
 }: FollowButtonProps) {
   const [followLoading, setFollowLoading] = useState(false);
   const { currentUser, addFollow, follows, setFollows } = useCurrentUser();
-  const modal = useModal();
   const { ndk } = useNDK();
 
   async function handleFollow() {
@@ -54,11 +53,7 @@ export default function FollowButton({
     return (
       <Button
         onClick={() => {
-          if (!currentUser) {
-            modal?.show(<LoginModal />);
-          } else {
-            handleUnfollow();
-          }
+          handleUnfollow();
         }}
         loading={followLoading}
         variant={"secondary"}
@@ -72,7 +67,9 @@ export default function FollowButton({
       <Button
         onClick={() => {
           if (!currentUser) {
-            modal?.show(<LoginModal />);
+            modal.show(<LoginModal />, {
+              id: "login",
+            });
           } else {
             handleFollow();
           }

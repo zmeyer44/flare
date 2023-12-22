@@ -1,12 +1,9 @@
 "use client";
-import { useModal } from "@/app/_providers/modal/provider";
-import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import LoginModal from "@/components/modals/login";
 import ZapModal from "@/components/modals/zap";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { HiOutlineLightningBolt } from "react-icons/hi";
-
+import { modal } from "@/app/_providers/modal";
 const flockstrEvent = {
   created_at: 1697736945,
   content:
@@ -22,19 +19,13 @@ const flockstrEvent = {
 };
 
 export default function ZapButton() {
-  const modal = useModal();
-  const { currentUser } = useCurrentUser();
   return (
     <div className="center relative w-full">
       <button
         onClick={() => {
-          if (currentUser) {
-            modal?.show(
-              <ZapModal title="Give Flare a Tip!" event={flockstrEvent} />,
-            );
-          } else {
-            modal?.show(<LoginModal />);
-          }
+          modal.show(
+            <ZapModal title="Give Flare a Tip!" event={flockstrEvent} />,
+          );
         }}
         className={cn(
           "center group relative min-h-[48px] min-w-[48px] rounded-lg  hover:bg-muted",

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useConfig } from "@/lib/hooks/useConfig";
 import { copyText } from "@/lib/utils";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { nip19 } from "nostr-tools";
@@ -14,8 +14,6 @@ import { Input } from "@/components/ui/input";
 type LoginModalProps = {};
 
 export default function LoginModal({}: LoginModalProps) {
-  const modal = useModal();
-  const [config] = useConfig();
   const { loginWithNip07, loginWithSecret } = useNDK();
   const { loginWithPubkey, currentUser } = useCurrentUser();
   const [isLoading, setIsLoading] = useState(false);
@@ -73,7 +71,7 @@ export default function LoginModal({}: LoginModalProps) {
 
   useEffect(() => {
     if (currentUser) {
-      modal?.hide();
+      modal.dismiss("login");
     }
   }, [currentUser]);
 
@@ -93,7 +91,7 @@ export default function LoginModal({}: LoginModalProps) {
     }
     console.log("connected ");
     setIsLoading(false);
-    modal?.hide();
+    modal.dismiss("login");
   }
 
   async function handleLoginNsec(nsec_?: string) {

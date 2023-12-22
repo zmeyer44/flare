@@ -11,7 +11,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import dynamic from "next/dynamic";
-import { useModal } from "@/app/_providers/modal/provider";
 import { IconType } from "react-icons";
 import { usePathname } from "next/navigation";
 
@@ -43,7 +42,6 @@ type NavigationElement = {
 } & (NavigationLink | NavigationButton);
 
 export default function Sidebar() {
-  const modal = useModal();
   const pathname = usePathname();
 
   const navigation: NavigationElement[] = [

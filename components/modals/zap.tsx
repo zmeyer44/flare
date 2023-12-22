@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import useAuthGuard from "./hooks/useAuthGuard";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import { useNDK } from "@/app/_providers/ndk";
 import { zapEvent } from "@/lib/actions/zap";
 import { type NostrEvent } from "@nostr-dev-kit/ndk";
@@ -31,7 +31,6 @@ export default function ZapModal({ event, title = "Send Zap" }: ZapModalProps) {
   useAuthGuard();
   const [isLoading, setIsLoading] = useState(false);
   const [note, setNote] = useState("");
-  const modal = useModal();
   const [sats, setSats] = useState(2000);
   const { ndk } = useNDK();
 
@@ -53,7 +52,7 @@ export default function ZapModal({ event, title = "Send Zap" }: ZapModalProps) {
       setIsLoading(true);
       const result = await zapEvent(ndk!, sats, event, note);
       toast.success("Zap Sent!");
-      modal?.hide();
+      modal.dismiss();
     } catch (err) {
       toast.error("An error occured");
       console.log("error sending zap", err);

@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import HeroSection, { HeroSectionFallback } from "./_sections/Hero";
 import TrendingSection from "./_sections/Trending";
 import ChannelSection from "./_sections/Channels";
-import { MyDrawer } from "../_providers/alt-modal";
+import { MyDrawer } from "../_providers/modal";
 
 export default function Page() {
   return (

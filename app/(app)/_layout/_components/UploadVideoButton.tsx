@@ -1,15 +1,13 @@
 "use client";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import LoginModal from "@/components/modals/login";
-import ZapModal from "@/components/modals/zap";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { RiAddFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 
 export default function ZapButton() {
-  const modal = useModal();
   const { currentUser } = useCurrentUser();
   const router = useRouter();
   return (
@@ -19,7 +17,9 @@ export default function ZapButton() {
           if (currentUser) {
             router.push("/new-video");
           } else {
-            modal?.show(<LoginModal />);
+            modal.show(<LoginModal />, {
+              id: "login",
+            });
           }
         }}
         size="icon"

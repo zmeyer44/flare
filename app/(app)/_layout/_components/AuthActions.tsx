@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,7 +40,6 @@ import { cn } from "@/lib/utils";
 
 export default function AuthActions() {
   const router = useRouter();
-  const modal = useModal();
   const { currentUser, logout, attemptLogin } = useCurrentUser();
   const { ndk } = useNDK();
 
@@ -48,7 +47,9 @@ export default function AuthActions() {
     if (currentUser) {
       router.push(`/channel/${currentUser?.npub}`);
     } else {
-      modal?.show(<LoginModal />);
+      modal.show(<LoginModal />, {
+        id: "login",
+      });
     }
   });
   useKeyboardShortcut(["shift", "ctrl", "q"], () => {
@@ -82,7 +83,11 @@ export default function AuthActions() {
     <>
       <SearchButton className="md:hidden" />
       <Button
-        onClick={() => modal?.show(<LoginModal />)}
+        onClick={() =>
+          modal.show(<LoginModal />, {
+            id: "login",
+          })
+        }
         className="rounded-sm px-5 font-medium"
       >
         Login

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import useAuthGuard from "./hooks/useAuthGuard";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import { useNDK } from "@/app/_providers/ndk";
 import { checkUserZap, zapUser } from "@/lib/actions/zap";
 import { toast } from "sonner";
@@ -22,7 +22,6 @@ export default function ZapModal({}: ModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [checkingPayment, setCheckingPayment] = useState(false);
   const [note, setNote] = useState("");
-  const modal = useModal();
   const [sats, setSats] = useState(2000);
   const { ndk } = useNDK();
   const { currentUser } = useCurrentUser();
@@ -47,7 +46,10 @@ export default function ZapModal({}: ModalProps) {
     },
     onSuccess: () => {
       toast.success("Credits received!");
-      modal?.hide();
+      modal.dismiss();
+    },
+    onSettled: () => {
+      setCheckingPayment(false);
     },
   });
 
@@ -86,12 +88,9 @@ export default function ZapModal({}: ModalProps) {
           paymentEvent: result.paymentEvent,
           zapEndpoint: result.zapEndpoint,
         });
-        toast.success("Payment confirmed!");
       }
     } catch (err) {
       console.log("error sending zap", err);
-    } finally {
-      setCheckingPayment(false);
     }
   }
 

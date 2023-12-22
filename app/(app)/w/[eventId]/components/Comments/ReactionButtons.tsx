@@ -12,7 +12,7 @@ import {
   HiHandThumbUp,
   HiHandThumbDown,
 } from "react-icons/hi2";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import LoginModal from "@/components/modals/login";
 import { formatCount } from "@/lib/utils";
 
@@ -28,7 +28,6 @@ export default function ReactionButtons({ event }: ReactionButtosProps) {
       ["#e"]: [event.id],
     },
   });
-  const modal = useModal();
   const downVotes = events.filter((e) => e.content === "-").length;
   const upVotes = events.length - downVotes;
 
@@ -59,7 +58,9 @@ export default function ReactionButtons({ event }: ReactionButtosProps) {
     if (currentUser) {
       handleLike(action);
     } else {
-      modal?.show(<LoginModal />);
+      modal.show(<LoginModal />, {
+        id: "login",
+      });
     }
   }
 

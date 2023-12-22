@@ -6,11 +6,10 @@ import { Button } from "@/components/ui/button";
 import useLocalStorage from "@/lib/hooks/useLocalStorage";
 // import Logo from "@/assets/Logo";
 import InstallPWAModal from "@/components/modals/pwaInstall";
-import { useModal } from "@/app/_providers/modal/provider";
+import { modal } from "@/app/_providers/modal";
 import Image from "next/image";
 
 export default function MobileBanner() {
-  const modal = useModal();
   const [showPWAPrompt, setShowPWAPrompt] = useState(false);
   const [hidePWA, setHidePWA] = useLocalStorage<boolean | undefined>(
     "hidePWA",
@@ -27,7 +26,7 @@ export default function MobileBanner() {
     setShowPWAPrompt(false);
   }
   function handleShowModal() {
-    modal?.show(<InstallPWAModal />);
+    modal.show(<InstallPWAModal />);
   }
   if (!showPWAPrompt) return null;
   return (
