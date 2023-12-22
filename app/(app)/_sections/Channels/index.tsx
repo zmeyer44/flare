@@ -18,17 +18,13 @@ import { type NDKKind } from "@nostr-dev-kit/ndk";
 import { uniqBy } from "ramda";
 import { getTagValues } from "@/lib/nostr/utils";
 import { nip19 } from "nostr-tools";
+import { api } from "@/lib/trpc/api";
 
 export default function ChannelsSection() {
-  const { events } = useEvents({
-    filter: {
-      kinds: [34235 as NDKKind],
-      limit: 10,
-    },
+  const { data: channels } = api.feed.getChannelsToWatch.useQuery(undefined, {
+    initialData: [],
   });
-  const channels = uniqBy((e) => e.author.pubkey, events).map(
-    (event) => event.author.pubkey,
-  );
+
   return (
     <Section className="relative overflow-x-hidden">
       <SectionHeader className="px-5">

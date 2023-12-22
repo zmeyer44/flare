@@ -1,6 +1,7 @@
 import { createTRPCRouter } from "@/lib/trpc/trpc";
 import { storageRouter } from "@/lib/trpc/router/storageRouter";
 import { viewRouter } from "@/lib/trpc/router/viewRouter";
+import { feedRouter } from "@/lib/trpc/router/feedRouter";
 /**
  * This is the primary router for your server.
  *
@@ -9,6 +10,7 @@ import { viewRouter } from "@/lib/trpc/router/viewRouter";
 export const appRouter = createTRPCRouter({
   storage: storageRouter,
   view: viewRouter,
+  feed: feedRouter,
 });
 
 // export type definition of API
