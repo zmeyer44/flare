@@ -18,7 +18,7 @@ export function MyDrawer() {
             shouldScaleBackground
             open={showNested}
             nested={true}
-            onClose={() => setTimeout(() => setShowNested(true), 300)}
+            onClose={() => setTimeout(() => setShowNested(false), 300)}
           >
             <Drawer.Portal>
               <Drawer.Overlay className="fixed inset-0 bg-black/40" />
