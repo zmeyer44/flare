@@ -62,7 +62,10 @@ export function ProfileForm() {
   const { profile } = useProfile(currentUser?.pubkey ?? data?.user.id);
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues: { ...profile, display_name: profile?.displayName },
+    defaultValues: {
+      ...profile,
+      display_name: profile?.displayName,
+    },
     mode: "onChange",
   });
   const { setValue, getValues } = form;
@@ -98,7 +101,11 @@ export function ProfileForm() {
   async function onSubmit(data: ProfileFormValues) {
     if (!ndk || !currentUser) return;
     setIsLoading(true);
-    const content = JSON.stringify({ ...profile, ...data });
+    const content = JSON.stringify({
+      picture: profile?.image,
+      ...profile,
+      ...data,
+    });
     const result = await createEvent(ndk, {
       content,
       kind: 0,
