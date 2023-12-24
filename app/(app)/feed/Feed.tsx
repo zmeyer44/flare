@@ -34,15 +34,19 @@ export default function Feed() {
             Recent Uploads
           </SectionTitle>
         </SectionHeader>
-        <SectionContent className="md-feed-cols relative mx-auto gap-4">
-          {processedEvents.map((e) => {
-            return (
-              <Link key={e.id} href={`/w/${e.encode()}`}>
-                {/* <VideoCard event={e} /> */}
-                <h1>{e.id}</h1>
-              </Link>
-            );
-          })}
+        <SectionContent className="mx-auto">
+          <ul className="md-feed-cols  gap-4">
+            {processedEvents.map((e) => {
+              return (
+                <li key={e.id}>
+                  <Link href={`/w/${e.encode()}`}>
+                    {/* <VideoCard event={e} /> */}
+                    <h1>{e.id}</h1>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </SectionContent>
       </Section>
     );
