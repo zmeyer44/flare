@@ -26,7 +26,7 @@ export default function Feed() {
   });
 
   const processedEvents = uniqBy((e) => getTagValues("title", e.tags), events);
-  if (processedEvents.length) {
+  if (false && processedEvents.length) {
     return (
       <Section className="px-5">
         <SectionHeader>
@@ -36,16 +36,15 @@ export default function Feed() {
         </SectionHeader>
         <SectionContent className="mx-auto">
           <ul className="md-feed-cols  gap-4">
-            {processedEvents.map((e) => {
+            {/* {processedEvents.map((e) => {
               return (
                 <li key={e.id}>
                   <Link href={`/w/${e.encode()}`}>
-                    {/* <VideoCard event={e} /> */}
-                    <h1>{e.id}</h1>
+                    <VideoCard event={e} />
                   </Link>
                 </li>
               );
-            })}
+            })} */}
           </ul>
         </SectionContent>
       </Section>
@@ -55,7 +54,7 @@ export default function Feed() {
     <Section className="px-5">
       <SectionHeader>
         <SectionTitle className="font-main text-2xl font-normal sm:text-3xl">
-          Recent Uploads
+          Recent Uploads {processedEvents.length}
         </SectionTitle>
       </SectionHeader>
       <SectionContent className="md-feed-cols relative mx-auto gap-4">
