@@ -127,8 +127,8 @@ function redirectToAuthUrlWithCallback(url: string) {
   const callbackPath = "/auth/callback";
   const currentUrl = new URL(window.location.href);
   const callbackUrl = new URL(callbackPath, currentUrl.origin);
-  alert("at redirectToAuthUrlWithCallback");
   redirectUrl.searchParams.set("callbackUrl", callbackUrl.toString());
+  alert("sedning to " + redirectUrl.toString());
   localStorage.setItem("intended-url", window.location.href);
   // window.open(redirectUrl.toString());
   window.location.href = redirectUrl.toString();
