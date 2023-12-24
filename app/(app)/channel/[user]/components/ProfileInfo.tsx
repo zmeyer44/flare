@@ -62,7 +62,7 @@ export default function ProfileInfo({
         </div>
         <div className="flex items-center gap-3">
           <FollowButton pubkey={pubkey} />
-          <ZapButton pubkey={pubkey} zapType="user" />
+          <ZapButton variant={"secondary"} pubkey={pubkey} zapType="user" />
         </div>
       </div>
 
