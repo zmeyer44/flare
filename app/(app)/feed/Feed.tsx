@@ -38,7 +38,8 @@ export default function Feed() {
           {processedEvents.map((e) => {
             return (
               <Link key={e.id} href={`/w/${e.encode()}`}>
-                <VideoCard event={e} />
+                {/* <VideoCard event={e} /> */}
+                <h1>{e.id}</h1>
               </Link>
             );
           })}
