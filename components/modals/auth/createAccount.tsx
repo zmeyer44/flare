@@ -210,7 +210,11 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
                 </FormItem>
               )}
             />
-            <Button loading={isCreatingAccount} type="submit">
+            <Button
+              loading={isCreatingAccount}
+              type="submit"
+              className="w-full"
+            >
               Create Account
             </Button>
           </form>

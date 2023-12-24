@@ -24,10 +24,12 @@ export default function useCurrentUser() {
     addFollow,
   } = currentUserStore();
   const { loginWithNip07, ndk } = useNDK();
+
   async function attemptLogin() {
     try {
       const shouldReconnect = localStorage.getItem("shouldReconnect");
       if (!shouldReconnect || typeof window.nostr === "undefined") return;
+      if (ndk?.signer) return;
       const user = await loginWithNip07();
       if (!user) {
         throw new Error("NO auth");
