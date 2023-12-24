@@ -5,7 +5,7 @@ import { useState } from "react";
 import useAuthGuard from "./hooks/useAuthGuard";
 import { modal } from "@/app/_providers/modal";
 import { useNDK } from "@/app/_providers/ndk";
-import { zapEvent } from "@/lib/actions/zap";
+import { zapEvent, zapUser } from "@/lib/actions/zap";
 import { type NostrEvent } from "@nostr-dev-kit/ndk";
 import { toast } from "sonner";
 
@@ -15,6 +15,7 @@ import { formatCount } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { SendPaymentResponse } from "webln";
 
 const intervals = [
   10, 25, 50, 75, 100, 150, 200, 250, 350, 500, 750, 1000, 1250, 1500, 2_000,
@@ -23,11 +24,23 @@ const intervals = [
   300_000, 500_000, 750_000, 1_000_000, 1_250_000, 1_500_000, 2_000_000,
 ];
 
-type ZapModalProps = {
-  title?: string;
+type ZapEvent = {
+  type: "event";
   event: NostrEvent;
 };
-export default function ZapModal({ event, title = "Send Zap" }: ZapModalProps) {
+type ZapUser = {
+  type: "user";
+  pubkey: string;
+};
+type ZapModalProps = {
+  title?: string;
+} & (ZapEvent | ZapUser);
+
+export default function ZapModal({
+  title = "Send Zap",
+
+  ...props
+}: ZapModalProps) {
   useAuthGuard();
   const [isLoading, setIsLoading] = useState(false);
   const [note, setNote] = useState("");
@@ -50,7 +63,12 @@ export default function ZapModal({ event, title = "Send Zap" }: ZapModalProps) {
   async function handleSendZap() {
     try {
       setIsLoading(true);
-      const result = await zapEvent(ndk!, sats, event, note);
+      let result: SendPaymentResponse | undefined;
+      if (props.type === "event") {
+        result = await zapEvent(ndk!, sats, props.event, note);
+      } else {
+        result = await zapUser(ndk!, sats, props.pubkey, note);
+      }
       toast.success("Zap Sent!");
       modal.dismiss();
     } catch (err) {

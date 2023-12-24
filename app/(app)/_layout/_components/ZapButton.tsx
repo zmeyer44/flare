@@ -24,7 +24,11 @@ export default function ZapButton() {
       <button
         onClick={() => {
           modal.show(
-            <ZapModal title="Give Flare a Tip!" event={flockstrEvent} />,
+            <ZapModal
+              title="Give Flare a Tip!"
+              event={flockstrEvent}
+              type="event"
+            />,
           );
         }}
         className={cn(
