@@ -107,7 +107,7 @@ export async function _loginWithNip07() {
 function onAuthUrl(url: string) {
   let popupNotOpened = true;
   let creating = true;
-  let popup = window.open(url, "_blank", "width=400,height=600");
+  let popup = window.open(url, undefined, "width=400,height=600");
   if (!popup) {
     popupNotOpened = true;
     redirectToAuthUrlWithCallback(url);
@@ -127,7 +127,9 @@ function redirectToAuthUrlWithCallback(url: string) {
   const callbackPath = "/auth/callback";
   const currentUrl = new URL(window.location.href);
   const callbackUrl = new URL(callbackPath, currentUrl.origin);
+  alert("at redirectToAuthUrlWithCallback");
   redirectUrl.searchParams.set("callbackUrl", callbackUrl.toString());
   localStorage.setItem("intended-url", window.location.href);
-  window.open(redirectUrl.toString());
+  // window.open(redirectUrl.toString());
+  window.location.href = redirectUrl.toString();
 }
