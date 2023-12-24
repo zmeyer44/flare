@@ -71,13 +71,15 @@ export default function useCurrentUser() {
     const user = ndk.getUser({ hexpubkey: pubkey });
     console.log("user", user);
     await user.fetchProfile();
-
     // await db.users.add({
     //   profile: user.profile!,
     //   pubkey: pubkey,
     //   createdAt: unixTimeNowInSeconds(),
     // });
     setCurrentUser(user);
+    if (typeof window.webln !== "undefined") {
+      await window.webln.enable();
+    }
   }
 
   // useEffect(() => {

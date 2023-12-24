@@ -68,6 +68,14 @@ const DrawerHeader = ({
 );
 DrawerHeader.displayName = "DrawerHeader";
 
+const DrawerBody = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("px-4 text-center sm:text-left", className)} {...props} />
+);
+DrawerBody.displayName = "DrawerBody";
+
 const DrawerFooter = ({
   className,
   ...props
@@ -117,5 +125,6 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
+  DrawerBody,
   DrawerNestedRoot,
 };

@@ -36,17 +36,19 @@ function cn(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+type ModalProps = React.HTMLAttributes<HTMLDivElement> & {
+  modal: ModalT;
+  layer?: number;
+  nestedModals: ModalT[];
+  removeModal: (modal: ModalT) => void;
+};
 const Modal = ({
   modal,
   layer = 0,
   nestedModals,
   removeModal,
-}: {
-  modal: ModalT;
-  layer?: number;
-  nestedModals: ModalT[];
-  removeModal: (modal: ModalT) => void;
-}) => {
+  ...props
+}: ModalProps) => {
   const NestedModal = () => {
     if (nestedModals.length === 0) {
       return null;
@@ -61,8 +63,16 @@ const Modal = ({
         }}
       >
         <DialogPortal>
-          <DialogOverlay className="fixed inset-0 bg-black/40" />
+          <DialogOverlay
+            style={{
+              zIndex: 940 + layer * 2,
+            }}
+            className="fixed inset-0 bg-black/40"
+          />
           <Modal
+            style={{
+              zIndex: 940 + layer * 2,
+            }}
             modal={nestedModals[0]!}
             layer={layer + 1}
             nestedModals={nestedModals.slice(1)}
@@ -73,7 +83,7 @@ const Modal = ({
     );
   };
   return (
-    <DialogContent>
+    <DialogContent {...props}>
       {modal.jsx}
       <NestedModal />
     </DialogContent>
@@ -102,7 +112,11 @@ const ModalDrawer = ({
           setTimeout(() => removeModal(nestedModals[0]!), 300);
         }}
       >
-        <DrawerContent>
+        <DrawerContent
+          style={{
+            maxHeight: `${maxHeight - 2}%`,
+          }}
+        >
           <ModalDrawer
             modal={nestedModals[0]!}
             layer={layer + 1}
@@ -190,7 +204,11 @@ const Modstr = (props: ToasterProps) => {
           onClose={() => setModals([])}
           shouldScaleBackground={true}
         >
-          <DrawerContent>
+          <DrawerContent
+            style={{
+              maxHeight: "96%",
+            }}
+          >
             <ModalDrawer
               modal={rootModal}
               nestedModals={modals.slice(1)}

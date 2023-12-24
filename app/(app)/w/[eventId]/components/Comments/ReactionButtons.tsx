@@ -13,7 +13,7 @@ import {
   HiHandThumbDown,
 } from "react-icons/hi2";
 import { modal } from "@/app/_providers/modal";
-import LoginModal from "@/components/modals/login";
+import AuthModal from "@/components/modals/auth";
 import { formatCount } from "@/lib/utils";
 
 type ReactionButtosProps = {
@@ -58,7 +58,7 @@ export default function ReactionButtons({ event }: ReactionButtosProps) {
     if (currentUser) {
       handleLike(action);
     } else {
-      modal.show(<LoginModal />, {
+      modal.show(<AuthModal />, {
         id: "login",
       });
     }
