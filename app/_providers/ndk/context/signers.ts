@@ -108,7 +108,7 @@ export async function _loginWithNip07() {
 function onAuthUrl(url: string) {
   let popupNotOpened = true;
   let creating = true;
-  let popup = window.open(url, undefined, "width=400,height=600");
+  let popup = window.open(url, "_blank", "width=400,height=600");
   if (!popup) {
     popupNotOpened = true;
     redirectToAuthUrlWithCallback(url);
