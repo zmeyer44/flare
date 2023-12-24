@@ -8,7 +8,6 @@ import VideosGrid from "@/containers/feeds/VideosGrid";
 import type { NDKKind } from "@nostr-dev-kit/ndk";
 import { nip19 } from "nostr-tools";
 import useProfile from "@/lib/hooks/useProfile";
-
 import Spinner from "@/components/spinner";
 
 export default function ChannelPage({

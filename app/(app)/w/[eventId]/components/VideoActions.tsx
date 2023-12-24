@@ -99,6 +99,7 @@ export default function VideoActions({ event }: VideoActionsProps) {
               pubkey={event.author.pubkey}
             />
             <ZapButton
+              zapType="event"
               event={event.rawEvent()}
               size={"sm"}
               className="px-4 font-bold"

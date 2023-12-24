@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { RiAddFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 
-export default function ZapButton() {
+export default function UploadVideoButton() {
   const { currentUser } = useCurrentUser();
   const router = useRouter();
   return (

@@ -7,12 +7,18 @@ import { modal } from "@/app/_providers/modal";
 import type { NostrEvent } from "@nostr-dev-kit/ndk";
 import { Button } from "@/components/ui/button";
 
-type ZapButtonProps = {
+type ZapEvent = {
+  zapType: "event";
   event: NostrEvent;
-} & ComponentProps<typeof Button>;
+};
+type ZapUser = {
+  zapType: "user";
+  pubkey: string;
+};
+
+type ZapButtonProps = ComponentProps<typeof Button> & (ZapEvent | ZapUser);
 
 export default function ZapButton({
-  event,
   children = "Zap",
   ...buttonProps
 }: ZapButtonProps) {
@@ -21,7 +27,11 @@ export default function ZapButton({
   return (
     <Button
       onClick={() => {
-        modal.show(<ZapModal event={event} />);
+        if (buttonProps.zapType === "event") {
+          modal.show(<ZapModal event={buttonProps.event} type="event" />);
+        } else {
+          modal.show(<ZapModal pubkey={buttonProps.pubkey} type="user" />);
+        }
       }}
       {...buttonProps}
     >

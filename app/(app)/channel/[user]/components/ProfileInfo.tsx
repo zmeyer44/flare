@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HiCheckBadge } from "react-icons/hi2";
 import FollowButton from "@/components/custom-buttons/FollowButton";
+import ZapButton from "@/components/custom-buttons/ZapButton";
+
 import useProfile from "@/lib/hooks/useProfile";
 
 export default function ProfileInfo({
@@ -58,7 +60,10 @@ export default function ProfileInfo({
             </div>
           </div>
         </div>
-        <FollowButton pubkey={pubkey} />
+        <div className="flex items-center gap-3">
+          <FollowButton pubkey={pubkey} />
+          <ZapButton pubkey={pubkey} zapType="user" />
+        </div>
       </div>
 
       {/* Description and data */}
