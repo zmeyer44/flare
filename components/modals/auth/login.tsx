@@ -130,6 +130,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
                   <FormControl>
                     <Input
                       placeholder="name@[provider].com or npub..."
+                      className="text-[16px] sm:text-sm"
                       {...field}
                     />
                   </FormControl>
