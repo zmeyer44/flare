@@ -67,7 +67,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
       // Check if nip-05
       if (/^(?:([\w.+-]+)@)?([\w.-]+)$/.test(npub)) {
         console.log("searching nip05");
-        const pubkey = await nip05.queryProfile(npub);
+        const pubkey = await nip05.queryProfile(npub.toLowerCase());
         if (!pubkey) {
           toast.error("Unable to find profile");
           return;

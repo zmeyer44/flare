@@ -73,7 +73,7 @@ type CreateAccountFormProps = {
 };
 export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
-  const { ndk, createNip46Signer, fetchEvents } = useNDK();
+  const { createNip46Signer } = useNDK();
   const { loginWithPubkey } = useCurrentUser();
 
   const form = useForm<CreateAccountFormValues>({
@@ -91,7 +91,7 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
       const nip46Signer = await createNip46Signer(
         data.provider.pubkey,
         data.provider.domain,
-        data.username,
+        data.username.toLowerCase(),
         data.email,
       );
       if (nip46Signer) {

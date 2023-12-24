@@ -74,6 +74,7 @@ export async function _createNip46Signer(
     const signer = new NDKNip46Signer(ndk, bunkerPubkey, localSigner);
     ndk.signer = signer;
     signer.rpc.on("authUrl", (url: string) => onAuthUrl(url));
+
     const newSignerPubkey = await signer.createAccount(
       username,
       bunkerDomain,
@@ -128,7 +129,6 @@ function redirectToAuthUrlWithCallback(url: string) {
   const currentUrl = new URL(window.location.href);
   const callbackUrl = new URL(callbackPath, currentUrl.origin);
   redirectUrl.searchParams.set("callbackUrl", callbackUrl.toString());
-  alert("sedning to " + redirectUrl.toString());
   localStorage.setItem("intended-url", window.location.href);
   // window.open(redirectUrl.toString());
   window.location.href = redirectUrl.toString();
