@@ -28,7 +28,7 @@ const data = {
   },
 };
 async function handler() {
-  return new NextResponse(JSON.stringify(data), {
+  return new NextResponse(JSON.stringify(data, undefined, 2), {
     status: 200,
     headers: {
       "Cross-Origin-Resource-Policy": "cross-origin",
@@ -39,13 +39,5 @@ async function handler() {
     },
   });
 }
-
-const test = {
-  names: {
-    _: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
-    zach: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
-    "🔥": "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
-  },
-};
 
 export { handler as GET, handler as POST };
