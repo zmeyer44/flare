@@ -160,3 +160,7 @@ img:not([src]) {
 html {
   background-color: black;
 }
+
+.odell-mode {
+  text-transform: lowercase !important;
+}

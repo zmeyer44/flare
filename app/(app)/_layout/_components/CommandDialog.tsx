@@ -37,6 +37,7 @@ type SearchSuggestionObject = {
 };
 export const commandDialogAtom = atom(false);
 export const anonModeAtom = atom(false);
+export const odellModeAtom = atom(false);
 
 export default function CommandDialogComponent() {
   const [anon, setAnon] = useAtom(anonModeAtom);
@@ -50,6 +51,24 @@ export default function CommandDialogComponent() {
       return !a;
     }),
   );
+
+  const [odellMode, setOdellMode] = useAtom(odellModeAtom);
+  useKeyboardShortcut(["shift", "o", "d", "e", "l"], () => {
+    if (odellMode) {
+      setOdellMode(false);
+      toast.success("Odell mode deactivated");
+    } else {
+      setOdellMode(true);
+      toast.success("Odell mode activated 🤙");
+    }
+  });
+  useEffect(() => {
+    if (odellMode) {
+      return document.body.classList.add(`odell-mode`);
+    } else {
+      return document.body.classList.remove(`odell-mode`);
+    }
+  }, [odellMode]);
 
   const [open, setOpen] = useAtom(commandDialogAtom);
   useKeyboardShortcut(["ctrl", "k"], () => setOpen((open) => !open));
