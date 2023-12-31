@@ -37,7 +37,7 @@ type SearchSuggestionObject = {
 };
 export const commandDialogAtom = atom(false);
 export const anonModeAtom = atom(false);
-export const odellModeAtom = atom(false);
+export const odellModeAtom = atom<"lower" | "upper" | null>(null);
 
 export default function CommandDialogComponent() {
   const [anon, setAnon] = useAtom(anonModeAtom);
@@ -55,19 +55,27 @@ export default function CommandDialogComponent() {
   const [odellMode, setOdellMode] = useAtom(odellModeAtom);
 
   useKeyboardShortcut(["shift", "o"], () => {
-    if (odellMode) {
-      setOdellMode(false);
-      toast.success("Odell mode deactivated");
+    if (odellMode === null) {
+      setOdellMode("upper");
+      toast.success("Odell Mode uppercase activated 🤙");
+    } else if (odellMode === "upper") {
+      setOdellMode("lower");
+      toast.success("Odell Mode lowercase activated 🤙");
     } else {
-      setOdellMode(true);
-      toast.success("Odell mode activated 🤙");
+      setOdellMode(null);
+      toast.success("Odell mode Deactivated 🤙");
     }
   });
   useEffect(() => {
-    if (odellMode) {
-      return document.body.classList.add(`odell-mode`);
+    if (odellMode === "upper") {
+      document.body.classList.remove(`odell-mode-lower`);
+      return document.body.classList.add(`odell-mode-upper`);
+    } else if (odellMode === "lower") {
+      document.body.classList.remove(`odell-mode-upper`);
+      return document.body.classList.add(`odell-mode-lower`);
     } else {
-      return document.body.classList.remove(`odell-mode`);
+      document.body.classList.remove(`odell-mode-upper`);
+      return document.body.classList.remove(`odell-mode-lower`);
     }
   }, [odellMode]);
 
