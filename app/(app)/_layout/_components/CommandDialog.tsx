@@ -55,7 +55,6 @@ export default function CommandDialogComponent() {
   const [odellMode, setOdellMode] = useAtom(odellModeAtom);
 
   useKeyboardShortcut(["shift", "o"], () => {
-    console.log("LELLO");
     if (odellMode) {
       setOdellMode(false);
       toast.success("Odell mode deactivated");
