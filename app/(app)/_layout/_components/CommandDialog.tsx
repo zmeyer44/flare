@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/command";
 
 import { atom, useAtom } from "jotai";
+import useWindowSize from "@/lib/hooks/useWindowSize";
 import useSearch from "@/lib/hooks/useSearch";
 import { cn } from "@/lib/utils";
 import SearchVideoCard, {
@@ -40,6 +41,8 @@ export const anonModeAtom = atom(false);
 export const odellModeAtom = atom<"lower" | "upper" | null>(null);
 
 export default function CommandDialogComponent() {
+  const { isMobile } = useWindowSize();
+
   const [anon, setAnon] = useAtom(anonModeAtom);
   useKeyboardShortcut(["ctrl", "shift", "a"], () =>
     setAnon((a) => {
@@ -124,7 +127,11 @@ export default function CommandDialogComponent() {
   }, [searchInput, debounce]);
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandDialog
+      contentClassName={cn(isMobile && "w-full h-[100svh] py-1")}
+      open={open}
+      onOpenChange={setOpen}
+    >
       {/* <CommandInput placeholder="Search videos..." /> */}
       <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
         <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
