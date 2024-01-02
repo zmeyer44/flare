@@ -40,7 +40,13 @@ function Player({
   onClose,
 }: {
   player: React.RefObject<MediaPlayerInstance>;
-  episode: { url: string; title?: string; thumbnail?: string; author: string };
+  episode: {
+    url: string;
+    title?: string;
+    thumbnail?: string;
+    author: string;
+    encodedEvent?: string;
+  };
   onClose: () => void;
 }) {
   const { player, currentTime, wasPlaying } = usePlayer();
@@ -62,7 +68,10 @@ function Player({
   console.log("Was playing", wasPlaying);
   return (
     <>
-      <div className="flex w-full items-stretch justify-between gap-3 overflow-hidden hover:cursor-pointer sm:hidden">
+      <Link
+        href={`/w/${episode.encodedEvent}`}
+        className="flex w-full items-stretch justify-between gap-3 overflow-hidden hover:cursor-pointer sm:hidden"
+      >
         <div className="flex shrink grow items-center gap-x-2 text-sm font-medium text-foreground">
           <div className="center aspect-[21/9] h-[55px] shrink-0 shadow">
             <div className="center h-full w-full">
@@ -127,7 +136,7 @@ function Player({
             <RiCloseFill className="h-[30px] w-[30px]" />
           </button>
         </div>
-      </div>
+      </Link>
       <ProgressBar player={pipRef} />
     </>
   );

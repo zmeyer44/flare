@@ -7,12 +7,14 @@ import { anonModeAtom } from "@/app/(app)/_layout/_components/CommandDialog";
 import { useAtom } from "jotai";
 import { usePlayer } from "@/app/_providers/pipPlayer";
 import { cn } from "@/lib/utils";
+import { nip19 } from "nostr-tools";
 
 type PlayerProps = {
   url: string;
   title: string;
   image: string;
   eventIdentifier: string;
+  encodedEvent: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export default function Player({
@@ -21,6 +23,7 @@ export default function Player({
   image,
   eventIdentifier,
   className: containerClassName,
+  encodedEvent,
   ...containerProps
 }: PlayerProps) {
   const [anon] = useAtom(anonModeAtom);
@@ -31,6 +34,7 @@ export default function Player({
     title,
     thumbnail: image,
     author: eventIdentifier.split(":")[1] ?? "",
+    encodedEvent,
   });
   const autho = eventIdentifier.split(":")[1] ?? "";
   useEffect(() => {
@@ -61,6 +65,7 @@ export default function Player({
   return (
     <div {...containerProps} className={cn("aspect-video", containerClassName)}>
       <VideoPlayer
+        encodedEvent={encodedEvent}
         onCanPlay={onCanPlay}
         src={url}
         title={title}

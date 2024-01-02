@@ -52,6 +52,7 @@ export function PlaybackPage({ event }: { event: NDKEvent }) {
             url={url}
             title={title}
             image={image}
+            encodedEvent={event.encode()}
             eventIdentifier={event.tagId()}
           />
         </div>

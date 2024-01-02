@@ -32,6 +32,7 @@ type VideoPlayerProps = {
   lastRecordedTime?: number;
   onCanPlay?: () => void;
   persistentProgress?: boolean;
+  encodedEvent?: string;
 };
 export default function VideoPlayer({
   textTracks,
@@ -44,12 +45,14 @@ export default function VideoPlayer({
   lastRecordedTime,
   onCanPlay: _onCanPlay,
   persistentProgress,
+  encodedEvent,
 }: VideoPlayerProps) {
   const useplayer = usePlayer({
     url: src,
     author: "",
     title,
     thumbnail,
+    encodedEvent,
   });
   const { player, updateCurrentTime } = useplayer;
   // let player = useRef<MediaPlayerInstance>(null);

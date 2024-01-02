@@ -9,6 +9,7 @@ type Video = {
   author: string;
   title?: string;
   thumbnail?: string;
+  encodedEvent?: string;
 };
 
 interface PlayerState {
