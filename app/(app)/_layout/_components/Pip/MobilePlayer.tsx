@@ -60,7 +60,6 @@ function Player({
     console.log("VS", currentTime);
   }, [player.current]);
   const paused = useMediaState("paused", pipRef);
-
   function handleClickHide() {
     onClose();
   }
@@ -81,11 +80,8 @@ function Player({
                 src={episode.url}
                 playsinline
                 currentTime={currentTime}
-                autoplay={wasPlaying || true}
+                autoplay={wasPlaying}
                 ref={pipRef}
-                onMouseEnter={() => {
-                  console.log("Mouse enter pip", pipRef.current!.currentTime);
-                }}
               >
                 <MediaProvider>
                   {!!episode.thumbnail && (

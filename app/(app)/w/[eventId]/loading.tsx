@@ -10,13 +10,13 @@ export default function LoadingPage() {
         <div className="w-full rounded-xl">
           <Skeleton className="aspect-video w-full bg-muted" />
         </div>
-        <div className="pt-1">
+        <div className="px-4 pt-1">
           <VideoActionsLoading />
         </div>
         {/* <CommentSection eventReference={tagId} /> */}
       </div>
       <VerticalVideosFeedLoading
-        className="w-full lg:max-w-[400px]"
+        className="w-full px-4 lg:max-w-[400px]"
         title="Up Next"
         action={
           <Button disabled size={"sm"} variant={"ghost"}>
