@@ -55,7 +55,7 @@ export function PlaybackPage({ event }: { event: NDKEvent }) {
             eventIdentifier={event.tagId()}
           />
         </div>
-        <div className="px-4">
+        <div className="z-0 px-4">
           <div className="pt-1">
             <VideoActions event={event} />
           </div>
