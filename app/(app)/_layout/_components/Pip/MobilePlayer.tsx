@@ -85,11 +85,15 @@ function Player({
                 // autoplay={wasPlaying}
                 ref={pipRef}
                 onPlay={() => {
-                  alert("Can play!");
+                  alert("on play!");
                 }}
                 onCanPlay={() => {
                   alert("Can play!");
                   pipRef.current?.play();
+                }}
+                onError={(err) => {
+                  alert("Error");
+                  console.log("ERROR", err);
                 }}
               >
                 <MediaProvider>
