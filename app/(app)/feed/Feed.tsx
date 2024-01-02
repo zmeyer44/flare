@@ -21,7 +21,11 @@ export default function Feed() {
     },
   });
 
-  const processedEvents = uniqBy((e) => getTagValues("title", e.tags), events);
+  const processedEvents = uniqBy(
+    (e) => getTagValues("title", e.tags),
+    events,
+  ).slice(50);
+
   if (processedEvents.length) {
     return (
       <Section className="px-5">
