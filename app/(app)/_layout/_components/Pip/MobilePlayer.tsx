@@ -84,14 +84,7 @@ function Player({
                 currentTime={currentTime}
                 // autoplay={wasPlaying}
                 ref={pipRef}
-                onBlur={() => {
-                  alert("BLURRED");
-                }}
-                onFocus={() => {
-                  alert("FOCUSED");
-                }}
                 onCanPlay={() => {
-                  alert("Can play!");
                   if (wasPlaying && pipRef.current?.paused) {
                     pipRef.current?.play();
                   }
