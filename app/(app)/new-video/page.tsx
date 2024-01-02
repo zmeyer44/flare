@@ -57,13 +57,24 @@ export default function Page() {
 
     setLoading(true);
     try {
+      const d = nanoid(7);
       const tags: string[][] = [
-        ["d", nanoid(7)],
+        ["d", d],
         ["url", videoData.url],
         ["title", videoData.title],
         ["summary", videoData.summary ?? ""],
         ["published_at", unixTimeNowInSeconds().toString()],
         ["client", "flare"],
+        [
+          "alt",
+          `This is a video event and can be viewed at ${
+            process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? "https://www.flare.pub"
+          }/w/${nip19.naddrEncode({
+            identifier: d,
+            kind: 34235,
+            pubkey: currentUser.pubkey,
+          })}`,
+        ],
       ];
 
       if (videoData.fileType) {
