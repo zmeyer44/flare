@@ -22,6 +22,7 @@ export default function Feed() {
   const { events } = useEvents({
     filter: {
       kinds: [34235 as NDKKind],
+      limit: 1,
     },
   });
 
@@ -53,11 +54,41 @@ export default function Feed() {
   return (
     <Section className="px-5">
       <SectionHeader>
-        <SectionTitle className="font-main text-2xl font-normal sm:text-3xl">
+        <SectionTitle className="font-main text-2xl font-semibold sm:text-3xl">
           Recent Uploads {processedEvents.length}
         </SectionTitle>
       </SectionHeader>
       <SectionContent className="md-feed-cols relative mx-auto gap-4">
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
         <VideoCardLoading />
         <VideoCardLoading />
         <VideoCardLoading />
