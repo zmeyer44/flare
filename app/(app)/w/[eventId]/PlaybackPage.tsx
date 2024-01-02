@@ -46,25 +46,28 @@ export function PlaybackPage({ event }: { event: NDKEvent }) {
     <div className="flex flex-col gap-6 lg:flex-row">
       <div className="shrink-1 flex-1 md:min-w-[500px]">
         {/* Video Player */}
-        <div className="aspect-video max-h-[calc(61vw-32px)] w-full overflow-hidden rounded-xl">
+        <div className="sticky top-[calc(var(--header-height))] z-10 aspect-video max-h-[calc(61vw-32px)] w-full overflow-hidden sm:static sm:rounded-xl sm:px-4">
           <Player
+            className="overflow-hidden sm:rounded-xl"
             url={url}
             title={title}
             image={image}
             eventIdentifier={event.tagId()}
           />
         </div>
-        <div className="pt-1">
-          <VideoActions event={event} />
+        <div className="px-4">
+          <div className="pt-1">
+            <VideoActions event={event} />
+          </div>
+          <CommentSection
+            eventReference={tagId}
+            eventId={event.id}
+            pubkey={event.pubkey}
+          />
         </div>
-        <CommentSection
-          eventReference={tagId}
-          eventId={event.id}
-          pubkey={event.pubkey}
-        />
       </div>
       <VerticalVideosFeed
-        className="w-full lg:max-w-[400px]"
+        className="w-full px-4 lg:max-w-[400px]"
         title="Up Next"
         action={
           <Button className="" size={"sm"} variant={"ghost"}>

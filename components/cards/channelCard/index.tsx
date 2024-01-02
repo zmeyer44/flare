@@ -16,6 +16,7 @@ import { HiCheckBadge } from "react-icons/hi2";
 import useProfile from "@/lib/hooks/useProfile";
 import { nip19 } from "nostr-tools";
 import { useTimeout } from "usehooks-ts";
+import { useRouter } from "next/navigation";
 
 type ChannelCardProps = {
   className?: string;
@@ -28,6 +29,7 @@ export default function ChannelCard({
   channelPubkey,
   hide,
 }: ChannelCardProps) {
+  const router = useRouter();
   const npub = nip19.npubEncode(channelPubkey);
   const { profile, followers } = useProfile(channelPubkey, {
     fetchFollowerCount: false,
@@ -74,8 +76,8 @@ export default function ChannelCard({
       </div>
       <div className="flex-1 space-y-3 text-base">
         <div className="flex rounded-[10px] bg-muted p-2">
-          <Link
-            href={`/channel/${npub}`}
+          <div
+            onClick={() => router.push(`/channel/${npub}`)}
             className="center group gap-x-2 overflow-hidden text-foreground"
           >
             <Avatar className="center h-[34px] w-[34px] overflow-hidden rounded-[.35rem] bg-muted">
@@ -110,7 +112,7 @@ export default function ChannelCard({
                 </p>
               )}
             </div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>

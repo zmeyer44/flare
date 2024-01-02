@@ -6,18 +6,23 @@ import useVideo from "@/lib/hooks/useVideo";
 import { anonModeAtom } from "@/app/(app)/_layout/_components/CommandDialog";
 import { useAtom } from "jotai";
 import { usePlayer } from "@/app/_providers/pipPlayer";
+import { cn } from "@/lib/utils";
+
+type PlayerProps = {
+  url: string;
+  title: string;
+  image: string;
+  eventIdentifier: string;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export default function Player({
   url,
   title,
   image,
   eventIdentifier,
-}: {
-  url: string;
-  title: string;
-  image: string;
-  eventIdentifier: string;
-}) {
+  className: containerClassName,
+  ...containerProps
+}: PlayerProps) {
   const [anon] = useAtom(anonModeAtom);
   const { addView } = useVideo({ eventIdentifier: eventIdentifier });
 
@@ -42,13 +47,19 @@ export default function Player({
   }
   if (!url || !title) {
     return (
-      <div className="center relative aspect-video h-full w-full overflow-hidden rounded-md bg-muted text-primary">
+      <div
+        {...containerProps}
+        className={cn(
+          "center relative aspect-video h-full w-full overflow-hidden bg-muted text-primary",
+          containerClassName,
+        )}
+      >
         <Spinner />
       </div>
     );
   }
   return (
-    <div className="aspect-video">
+    <div {...containerProps} className={cn("aspect-video", containerClassName)}>
       <VideoPlayer
         onCanPlay={onCanPlay}
         src={url}

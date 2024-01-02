@@ -1,7 +1,7 @@
 "use client";
 import "@vidstack/react/player/styles/base.css";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 
 import {
   isHLSProvider,
@@ -19,7 +19,6 @@ import {
 import { VideoLayout } from "./layout";
 
 import { type TrackType } from "./types";
-import { usePlayer } from "@/app/_providers/pipPlayer";
 
 type VideoPlayerProps = {
   textTracks?: TrackType[];
@@ -43,60 +42,8 @@ export default function VideoPlayer({
   lastRecordedTime,
   onCanPlay: _onCanPlay,
 }: VideoPlayerProps) {
-  const useplayer = usePlayer({
-    url: src,
-    author: "",
-    title,
-    thumbnail,
-  });
-  const { player, updateCurrentTime } = useplayer;
-  // let player = useRef<MediaPlayerInstance>(null);
-  useEffect(() => {
-    // Subscribe to state updates.
-
-    return player.current!.subscribe(
-      ({ paused, viewType, currentTime: currentTimeInSeconds }) => {
-        // console.log("currentTimeInSeconds", currentTimeInSeconds);
-        if (recordView) {
-          if (currentTimeInSeconds - (lastRecordedTime ?? 0) > 10) {
-            recordView(currentTimeInSeconds);
-          }
-        }
-
-        // console.log('is paused?', '->', state.paused);
-        // console.log('is audio view?', '->', state.viewType === 'audio');
-      },
-    );
-  }, []);
-
-  // const time = useMediaState("currentTime", player);
-  // const paused = useMediaState("paused", player);
-  // useInterval(() => {
-  //   logProgress({ currentTime: time, playing: !paused });
-  // }, 5000);
-  // console.log("Renderererer");
-  // function logProgress({
-  //   currentTime,
-  //   playing,
-  // }: {
-  //   currentTime: number;
-  //   playing: boolean;
-  // }) {
-  //   console.log(
-  //     JSON.stringify({
-  //       currentTime: currentTime,
-  //       playing: playing,
-  //     }),
-  //   );
-  //   return;
-  //   localStorage.setItem(
-  //     "currently-watching",
-  //     JSON.stringify({
-  //       currentTime: currentTime,
-  //       playing: playing,
-  //     }),
-  //   );
-  // }
+  //   const { player, updateCurrentTime } = useplayer;
+  let player = useRef<MediaPlayerInstance>(null);
 
   function onProviderChange(
     provider: MediaProviderAdapter | null,
@@ -127,15 +74,6 @@ export default function VideoPlayer({
       playsinline
       onProviderChange={onProviderChange}
       onCanPlay={onCanPlay}
-      onPause={() => {
-        useplayer.pause();
-      }}
-      onPlay={() => {
-        useplayer.play();
-      }}
-      // onTimeUpdate={(event) => {
-      //   updateCurrentTime(Math.floor(event.currentTime));
-      // }}
       ref={player}
       autoplay={autoplay}
     >
