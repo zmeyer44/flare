@@ -17,21 +17,24 @@ export function Volume() {
   if (!canSetVolume) return null;
 
   return (
-    <Slider.Root
-      className="group relative inline-flex h-10 w-full max-w-[80px] cursor-pointer touch-none select-none items-center outline-none"
-      value={[volume * 100]}
-      onValueChange={([value]) => {
-        remote.changeVolume((value ?? 0) / 100);
-      }}
-    >
-      <Slider.Track className="relative h-[5px] w-full rounded-sm bg-white/30">
-        <Slider.Range className="absolute h-full rounded-sm bg-media-brand will-change-[width]" />
-      </Slider.Track>
-      <Slider.Thumb
-        aria-label="Volume"
-        className="block h-[15px] w-[15px] rounded-full border border-[#cacaca] bg-white opacity-0 outline-none ring-white/40 transition-opacity will-change-[left] focus:opacity-100 focus:ring-4 group-hocus:opacity-100"
-      />
-    </Slider.Root>
+    <div>
+      <Slider.Root
+        className="group/volume-slider relative inline-flex h-10 w-full max-w-0 cursor-pointer touch-none select-none items-center overflow-hidden outline-none transition-all group-hover/volume:max-w-[80px]"
+        value={[volume * 100]}
+        onValueChange={([value]) => {
+          remote.changeVolume((value ?? 0) / 100);
+        }}
+      >
+        <Slider.Track className="relative h-[5px] w-full rounded-sm bg-white/30">
+          <Slider.Range className="absolute h-full rounded-sm bg-media-brand will-change-[width]" />
+        </Slider.Track>
+        <Slider.Thumb
+          aria-label="Volume"
+          className="block h-[15px] w-[15px] rounded-full border border-[#cacaca] bg-white opacity-0 outline-none ring-white/40 transition-opacity will-change-[left] focus:opacity-100 focus:ring-4 group-hocus/volume-slider:opacity-100"
+        />
+      </Slider.Root>
+      <div className="pointer-events-none w-0 transition-all group-hover/volume:w-[80px]" />
+    </div>
   );
 }
 

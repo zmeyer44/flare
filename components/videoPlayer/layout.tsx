@@ -39,22 +39,31 @@ export function VideoLayout({
           <Controls.Group className="absolute right-0 top-0 flex items-center px-2">
             <Menus.Settings />
           </Controls.Group>
-          <Controls.Group className="flex w-full items-center px-2">
+          <Controls.Group className="-mb-2 flex w-full items-center px-2">
             <Sliders.Time thumbnails={thumbnails} />
           </Controls.Group>
-          <Controls.Group className="-mt-0.5 flex w-full items-center px-2 pb-2">
-            <Buttons.Play tooltipAlign="start" tooltipOffset={popupOffset} />
-            <Buttons.Mute tooltipOffset={popupOffset} />
-            <Sliders.Volume />
-            <TimeGroup />
-            <Title />
-            <div className="flex-1" />
-            <Menus.Captions offset={popupOffset} tooltipOffset={popupOffset} />
-            <Buttons.PIP tooltipOffset={popupOffset} />
-            <Buttons.Fullscreen
-              tooltipAlign="end"
-              tooltipOffset={popupOffset}
-            />
+          <Controls.Group className="-mt-0.5 flex w-full items-center justify-between overflow-hidden px-0.5 pb-0.5">
+            <div className="flex grow items-center justify-start overflow-hidden">
+              <Buttons.Play tooltipAlign="start" tooltipOffset={popupOffset} />
+              <div className="group/volume flex items-center">
+                <Buttons.Mute tooltipOffset={popupOffset} />
+                <Sliders.Volume />
+              </div>
+              <TimeGroup />
+              <Title />
+            </div>
+            {/* <div className="flex-1" /> */}
+            <div className="flex">
+              <Menus.Captions
+                offset={popupOffset}
+                tooltipOffset={popupOffset}
+              />
+              <Buttons.PIP tooltipOffset={popupOffset} />
+              <Buttons.Fullscreen
+                tooltipAlign="end"
+                tooltipOffset={popupOffset}
+              />
+            </div>
           </Controls.Group>
         </Tooltip.Provider>
       </Controls.Root>
