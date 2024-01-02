@@ -144,7 +144,7 @@ export function PersistentProgress({ thumbnails }: TimeSliderProps) {
       </Slider.Track>
       <Slider.Thumb
         aria-label="Current Time"
-        className="block h-[10px] w-[10px] rounded-full border border-primary bg-primary opacity-0 outline-none transition-opacity will-change-[left] focus:opacity-100 focus:ring-4 group-hocus:opacity-100"
+        className="block rounded-full border border-primary bg-primary opacity-0 outline-none transition-opacity will-change-[left] focus:opacity-100 focus:ring-4 group-hocus:opacity-100"
       />
 
       {/* Preview */}

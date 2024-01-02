@@ -59,7 +59,7 @@ function Player({
     onClose();
   }
   let ActionIcon = !paused ? RiPauseMiniFill : RiPlayMiniFill;
-
+  console.log("Was playing", wasPlaying);
   return (
     <>
       <div className="flex w-full items-stretch justify-between gap-3 overflow-hidden hover:cursor-pointer sm:hidden">
@@ -72,7 +72,7 @@ function Player({
                 src={episode.url}
                 playsinline
                 currentTime={currentTime}
-                autoplay={wasPlaying}
+                autoplay={wasPlaying || true}
                 ref={pipRef}
                 onMouseEnter={() => {
                   console.log("Mouse enter pip", pipRef.current!.currentTime);
