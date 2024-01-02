@@ -84,12 +84,17 @@ function Player({
                 currentTime={currentTime}
                 // autoplay={wasPlaying}
                 ref={pipRef}
-                onPlay={() => {
-                  alert("on play!");
+                onBlur={() => {
+                  alert("BLURRED");
+                }}
+                onFocus={() => {
+                  alert("FOCUSED");
                 }}
                 onCanPlay={() => {
                   alert("Can play!");
-                  pipRef.current?.play();
+                  if (wasPlaying && pipRef.current?.paused) {
+                    pipRef.current?.play();
+                  }
                 }}
                 onError={(err) => {
                   alert("Error");
