@@ -19,14 +19,17 @@ import { getTagValues } from "@/lib/nostr/utils";
 import { uniqBy } from "ramda";
 
 export default function Feed() {
-  const { events } = useEvents({
-    filter: {
-      kinds: [34235 as NDKKind],
-      limit: 1,
-    },
-  });
+  // const { events } = useEvents({
+  //   filter: {
+  //     kinds: [34235 as NDKKind],
+  //     limit: 1,
+  //   },
+  // });
 
-  const processedEvents = uniqBy((e) => getTagValues("title", e.tags), events);
+  const processedEvents = uniqBy(
+    (e) => getTagValues("title", e.tags),
+    [{ tags: [] }],
+  );
   if (false && processedEvents.length) {
     return (
       <Section className="px-5">
