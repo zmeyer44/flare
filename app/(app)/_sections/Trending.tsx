@@ -10,11 +10,9 @@ import {
 } from "@/containers/pageSection";
 import { Button } from "@/components/ui/button";
 import { RiArrowRightLine } from "react-icons/ri";
-import MarketCard from "@/components/cards/marketCard";
 import VideoCard, { VideoCardLoading } from "@/components/cards/videoCard";
-import ChannelCard from "@/components/cards/channelCard";
 import useEvents from "@/lib/hooks/useEvents";
-import { type NDKKind } from "@nostr-dev-kit/ndk";
+import type { NDKKind } from "@nostr-dev-kit/ndk";
 import { getTagValues } from "@/lib/nostr/utils";
 import { uniqBy } from "ramda";
 
