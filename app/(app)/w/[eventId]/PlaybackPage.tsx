@@ -46,7 +46,7 @@ export function PlaybackPage({ event }: { event: NDKEvent }) {
     <div className="flex flex-col gap-6 lg:flex-row">
       <div className="shrink-1 flex-1 md:min-w-[500px]">
         {/* Video Player */}
-        <div className="sticky top-[calc(var(--header-height))] z-10 aspect-video max-h-[calc(61vw-32px)] w-full overflow-hidden sm:static sm:rounded-xl sm:px-4">
+        <div className="sticky top-[calc(var(--header-height))] z-30 aspect-video max-h-[calc(61vw-32px)] w-full overflow-hidden sm:static sm:rounded-xl sm:px-4">
           <Player
             className="overflow-hidden sm:rounded-xl"
             url={url}
@@ -55,7 +55,7 @@ export function PlaybackPage({ event }: { event: NDKEvent }) {
             eventIdentifier={event.tagId()}
           />
         </div>
-        <div className="z-0 px-4">
+        <div className="px-4">
           <div className="pt-1">
             <VideoActions event={event} />
           </div>
