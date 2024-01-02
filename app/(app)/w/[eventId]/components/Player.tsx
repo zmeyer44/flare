@@ -71,6 +71,7 @@ export default function Player({
         title={title}
         thumbnail={image}
         persistentProgress={true}
+        autoplay={true}
       />
     </div>
   );
