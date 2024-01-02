@@ -19,6 +19,7 @@ import useProfile from "@/lib/hooks/useProfile";
 import { relativeTime } from "@/lib/utils/dates";
 import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
 import useElementOnScreen from "@/lib/hooks/useElementOnScreen";
+import { useRouter } from "next/navigation";
 
 type VideoCardProps = {
   className?: string;
@@ -29,6 +30,7 @@ export default function HorizontalVideoCard({
   className,
   event,
 }: VideoCardProps) {
+  const router = useRouter();
   const { containerRef, isVisible } = useElementOnScreen();
   const { viewCount, video } = useVideo({
     eventIdentifier: event.tagId(),
@@ -84,8 +86,8 @@ export default function HorizontalVideoCard({
           </div>
         </div>
         <div className="flex">
-          <Link
-            href={`/channel/${npub}`}
+          <div
+            onClick={() => router.push(`/channel/${npub}`)}
             className="center group gap-x-2 rounded-sm rounded-r-full pr-1 text-muted-foreground hover:shadow"
           >
             <Avatar className="center h-[20px] w-[20px] overflow-hidden rounded-[.35rem] bg-muted">
@@ -106,7 +108,7 @@ export default function HorizontalVideoCard({
                 <HiCheckBadge className="h-[12px] w-[12px] text-primary" />
               )}
             </div>
-          </Link>
+          </div>
         </div>
       </div>
       {/* <div className="-mt-1 flex flex-wrap-reverse gap-2 overflow-x-scroll scrollbar-none">
