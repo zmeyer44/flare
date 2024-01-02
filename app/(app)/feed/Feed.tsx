@@ -9,6 +9,7 @@ import {
   SectionTitle,
 } from "@/containers/pageSection";
 // import useEvents from "@/lib/hooks/useEvents";
+import { VideoCardLoading } from "@/components/cards/videoCard";
 import type { NDKKind } from "@nostr-dev-kit/ndk";
 import { getTagValues } from "@/lib/nostr/utils";
 import { uniqBy } from "ramda";
@@ -57,7 +58,22 @@ export default function Feed() {
         </SectionTitle>
       </SectionHeader>
       <SectionContent className="md-feed-cols relative mx-auto gap-4">
-        here is some content
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
+        <VideoCardLoading />
       </SectionContent>
     </Section>
   );
