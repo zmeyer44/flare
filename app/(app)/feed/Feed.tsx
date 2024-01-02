@@ -13,7 +13,7 @@ import { RiArrowRightLine } from "react-icons/ri";
 import MarketCard from "@/components/cards/marketCard";
 import VideoCard, { VideoCardLoading } from "@/components/cards/videoCard";
 import ChannelCard from "@/components/cards/channelCard";
-import useEvents from "@/lib/hooks/useEvents";
+// import useEvents from "@/lib/hooks/useEvents";
 import { type NDKKind } from "@nostr-dev-kit/ndk";
 import { getTagValues } from "@/lib/nostr/utils";
 import { uniqBy } from "ramda";
@@ -62,42 +62,7 @@ export default function Feed() {
         </SectionTitle>
       </SectionHeader>
       <SectionContent className="md-feed-cols relative mx-auto gap-4">
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
-        <VideoCardLoading />
+        here is some content
       </SectionContent>
     </Section>
   );
