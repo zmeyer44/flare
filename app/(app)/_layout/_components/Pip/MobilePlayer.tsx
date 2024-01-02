@@ -28,7 +28,7 @@ export default function MiniMobilePlayer() {
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-[var(--bottom-nav-height)] overflow-hidden bg-card @container sm:hidden">
+    <div className="standalone-show fixed inset-x-0 bottom-[var(--bottom-nav-height)] hidden overflow-hidden bg-card @container">
       <Player episode={episode} player={player} onClose={handleClickHide} />
     </div>
   );

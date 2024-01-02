@@ -74,6 +74,9 @@
     .standalone-hide {
       display: none !important;
     }
+    .standalone-show {
+      display: block !important;
+    }
   }
 }
 
