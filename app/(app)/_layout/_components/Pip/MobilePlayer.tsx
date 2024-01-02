@@ -5,7 +5,7 @@ import Link from "next/link";
 import { RiCloseFill, RiPlayMiniFill, RiPauseMiniFill } from "react-icons/ri";
 import { usePlayer } from "@/app/_providers/pipPlayer";
 import useProfile from "@/lib/hooks/useProfile";
-import { getNameToShow } from "@/lib/utils";
+import { getNameToShow, stopPropagation } from "@/lib/utils";
 import { nip19 } from "nostr-tools";
 import {
   MediaPlayer,
@@ -14,6 +14,7 @@ import {
   useMediaState,
   type MediaPlayerInstance,
 } from "@vidstack/react";
+import { useRouter } from "next/navigation";
 
 export default function MiniMobilePlayer() {
   const useplayer = usePlayer();
@@ -49,6 +50,7 @@ function Player({
   };
   onClose: () => void;
 }) {
+  const router = useRouter();
   const { player, currentTime, wasPlaying } = usePlayer();
   const { profile } = useProfile(episode.author);
   console.log("Redering, Player");
@@ -99,9 +101,12 @@ function Player({
             <h3 className="line-clamp-1 font-semibold">
               {episode?.title ?? ""}
             </h3>
-            <Link
+            <div
               className="flex"
-              href={`/channel/${nip19.npubEncode(episode.author)}`}
+              onClick={(e) => {
+                stopPropagation(e);
+                router.push(`/channel/${nip19.npubEncode(episode.author)}`);
+              }}
             >
               <p className="line-clamp-1 text-xs text-muted-foreground hover:underline">
                 {getNameToShow({
@@ -109,12 +114,13 @@ function Player({
                   profile,
                 })}
               </p>
-            </Link>
+            </div>
           </div>
         </div>
         <div className="min-w-auto flex aspect-[2/1] h-[55px] shrink-0 items-stretch justify-end overflow-hidden">
           <button
-            onClick={() => {
+            onClick={(e) => {
+              stopPropagation(e);
               if (paused) {
                 pipRef.current?.play();
               } else {
@@ -126,7 +132,10 @@ function Player({
             <ActionIcon className="h-[30px] w-[30px]" />
           </button>
           <button
-            onClick={handleClickHide}
+            onClick={(e) => {
+              stopPropagation(e);
+              handleClickHide();
+            }}
             className="center aspect-square text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
           >
             <RiCloseFill className="h-[30px] w-[30px]" />
