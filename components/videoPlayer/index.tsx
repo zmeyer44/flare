@@ -31,6 +31,7 @@ type VideoPlayerProps = {
   recordView?: (timeInSeconds: number) => void;
   lastRecordedTime?: number;
   onCanPlay?: () => void;
+  persistentProgress?: boolean;
 };
 export default function VideoPlayer({
   textTracks,
@@ -42,6 +43,7 @@ export default function VideoPlayer({
   recordView,
   lastRecordedTime,
   onCanPlay: _onCanPlay,
+  persistentProgress,
 }: VideoPlayerProps) {
   const useplayer = usePlayer({
     url: src,
@@ -151,7 +153,7 @@ export default function VideoPlayer({
       </MediaProvider>
 
       {/* <VideoLayout thumbnails="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/storyboard.vtt" /> */}
-      <VideoLayout />
+      <VideoLayout persistentProgress={persistentProgress} />
     </MediaPlayer>
   );
 }

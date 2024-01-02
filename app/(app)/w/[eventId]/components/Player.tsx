@@ -65,6 +65,8 @@ export default function Player({
         src={url}
         title={title}
         thumbnail={image}
+        persistentProgress={true}
+        autoplay={true}
       />
     </div>
   );

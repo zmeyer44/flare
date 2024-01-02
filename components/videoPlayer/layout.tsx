@@ -14,15 +14,24 @@ const popupOffset = 30;
 
 export interface VideoLayoutProps {
   thumbnails?: string;
+  persistentProgress?: boolean;
 }
 
-export function VideoLayout({ thumbnails }: VideoLayoutProps) {
+export function VideoLayout({
+  thumbnails,
+  persistentProgress,
+}: VideoLayoutProps) {
   return (
     <>
       <Gestures />
       <Captions
         className={`${captionStyles.captions} absolute inset-0 bottom-2 z-10 select-none break-words opacity-0 transition-[opacity,bottom] duration-300 group-hover:opacity-100 media-captions:opacity-100 media-controls:bottom-[85px] media-preview:opacity-0`}
       />
+      {persistentProgress && (
+        <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end sm:hidden">
+          <Sliders.PersistentProgress thumbnails={thumbnails} />
+        </div>
+      )}
 
       <Controls.Root className="absolute inset-0 z-10 flex h-full w-full flex-col bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-70 media-controls:opacity-100">
         <Tooltip.Provider>
