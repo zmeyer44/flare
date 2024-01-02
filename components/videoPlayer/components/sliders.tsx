@@ -65,7 +65,7 @@ export function Time({ thumbnails }: TimeSliderProps) {
 
   return (
     <Slider.Root
-      className="group relative inline-flex h-9 w-full cursor-pointer touch-none select-none items-center outline-none"
+      className="group/time-slider relative inline-flex h-9 w-full cursor-pointer touch-none select-none items-center outline-none"
       value={[value]}
       disabled={!canSeek}
       step={Number.isFinite(step) ? step : 1}
@@ -78,13 +78,13 @@ export function Time({ thumbnails }: TimeSliderProps) {
         remote.seek(((value ?? 0) / 100) * duration);
       }}
     >
-      <Slider.Track className="relative h-[5px] w-full rounded-sm bg-white/30">
+      <Slider.Track className="relative h-[4px] w-full rounded-sm bg-white/30">
         <Slider.Range className="absolute h-full rounded-sm bg-media-brand will-change-[width]" />
       </Slider.Track>
 
       <Slider.Thumb
         aria-label="Current Time"
-        className="block h-[15px] w-[15px] rounded-full border border-[#cacaca] bg-white opacity-0 outline-none ring-white/40 transition-opacity will-change-[left] focus:opacity-100 focus:ring-4 group-hocus:opacity-100"
+        className="block h-[0px] w-[0px] rounded-full border border-[#cacaca] opacity-0 outline-none ring-0 ring-white/40 transition-all will-change-[left] group-hover/time-slider:h-[15px] group-hover/time-slider:w-[15px] group-hover/time-slider:opacity-100 focus:opacity-100 focus:ring-4 group-hocus/time-slider:bg-white"
       />
 
       {/* Preview */}

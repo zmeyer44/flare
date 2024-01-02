@@ -36,7 +36,7 @@ export interface MediaButtonProps {
 }
 
 export const buttonClass =
-  "group ring-media-focus relative inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md outline-none ring-inset hover:bg-white/20 focus-visible:ring-4 aria-disabled:hidden";
+  "group ring-media-focus relative inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-md outline-none ring-inset hover:bg-white/10 focus-visible:ring-4 aria-disabled:hidden";
 
 export const tooltipClass =
   "animate-out fade-out slide-out-to-bottom-2 data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in data-[state=delayed-open]:slide-in-from-bottom-4 z-10 rounded-sm bg-black/90 px-2 py-0.5 text-sm font-medium text-white parent-data-[open]:hidden";
@@ -82,11 +82,11 @@ export function Mute({
       <Tooltip.Trigger asChild>
         <MuteButton className={buttonClass}>
           {isMuted || volume == 0 ? (
-            <MuteIcon className="h-7 w-7" />
+            <MuteIcon className="h-6 w-6" />
           ) : volume < 0.5 ? (
-            <VolumeLowIcon className="h-7 w-7" />
+            <VolumeLowIcon className="h-6 w-6" />
           ) : (
-            <VolumeHighIcon className="h-7 w-7" />
+            <VolumeHighIcon className="h-6 w-6" />
           )}
         </MuteButton>
       </Tooltip.Trigger>
@@ -141,9 +141,9 @@ export function PIP({
       <Tooltip.Trigger asChild>
         <PIPButton className={buttonClass}>
           {isActive ? (
-            <PictureInPictureExitIcon className="h-7 w-7" />
+            <PictureInPictureExitIcon className="h-6 w-6" />
           ) : (
-            <PictureInPictureIcon className="h-7 w-7" />
+            <PictureInPictureIcon className="h-6 w-6" />
           )}
         </PIPButton>
       </Tooltip.Trigger>
@@ -170,9 +170,9 @@ export function Fullscreen({
       <Tooltip.Trigger asChild>
         <FullscreenButton className={buttonClass}>
           {isActive ? (
-            <FullscreenExitIcon className="h-7 w-7" />
+            <FullscreenExitIcon className="h-6 w-6" />
           ) : (
-            <FullscreenIcon className="h-7 w-7" />
+            <FullscreenIcon className="h-6 w-6" />
           )}
         </FullscreenButton>
       </Tooltip.Trigger>

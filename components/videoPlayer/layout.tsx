@@ -45,7 +45,7 @@ export function VideoLayout({
           <Controls.Group className="-mt-0.5 flex w-full items-center justify-between overflow-hidden px-0.5 pb-0.5">
             <div className="flex grow items-center justify-start overflow-hidden">
               <Buttons.Play tooltipAlign="start" tooltipOffset={popupOffset} />
-              <div className="group/volume flex items-center">
+              <div className="group/volume flex items-center px-1">
                 <Buttons.Mute tooltipOffset={popupOffset} />
                 <Sliders.Volume />
               </div>
@@ -53,7 +53,7 @@ export function VideoLayout({
               <Title />
             </div>
             {/* <div className="flex-1" /> */}
-            <div className="flex">
+            <div className="flex gap-x-1">
               <Menus.Captions
                 offset={popupOffset}
                 tooltipOffset={popupOffset}

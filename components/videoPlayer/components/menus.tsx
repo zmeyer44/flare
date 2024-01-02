@@ -34,11 +34,13 @@ import {
 import {
   LuCircle as CircleIcon,
   LuCheckCircle as CheckCircle,
-  LuSubtitles as SubtitlesIcon,
   LuArrowLeft as ArrowLeftIcon,
   LuArrowRight as ArrowRightIcon,
 } from "react-icons/lu";
-import { RiSettings4Line as SettingsIcon, RiSpeedUpFill } from "react-icons/ri";
+import {
+  RiSettings4Line as SettingsIcon,
+  RiClosedCaptioningFill as SubtitlesIcon,
+} from "react-icons/ri";
 import { buttonClass, tooltipClass } from "./buttons";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -72,11 +74,11 @@ export function Captions({
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
           <DropdownMenu.Trigger
-            aria-label="Settings"
+            aria-label="Subtitles"
             className={buttonClass}
             disabled={options.disabled}
           >
-            <SubtitlesIcon className="h-7 w-7" />
+            <SubtitlesIcon className="h-6 w-6" />
           </DropdownMenu.Trigger>
         </Tooltip.Trigger>
         <Tooltip.Content
