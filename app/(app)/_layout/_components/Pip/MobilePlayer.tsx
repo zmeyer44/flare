@@ -57,7 +57,7 @@ function Player({
   const pipRef = useRef<MediaPlayerInstance>(player.current);
   useEffect(() => {
     console.log("Pip effect", player.current?.currentTime);
-    pipRef.current?.startLoading();
+    // pipRef.current?.startLoading();
     console.log("VS", pipRef.current?.currentTime);
     console.log("VS", currentTime);
   }, [player.current]);
@@ -82,8 +82,11 @@ function Player({
                 src={episode.url}
                 playsinline
                 currentTime={currentTime}
-                autoplay={wasPlaying}
+                // autoplay={wasPlaying}
                 ref={pipRef}
+                onPlay={() => {
+                  alert("Can play!");
+                }}
                 onCanPlay={() => {
                   alert("Can play!");
                   pipRef.current?.play();
