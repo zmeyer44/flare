@@ -84,6 +84,10 @@ function Player({
                 currentTime={currentTime}
                 autoplay={wasPlaying}
                 ref={pipRef}
+                onCanPlay={() => {
+                  alert("Can play!");
+                  pipRef.current?.play();
+                }}
               >
                 <MediaProvider>
                   {!!episode.thumbnail && (
