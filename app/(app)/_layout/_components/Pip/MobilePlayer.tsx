@@ -69,7 +69,7 @@ function Player({
   return (
     <>
       <Link
-        href={`/w/${episode.encodedEvent}`}
+        href={episode.encodedEvent ? `/w/${episode.encodedEvent}` : "/"}
         className="flex w-full items-stretch justify-between gap-3 overflow-hidden hover:cursor-pointer sm:hidden"
       >
         <div className="flex shrink grow items-center gap-x-2 text-sm font-medium text-foreground">
