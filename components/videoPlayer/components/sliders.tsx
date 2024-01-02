@@ -126,7 +126,7 @@ export function PersistentProgress({ thumbnails }: TimeSliderProps) {
   }, [time, duration]);
   return (
     <Slider.Root
-      className="group relative inline-flex h-[4px] w-full cursor-pointer touch-none select-none items-center outline-none"
+      className="group relative inline-flex h-[2px] w-full cursor-pointer touch-none select-none items-center outline-none"
       value={[value]}
       disabled={!canSeek}
       step={Number.isFinite(step) ? step : 1}
@@ -139,7 +139,7 @@ export function PersistentProgress({ thumbnails }: TimeSliderProps) {
         remote.seek(((value ?? 0) / 100) * duration);
       }}
     >
-      <Slider.Track className="relative h-full w-full rounded-sm bg-muted-foreground/80">
+      <Slider.Track className="relative h-full w-full rounded-sm bg-muted-foreground/40">
         <Slider.Range className="absolute h-full rounded-sm bg-media-brand will-change-[width]" />
       </Slider.Track>
       <Slider.Thumb
