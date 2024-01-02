@@ -26,6 +26,7 @@ model User {
   nip05          String?         @unique
   storageCredits StorageCredit[]
   uploads        Upload[]
+  role           UserRole        @default(USER)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,4 +91,9 @@ model Upload {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  USER
+  PRO
 }

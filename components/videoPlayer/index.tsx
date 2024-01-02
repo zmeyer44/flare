@@ -14,10 +14,12 @@ import {
   type MediaPlayerInstance,
   type MediaProviderAdapter,
   type MediaProviderChangeEvent,
+  useMediaState,
 } from "@vidstack/react";
 import { VideoLayout } from "./layout";
 
 import { type TrackType } from "./types";
+import { usePlayer } from "@/app/_providers/pipPlayer";
 
 type VideoPlayerProps = {
   textTracks?: TrackType[];
@@ -28,6 +30,7 @@ type VideoPlayerProps = {
   autoplay?: boolean;
   recordView?: (timeInSeconds: number) => void;
   lastRecordedTime?: number;
+  onCanPlay?: () => void;
 };
 export default function VideoPlayer({
   textTracks,
@@ -38,23 +41,63 @@ export default function VideoPlayer({
   autoplay = false,
   recordView,
   lastRecordedTime,
+  onCanPlay: _onCanPlay,
 }: VideoPlayerProps) {
-  let player = useRef<MediaPlayerInstance>(null);
-
+  console.log("at video player");
+  const useplayer = usePlayer({
+    url: src,
+    author: "",
+    title,
+    thumbnail,
+  });
+  const { player, updateCurrentTime } = useplayer;
+  // let player = useRef<MediaPlayerInstance>(null);
   useEffect(() => {
     // Subscribe to state updates.
+
     return player.current!.subscribe(
       ({ paused, viewType, currentTime: currentTimeInSeconds }) => {
+        // console.log("currentTimeInSeconds", currentTimeInSeconds);
         if (recordView) {
           if (currentTimeInSeconds - (lastRecordedTime ?? 0) > 10) {
             recordView(currentTimeInSeconds);
           }
         }
+
         // console.log('is paused?', '->', state.paused);
         // console.log('is audio view?', '->', state.viewType === 'audio');
       },
     );
   }, []);
+
+  // const time = useMediaState("currentTime", player);
+  // const paused = useMediaState("paused", player);
+  // useInterval(() => {
+  //   logProgress({ currentTime: time, playing: !paused });
+  // }, 5000);
+  // console.log("Renderererer");
+  // function logProgress({
+  //   currentTime,
+  //   playing,
+  // }: {
+  //   currentTime: number;
+  //   playing: boolean;
+  // }) {
+  //   console.log(
+  //     JSON.stringify({
+  //       currentTime: currentTime,
+  //       playing: playing,
+  //     }),
+  //   );
+  //   return;
+  //   localStorage.setItem(
+  //     "currently-watching",
+  //     JSON.stringify({
+  //       currentTime: currentTime,
+  //       playing: playing,
+  //     }),
+  //   );
+  // }
 
   function onProviderChange(
     provider: MediaProviderAdapter | null,
@@ -71,6 +114,9 @@ export default function VideoPlayer({
     detail: MediaCanPlayDetail,
     nativeEvent: MediaCanPlayEvent,
   ) {
+    if (_onCanPlay) {
+      _onCanPlay();
+    }
     // ...
   }
 
@@ -82,6 +128,19 @@ export default function VideoPlayer({
       playsinline
       onProviderChange={onProviderChange}
       onCanPlay={onCanPlay}
+      onMouseEnter={() => {
+        console.log("Mouse enter", player.current!.currentTime);
+      }}
+      onPause={() => {
+        useplayer.pause();
+      }}
+      onPlay={() => {
+        console.log("ON play");
+        useplayer.play();
+      }}
+      // onTimeUpdate={(event) => {
+      //   updateCurrentTime(Math.floor(event.currentTime));
+      // }}
       ref={player}
       autoplay={autoplay}
     >

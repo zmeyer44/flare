@@ -10,6 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import { HttpAuthProvider } from "./httpAuth";
 import { GoogleAnalyticsInit } from "@/lib/analytics";
 import { Modstr } from "./modal";
+import { PlayerProvider } from "./pipPlayer";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const handleRouteChange = (url: string) => {
@@ -28,9 +29,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <Toaster theme="dark" className="hidden dark:block" />
             <Modstr />
             <HttpAuthProvider />
-            <div vaul-drawer-wrapper="" className="min-h-[100svh]">
-              {children}
-            </div>
+            <PlayerProvider>
+              <div vaul-drawer-wrapper="" className="min-h-[100svh]">
+                {children}
+              </div>
+            </PlayerProvider>
           </NDKProvider>
         </TRPCProvider>
       </SessionProvider>
