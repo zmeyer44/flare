@@ -30,5 +30,10 @@ export default function Pip() {
       </>
     );
   }
-  return null;
+  return (
+    <>
+      <RouteChangeListener callback={routeListener} />
+      <MiniMobilePlayer />
+    </>
+  );
 }
