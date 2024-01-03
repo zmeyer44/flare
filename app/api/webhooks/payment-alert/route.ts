@@ -4,11 +4,11 @@ import { z } from "zod";
 
 const AlertSchema = z.object({
   amount: z.number(),
-  comment: z.string(),
+  boostagram: z.string().nullable(),
+  comment: z.string().nullable(),
   created_at: z.string(),
   creation_date: z.number(),
   currency: z.string(),
-  custom_records: z.object({}).nullable(),
   description_hash: z.string(),
   destination_alias: z.string(),
   destination_pubkey: z.string(),
@@ -19,14 +19,28 @@ const AlertSchema = z.object({
   first_route_hint_alias: z.string().nullable(),
   first_route_hint_pubkey: z.string().nullable(),
   identifier: z.string(),
-  keysend_message: z.null(),
+  keysend_message: z.string().nullable(),
   memo: z.string().nullable(),
-  metadata: z.object({}),
+  metadata: z
+    .object({
+      zap_request: z.object({
+        content: z.string(),
+        created_at: z.number(),
+        id: z.string(),
+        kind: z.number(),
+        pubkey: z.string(),
+        sig: z.string(),
+        tags: z.array(z.array(z.string())),
+      }),
+      zap_request_raw: z.string(),
+    })
+    .nullable(),
   payer_email: z.string().nullable(),
   payer_name: z.string().nullable(),
   payer_pubkey: z.string().nullable(),
   payment_hash: z.string(),
   payment_request: z.string(),
+  preimage: z.string(),
   r_hash_str: z.string(),
   settled: z.boolean(),
   settled_at: z.string(),
@@ -43,7 +57,44 @@ async function handler(req: Request) {
     return NextResponse.json({
       data: "no pubkey",
     });
+  } else if (!data.settled) {
+    return NextResponse.json({
+      data: "Not settled",
+    });
+  } else if (data.amount !== 10000) {
+    return NextResponse.json({
+      data: "Incorrect amount",
+    });
+  } else if (!data.comment?.startsWith("Purchasing 2 Gb")) {
+    return NextResponse.json({
+      data: "Not purchasing",
+    });
+  } else if (!data.metadata) {
+    return NextResponse.json({
+      data: "No metadata",
+    });
   }
+  const checkCredit = await prisma.storageCredit.findFirst({
+    where: {
+      paymentHash: data.payment_hash,
+    },
+  });
+  if (checkCredit) {
+    return NextResponse.json({
+      data: "Already processed",
+    });
+  }
+
+  await prisma.storageCredit.create({
+    data: {
+      paymentHash: data.payment_hash,
+      pubkey: data.payer_pubkey,
+      bytes: 2_147_483_648,
+      paymentEvent: data.metadata.zap_request_raw,
+      paymentEventId: data.metadata.zap_request.id,
+    },
+  });
+
   //   const message = MessageSchema.parse(JSON.parse(data.Message));
   //   for (const record of message.Records) {
   //     const recordSize = record.s3.object.size;
@@ -61,8 +112,7 @@ async function handler(req: Request) {
   //   }
 
   return NextResponse.json({
-    data: rawJson,
-    parsed: data,
+    data: "Created Storage Credit",
   });
 }
 
