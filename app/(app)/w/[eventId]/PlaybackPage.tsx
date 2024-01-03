@@ -10,6 +10,7 @@ import useProfile from "@/lib/hooks/useProfile";
 import { getTagValues } from "@/lib/nostr/utils";
 import { useEvent } from "@/lib/hooks/useEvents";
 import LoadingPage from "./loading";
+import { E } from "@vidstack/react/dist/types/vidstack-framework";
 
 export default function Page({
   identifier,
@@ -79,7 +80,15 @@ export function PlaybackPage({ event }: { event: NDKEvent }) {
           kinds: [34235 as NDKKind],
           limit: 5,
         }}
-        secondaryFilter={(_, i) => i < 10}
+        secondaryFilter={(e, i) => {
+          if (i >= 10) {
+            return false;
+          } else if (e.tagId() === tagId) {
+            return false;
+          } else {
+            return true;
+          }
+        }}
       />
     </div>
   );
