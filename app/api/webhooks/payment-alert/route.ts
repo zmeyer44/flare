@@ -3,60 +3,47 @@ import prisma from "@/lib/prisma";
 import { z } from "zod";
 
 const AlertSchema = z.object({
-  Type: z.string(),
-  MessageId: z.string(),
-  TopicArn: z.string(),
-  Subject: z.string(),
-  Message: z.string(),
-  Timestamp: z.string(),
-  SignatureVersion: z.string(),
-  Signature: z.string(),
-  SigningCertURL: z.string(),
-  UnsubscribeURL: z.string(),
-});
-
-const RecordSchema = z.object({
-  eventVersion: z.string(),
-  eventSource: z.string(),
-  awsRegion: z.string(),
-  eventTime: z.string(),
-  eventName: z.string(),
-  userIdentity: z.object({ principalId: z.string() }),
-  requestParameters: z.object({ sourceIPAddress: z.string() }),
-  responseElements: z.object({
-    "x-amz-request-id": z.string(),
-    "x-amz-id-2": z.string(),
-  }),
-  s3: z.object({
-    s3SchemaVersion: z.string(),
-    configurationId: z.string(),
-    bucket: z.object({
-      name: z.string(),
-      ownerIdentity: z.object({ principalId: z.string() }),
-      arn: z.string(),
-    }),
-    object: z.object({
-      key: z.string(),
-      size: z.number(),
-      eTag: z.string(),
-      sequencer: z.string(),
-    }),
-  }),
-});
-
-const MessageSchema = z.object({
-  Records: z.array(RecordSchema),
+  amount: z.number(),
+  comment: z.string(),
+  created_at: z.string(),
+  creation_date: z.number(),
+  currency: z.string(),
+  custom_records: z.object({}).nullable(),
+  description_hash: z.string(),
+  destination_alias: z.string(),
+  destination_pubkey: z.string(),
+  expires_at: z.string(),
+  expiry: z.number(),
+  fiat_currency: z.string(),
+  fiat_in_cents: z.number(),
+  first_route_hint_alias: z.string().nullable(),
+  first_route_hint_pubkey: z.string().nullable(),
+  identifier: z.string(),
+  keysend_message: z.null(),
+  memo: z.string().nullable(),
+  metadata: z.object({}),
+  payer_email: z.string().nullable(),
+  payer_name: z.string().nullable(),
+  payer_pubkey: z.string().nullable(),
+  payment_hash: z.string(),
+  payment_request: z.string(),
+  r_hash_str: z.string(),
+  settled: z.boolean(),
+  settled_at: z.string(),
+  state: z.string(),
+  type: z.string(),
+  value: z.number(),
 });
 
 async function handler(req: Request) {
   const rawJson = await req.json();
   console.log("raw json, ", rawJson);
-  //   const data = AlertSchema.parse(rawJson);
-  //   if (data.Type !== "Notification") {
-  //     return NextResponse.json({
-  //       data: "ok",
-  //     });
-  //   }
+  const data = AlertSchema.parse(rawJson);
+  if (!data.payer_pubkey) {
+    return NextResponse.json({
+      data: "no pubkey",
+    });
+  }
   //   const message = MessageSchema.parse(JSON.parse(data.Message));
   //   for (const record of message.Records) {
   //     const recordSize = record.s3.object.size;
@@ -75,6 +62,7 @@ async function handler(req: Request) {
 
   return NextResponse.json({
     data: rawJson,
+    parsed: data,
   });
 }
 
