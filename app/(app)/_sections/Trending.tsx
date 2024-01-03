@@ -22,7 +22,9 @@ export default function TrendingSection() {
 
   const { events } = useEvents({
     filter: {
-      authors: Array.from(follows).map((f) => f.pubkey),
+      authors: follows.size
+        ? Array.from(follows).map((f) => f.pubkey)
+        : undefined,
       kinds: [34235 as NDKKind],
       limit: 10,
     },
