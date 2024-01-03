@@ -179,9 +179,7 @@ export function VideoUpload({
     <div className="center relative aspect-video h-full w-full flex-col gap-y-3 overflow-hidden rounded-md bg-muted">
       <button
         onClick={() => {
-          if (!remainingCredits || remainingCredits < 10_000) {
-            modal.show(<PurchseStorageCreditsModal />);
-          }
+          modal.show(<PurchseStorageCreditsModal />);
         }}
       >
         test
