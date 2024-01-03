@@ -48,6 +48,9 @@ export default function Player({
 
   function onCanPlay() {
     console.log("onCanPlay");
+    if (player.player.current?.paused) {
+      player.player.current.play();
+    }
   }
   if (!url || !title) {
     return (
