@@ -139,17 +139,19 @@ export function stopPropagation(e: React.MouseEvent) {
   e.preventDefault();
 }
 
-export function downloadVideo(url: string, filename?: string) {
+export async function downloadVideo(url: string, filename?: string) {
   let name = filename || "video";
   const splitUrl = url.split(".");
   if (splitUrl.length > 1) {
     name += `.${splitUrl.at(-1)}`;
   }
-  var link = document.createElement("a");
+  const video = await fetch(url);
+  const videoBlob = await video.blob();
+  const videoURL = URL.createObjectURL(videoBlob);
+  const link = document.createElement("a");
+  link.href = videoURL;
   link.download = name;
-  link.href = url;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  // delete link;
 }
