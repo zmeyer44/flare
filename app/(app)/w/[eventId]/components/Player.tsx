@@ -37,9 +37,7 @@ export default function Player({
     encodedEvent,
   });
   const autho = eventIdentifier.split(":")[1] ?? "";
-  useEffect(() => {
-    console.log("usePlayer", player);
-  }, [player]);
+
   useEffect(() => {
     if (eventIdentifier && !anon) {
       addView();

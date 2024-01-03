@@ -27,6 +27,7 @@ import {
 import { useRouter } from "next/navigation";
 import Thumbnail from "./components/thumbnail";
 import TextTracks from "./components/textTracks";
+import { RiAlertLine } from "react-icons/ri";
 
 export default function Page() {
   const router = useRouter();
@@ -236,6 +237,16 @@ export default function Page() {
               }))
             }
           />
+        </div>
+        <div className="flex flex-col gap-y-2 rounded-lg border bg-muted p-2 text-muted-foreground">
+          <div className="flex items-center gap-x-1">
+            <RiAlertLine className="h-4 w-4" />
+            <Label className="font-semibold">Disclaimer</Label>
+          </div>
+          <p className="text-sm">
+            By using this service, you confirm that this video belongs to you or
+            that you have the right to publish it.
+          </p>
         </div>
       </div>
     </div>
