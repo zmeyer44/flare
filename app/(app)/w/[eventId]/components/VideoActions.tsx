@@ -9,6 +9,7 @@ import {
   formatCount,
   copyText,
   formatNumber,
+  downloadVideo,
 } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -122,6 +123,13 @@ export default function VideoActions({ event }: VideoActionsProps) {
                     }/w/${event.encode()}`,
                   );
                   toast.success("Link copied!");
+                },
+              },
+              {
+                label: "Download video",
+                action: () => {
+                  downloadVideo(url, title);
+                  toast.success("Download started!");
                 },
               },
               {

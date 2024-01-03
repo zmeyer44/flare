@@ -221,7 +221,6 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
 export function usePlayer(episode?: Video) {
   console.log("episode", episode);
   let player = useContext(AudioPlayerContext);
-
   return useMemo<PlayerAPI>(
     () => ({
       ...player!,

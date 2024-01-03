@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { RiArrowRightLine } from "react-icons/ri";
 import MarketCard from "@/components/cards/marketCard";
 import VideoCard, { VideoCardLoading } from "@/components/cards/videoCard";
-import ChannelCard from "@/components/cards/channelCard";
 import { type NDKKind } from "@nostr-dev-kit/ndk";
 import { getTagValues } from "@/lib/nostr/utils";
 import { uniqBy } from "ramda";
