@@ -181,6 +181,15 @@ export function VideoUpload({
         onClick={() => {
           if (!remainingCredits || remainingCredits < 10_000) {
             modal.show(<PurchseStorageCreditsModal />);
+          }
+        }}
+      >
+        test
+      </button>
+      <button
+        onClick={() => {
+          if (!remainingCredits || remainingCredits < 10_000) {
+            modal.show(<PurchseStorageCreditsModal />);
           } else {
             modal.show(
               <UploadModal

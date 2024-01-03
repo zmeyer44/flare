@@ -21,8 +21,6 @@ export default function ZapModal({}: ModalProps) {
   useAuthGuard();
   const [isLoading, setIsLoading] = useState(false);
   const [checkingPayment, setCheckingPayment] = useState(false);
-  const [note, setNote] = useState("");
-  const [sats, setSats] = useState(2000);
   const { ndk } = useNDK();
   const { currentUser } = useCurrentUser();
 
