@@ -15,10 +15,14 @@ import useEvents from "@/lib/hooks/useEvents";
 import type { NDKKind } from "@nostr-dev-kit/ndk";
 import { getTagValues } from "@/lib/nostr/utils";
 import { uniqBy } from "ramda";
+import useCurrentUser from "@/lib/hooks/useCurrentUser";
 
 export default function TrendingSection() {
+  const { follows } = useCurrentUser();
+
   const { events } = useEvents({
     filter: {
+      authors: Array.from(follows).map((f) => f.pubkey),
       kinds: [34235 as NDKKind],
       limit: 10,
     },

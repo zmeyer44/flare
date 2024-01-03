@@ -87,11 +87,11 @@ export default function useCurrentUser() {
     setCurrentUser(user);
   }
 
-  // useEffect(() => {
-  //   if (!currentUser || follows.size) return;
-  //   console.log("fetching follows");
-  //   handleFetchFollows();
-  // }, [currentUser]);
+  useEffect(() => {
+    if (!currentUser || follows.size) return;
+    console.log("fetching follows");
+    handleFetchFollows();
+  }, [currentUser]);
 
   async function handleFetchFollows() {
     if (!currentUser || follows.size || fetchingFollows) return;
