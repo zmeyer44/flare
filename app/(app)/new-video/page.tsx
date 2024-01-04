@@ -238,7 +238,7 @@ export default function Page() {
             }
           />
         </div>
-        <div className="flex flex-col gap-y-2 rounded-lg border bg-muted p-2 text-muted-foreground transition-colors hover:text-yellow-500">
+        <div className="flex flex-col gap-y-2 rounded-lg border bg-muted p-2 text-muted-foreground transition-colors hover:border-yellow-600 hover:text-yellow-500">
           <div className="flex items-center gap-x-1">
             <RiAlertLine className="h-4 w-4" />
             <Label className="font-semibold">Disclaimer</Label>
