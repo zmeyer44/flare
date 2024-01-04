@@ -34,6 +34,19 @@ export const storageRouter = createTRPCRouter({
       (Number(uploadsUsed._sum.size) ?? 0);
     return remainingCredits;
   }),
+  getNewCredits: protectedProcedure.query(async ({ ctx }) => {
+    const TIME_BUFFER = new Date(Date.now() - 1000 * 60);
+    const storageCredit = await ctx.prisma.storageCredit.findFirst({
+      where: {
+        pubkey: ctx.session.user.pubkey,
+        createdAt: {
+          gt: TIME_BUFFER,
+        },
+      },
+    });
+
+    return storageCredit;
+  }),
   purchaseCredits: protectedProcedure
     .input(
       z.object({

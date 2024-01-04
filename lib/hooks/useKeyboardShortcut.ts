@@ -16,6 +16,8 @@ export const useKeyboardShortcut = (keys: Key[], callback: () => void) => {
         )
       ) {
         callback();
+      } else {
+        console.log("Nope", event.key);
       }
     };
 

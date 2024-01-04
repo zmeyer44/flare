@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import currentUserStore from "@/lib/stores/currentUser";
 // import useEvents from "@/lib/hooks/useEvents";
 import { UserSchema } from "@/types";
@@ -8,6 +8,7 @@ import { useNDK } from "@/app/_providers/ndk";
 import { nip19 } from "nostr-tools";
 import { type NDKKind } from "@nostr-dev-kit/ndk";
 import { webln } from "@getalby/sdk";
+import { api } from "../trpc/api";
 
 const loadNWCUrl = "";
 const nwc = new webln.NWC({ nostrWalletConnectUrl: loadNWCUrl });
@@ -23,7 +24,12 @@ export default function useCurrentUser() {
     setFollows,
     addFollow,
   } = currentUserStore();
+  const { data: sesstionData } = useSession();
   const { loginWithNip07, ndk } = useNDK();
+
+  const { data: dbUser } = api.user.getCurrentUser.useQuery(undefined, {
+    enabled: !!sesstionData,
+  });
 
   async function attemptLogin() {
     try {
@@ -84,11 +90,11 @@ export default function useCurrentUser() {
     }
   }
 
-  // useEffect(() => {
-  //   if (!currentUser || follows.size) return;
-  //   console.log("fetching follows");
-  //   handleFetchFollows();
-  // }, [currentUser]);
+  useEffect(() => {
+    if (!currentUser || follows.size) return;
+    console.log("fetching follows");
+    handleFetchFollows();
+  }, [currentUser]);
 
   async function handleFetchFollows() {
     if (!currentUser || follows.size || fetchingFollows) return;
@@ -102,6 +108,7 @@ export default function useCurrentUser() {
 
   return {
     currentUser,
+    dbUser,
     isLoading: false,
     follows,
     setCurrentUser,

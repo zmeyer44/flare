@@ -30,14 +30,13 @@ import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import AuthModal from "@/components/modals/auth";
 import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import { commandDialogAtom } from "./CommandDialog";
+import { commandDialogAtom, odellModeAtom } from "./CommandDialog";
 import { useAtom } from "jotai";
 import { cn } from "@/lib/utils";
 
 // const LoginModal = dynamic(() => import("@/components/Modals/Login"), {
 //   ssr: false,
 // });
-
 export default function AuthActions() {
   const router = useRouter();
   const { currentUser, logout, attemptLogin } = useCurrentUser();
@@ -57,6 +56,7 @@ export default function AuthActions() {
       logout();
     }
   });
+
   useEffect(() => {
     if (ndk && !currentUser) {
       void attemptLogin();

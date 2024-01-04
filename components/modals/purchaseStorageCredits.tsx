@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import useAuthGuard from "./hooks/useAuthGuard";
 import { modal } from "@/app/_providers/modal";
@@ -21,8 +21,6 @@ export default function ZapModal({}: ModalProps) {
   useAuthGuard();
   const [isLoading, setIsLoading] = useState(false);
   const [checkingPayment, setCheckingPayment] = useState(false);
-  const [note, setNote] = useState("");
-  const [sats, setSats] = useState(2000);
   const { ndk } = useNDK();
   const { currentUser } = useCurrentUser();
 
@@ -40,57 +38,34 @@ export default function ZapModal({}: ModalProps) {
     featured: false,
   };
 
-  const { mutate } = api.storage.purchaseCredits.useMutation({
-    onError: () => {
-      toast.error("An error has occured");
-    },
-    onSuccess: () => {
-      toast.success("Credits received!");
-      modal.dismiss();
-    },
-    onSettled: () => {
-      setCheckingPayment(false);
-    },
+  const { data: newCredit } = api.storage.getNewCredits.useQuery(undefined, {
+    enabled: checkingPayment,
+    refetchInterval: 1000,
   });
+
+  useEffect(() => {
+    if (newCredit) {
+      toast.success("Credit issued!");
+      modal.dismiss();
+    }
+  }, [newCredit]);
 
   async function handleSendZap() {
     if (!ndk || !currentUser) return;
     try {
       setIsLoading(true);
-      const result = await zapUser(
+      const result = zapUser(
         ndk,
         10_000,
         process.env.NEXT_PUBLIC_ZAP_ADDRESS as string,
         `Purchasing 2 Gb ${currentUser.npub}`,
       );
-      toast.success("Zap Sent!");
-      await handleCheckPayment();
+
+      setCheckingPayment(true);
     } catch (err) {
       console.log("error sending zap", err);
     } finally {
       setIsLoading(false);
-    }
-  }
-  async function handleCheckPayment() {
-    if (!currentUser || !ndk) return;
-    setCheckingPayment(true);
-    console.log("Checking payment");
-    try {
-      const result = await checkUserZap(
-        ndk,
-        currentUser.pubkey,
-        process.env.NEXT_PUBLIC_ZAP_ADDRESS as string,
-        10_000,
-        unixTimeNowInSeconds() - 60 * 5,
-      );
-      if (result) {
-        mutate({
-          paymentEvent: result.paymentEvent,
-          zapEndpoint: result.zapEndpoint,
-        });
-      }
-    } catch (err) {
-      console.log("error sending zap", err);
     }
   }
 

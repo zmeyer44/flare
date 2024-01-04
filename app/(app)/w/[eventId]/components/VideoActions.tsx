@@ -9,6 +9,7 @@ import {
   formatCount,
   copyText,
   formatNumber,
+  downloadVideo,
 } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -48,6 +49,16 @@ export default function VideoActions({ event }: VideoActionsProps) {
 
   const rawEvent = event.rawEvent();
 
+  function handleDownload() {
+    const promise = downloadVideo(url, title);
+    toast.promise(promise, {
+      loading: "Loading...",
+      success: (data) => {
+        return `Video has been downloaded`;
+      },
+      error: "Error",
+    });
+  }
   return (
     <div className="space-y-2.5 py-2">
       {/* Title Section */}
@@ -122,6 +133,12 @@ export default function VideoActions({ event }: VideoActionsProps) {
                     }/w/${event.encode()}`,
                   );
                   toast.success("Link copied!");
+                },
+              },
+              {
+                label: "Download video",
+                action: () => {
+                  handleDownload();
                 },
               },
               {

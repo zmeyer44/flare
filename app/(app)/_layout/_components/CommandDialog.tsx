@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/command";
 
 import { atom, useAtom } from "jotai";
+import useWindowSize from "@/lib/hooks/useWindowSize";
 import useSearch from "@/lib/hooks/useSearch";
 import { cn } from "@/lib/utils";
 import SearchVideoCard, {
@@ -37,8 +38,11 @@ type SearchSuggestionObject = {
 };
 export const commandDialogAtom = atom(false);
 export const anonModeAtom = atom(false);
+export const odellModeAtom = atom<"lower" | "upper" | null>(null);
 
 export default function CommandDialogComponent() {
+  const { isMobile } = useWindowSize();
+
   const [anon, setAnon] = useAtom(anonModeAtom);
   useKeyboardShortcut(["ctrl", "shift", "a"], () =>
     setAnon((a) => {
@@ -50,6 +54,33 @@ export default function CommandDialogComponent() {
       return !a;
     }),
   );
+
+  const [odellMode, setOdellMode] = useAtom(odellModeAtom);
+
+  useKeyboardShortcut(["shift", "o"], () => {
+    if (odellMode === null) {
+      setOdellMode("upper");
+      toast.success("Odell Mode uppercase activated 🤙");
+    } else if (odellMode === "upper") {
+      setOdellMode("lower");
+      toast.success("Odell Mode lowercase activated 🤙");
+    } else {
+      setOdellMode(null);
+      toast.success("Odell mode Deactivated 🤙");
+    }
+  });
+  useEffect(() => {
+    if (odellMode === "upper") {
+      document.body.classList.remove(`odell-mode-lower`);
+      return document.body.classList.add(`odell-mode-upper`);
+    } else if (odellMode === "lower") {
+      document.body.classList.remove(`odell-mode-upper`);
+      return document.body.classList.add(`odell-mode-lower`);
+    } else {
+      document.body.classList.remove(`odell-mode-upper`);
+      return document.body.classList.remove(`odell-mode-lower`);
+    }
+  }, [odellMode]);
 
   const [open, setOpen] = useAtom(commandDialogAtom);
   useKeyboardShortcut(["ctrl", "k"], () => setOpen((open) => !open));
@@ -96,7 +127,11 @@ export default function CommandDialogComponent() {
   }, [searchInput, debounce]);
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandDialog
+      contentClassName={cn(isMobile && "w-full h-[100svh] py-1")}
+      open={open}
+      onOpenChange={setOpen}
+    >
       {/* <CommandInput placeholder="Search videos..." /> */}
       <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
         <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
@@ -128,7 +163,7 @@ export default function CommandDialogComponent() {
           );
         })}
         {!suggestions.flatMap((e) => e.hits)?.length && (
-          <div className="center w-full py-6  text-muted-foreground/80 sm:min-h-[200px]">
+          <div className="center w-full py-6 text-muted-foreground/80 sm:min-h-[200px]">
             {searching ? (
               <CommandGroup heading="Videos" className="w-full">
                 <CommandItem>

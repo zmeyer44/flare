@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import VideoPlayer from "@/components/videoPlayer";
+import VideoPlayer from "@/components/videoPlayer/plainPlayer";
 import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import SupporterLabel from "./components/supporterLabel";
 
@@ -117,12 +117,14 @@ export default function HeroSection() {
         </span>
       </div>
       <div className="max-h-[350px] w-full max-w-[450px] shrink-0 pt-4 md:mt-10 md:w-5/12 md:pt-6 lg:mt-20">
-        <VideoPlayer
-          autoplay={false}
-          src={activeSponsor.videoUrl}
-          title={activeSponsor.name}
-          thumbnail={activeSponsor.thumbnail}
-        />
+        <div className="aspect-video overflow-hidden rounded-md">
+          <VideoPlayer
+            autoplay={false}
+            src={activeSponsor.videoUrl}
+            title={activeSponsor.name}
+            thumbnail={activeSponsor.thumbnail}
+          />
+        </div>
       </div>
     </div>
   );

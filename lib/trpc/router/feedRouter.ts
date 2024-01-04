@@ -22,7 +22,7 @@ export const feedRouter = createTRPCRouter({
       select: {
         pubkey: true,
       },
-      take: 20,
+      take: 30,
     });
     if (!popularVideos) return [];
     const pubkeys = popularVideos.map((p) => p.pubkey);

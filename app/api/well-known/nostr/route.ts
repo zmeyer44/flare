@@ -20,17 +20,24 @@ import prisma from "@/lib/prisma";
 //   response.headers.set("Access-Control-Allow-Origin", "*");
 //   return response;
 // }
+const data = {
+  names: {
+    _: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
+    zach: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
+    "🔥": "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
+  },
+};
 async function handler() {
-  const response = NextResponse.json({
-    names: {
-      _: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
-      zach: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
-      "🔥": "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
+  return new NextResponse(JSON.stringify(data, undefined, 2), {
+    status: 200,
+    headers: {
+      "Cross-Origin-Resource-Policy": "cross-origin",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      "Cache-Control": "s-maxage=3600, stale-while-revalidate=30",
+      "cache-control": "s-maxage=3600, stale-while-revalidate=30",
     },
   });
-  response.headers.set("Content-Type", "application/json");
-  response.headers.set("Access-Control-Allow-Origin", "*");
-  return response;
 }
 
 export { handler as GET, handler as POST };

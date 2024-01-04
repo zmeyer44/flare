@@ -27,6 +27,7 @@ import {
 import { useRouter } from "next/navigation";
 import Thumbnail from "./components/thumbnail";
 import TextTracks from "./components/textTracks";
+import { RiAlertLine } from "react-icons/ri";
 
 export default function Page() {
   const router = useRouter();
@@ -57,13 +58,24 @@ export default function Page() {
 
     setLoading(true);
     try {
+      const d = nanoid(7);
       const tags: string[][] = [
-        ["d", nanoid(7)],
+        ["d", d],
         ["url", videoData.url],
         ["title", videoData.title],
         ["summary", videoData.summary ?? ""],
         ["published_at", unixTimeNowInSeconds().toString()],
         ["client", "flare"],
+        [
+          "alt",
+          `This is a video event and can be viewed at ${
+            process.env.NEXT_PUBLIC_ROOT_DOMAIN ?? "https://www.flare.pub"
+          }/w/${nip19.naddrEncode({
+            identifier: d,
+            kind: 34235,
+            pubkey: currentUser.pubkey,
+          })}`,
+        ],
       ];
 
       if (videoData.fileType) {
@@ -225,6 +237,16 @@ export default function Page() {
               }))
             }
           />
+        </div>
+        <div className="flex flex-col gap-y-2 rounded-lg border bg-muted p-2 text-muted-foreground transition-colors hover:text-yellow-500">
+          <div className="flex items-center gap-x-1">
+            <RiAlertLine className="h-4 w-4" />
+            <Label className="font-semibold">Disclaimer</Label>
+          </div>
+          <p className="text-sm">
+            By using this service, you confirm that this video belongs to you or
+            that you have the right to publish it.
+          </p>
         </div>
       </div>
     </div>

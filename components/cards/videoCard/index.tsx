@@ -16,6 +16,7 @@ import { relativeTime } from "@/lib/utils/dates";
 import useProfile from "@/lib/hooks/useProfile";
 import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
 import useElementOnScreen from "@/lib/hooks/useElementOnScreen";
+import { useRouter } from "next/navigation";
 
 type VideoCardProps = {
   className?: string;
@@ -24,6 +25,7 @@ type VideoCardProps = {
 
 export default function VideoCard({ className, event }: VideoCardProps) {
   const { containerRef, isVisible } = useElementOnScreen();
+  const router = useRouter();
   const { viewCount, video } = useVideo({
     eventIdentifier: event.tagId(),
     event: event,
@@ -75,8 +77,8 @@ export default function VideoCard({ className, event }: VideoCardProps) {
         ))}
       </div> */}
       <div className="flex justify-between pr-2">
-        <Link
-          href={`/channel/${npub}`}
+        <div
+          onClick={() => router.push(`/channel/${npub}`)}
           className="center group gap-x-2 rounded-sm rounded-r-full pr-1 text-muted-foreground hover:shadow"
         >
           <Avatar className="center h-[24px] w-[24px] overflow-hidden rounded-[.35rem] bg-muted">
@@ -97,7 +99,7 @@ export default function VideoCard({ className, event }: VideoCardProps) {
               <HiCheckBadge className="h-[14px] w-[14px] text-primary" />
             )}
           </div>
-        </Link>
+        </div>
         <div className="flex items-center gap-x-1 text-xs text-muted-foreground">
           <p className="whitespace-nowrap">{`${formatCount(
             viewCount,

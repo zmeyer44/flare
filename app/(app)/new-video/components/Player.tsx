@@ -220,7 +220,7 @@ export function VideoUpload({
               Upload a file
             </span>
           </div>
-          <p className="text-xs leading-5 text-muted-foreground">Max 100MB</p>
+          <p className="text-xs leading-5 text-muted-foreground">Max 2GB</p>
         </div>
       </button>
 

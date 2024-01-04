@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import BottomNav from "./BottomNav";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import Pip from "./_components/Pip";
 
 const CommandDialog = dynamic(() => import("./_components/CommandDialog"), {
   ssr: false,
@@ -9,6 +10,9 @@ const CommandDialog = dynamic(() => import("./_components/CommandDialog"), {
 const MobileBanner = dynamic(() => import("./MobileBanner"), {
   ssr: false,
 });
+// const Pip = dynamic(() => import("./_components/Pip"), {
+//   ssr: false,
+// });
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -25,6 +29,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </div>
+      {/* Pip */}
+      <Pip />
       {/* Mobile Banner */}
       <MobileBanner />
       {/* BottomNav */}

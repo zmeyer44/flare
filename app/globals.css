@@ -74,6 +74,9 @@
     .standalone-hide {
       display: none !important;
     }
+    .standalone-show {
+      display: block !important;
+    }
   }
 }
 
@@ -162,4 +165,11 @@ img:not([src]) {
 
 html {
   background-color: black;
+}
+
+.odell-mode-lower {
+  text-transform: lowercase !important;
+}
+.odell-mode-upper {
+  text-transform: uppercase !important;
 }
