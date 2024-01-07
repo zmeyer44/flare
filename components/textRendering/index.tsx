@@ -15,6 +15,8 @@ const urlRegex =
   /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))/g;
 const hashtagRegex = /#\b\w+\b/g;
 const nostrPrefixRegex = /nostr:[a-z0-9]+/g;
+const imageFileRegex = /\.(png|jpg|jpeg|svg|webp|gif)$/;
+const videoFileRegex = /\.(mp4|mov|wmv|avi)$/;
 
 const RenderText = ({ text }: { text?: string }) => {
   if (!text) return null;
@@ -39,20 +41,11 @@ const RenderText = ({ text }: { text?: string }) => {
       if (currentValue?.match(urlRegex)) {
         console.log("First zSub", getFirstSubdomain(currentValue));
         const subdomain = getFirstSubdomain(currentValue);
-        if (!subdomain || subdomain === "www") {
-          specialElement = (
-            <a
-              className="text-secondary hover:underline"
-              href={cleanUrl(currentValue)}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {cleanUrl(currentValue)}
-            </a>
-          );
-        } else if (["m", "i", "image", "flockstr", "cdn"].includes(subdomain)) {
+        if (currentValue.match(imageFileRegex)) {
           specialElement = <ImageUrl className="my-1" url={currentValue} />;
-        } else if (["v", "video"].includes(subdomain)) {
+        } else if (subdomain && ["i", "image"].includes(subdomain)) {
+          specialElement = <ImageUrl className="my-1" url={currentValue} />;
+        } else if (currentValue.match(videoFileRegex)) {
           specialElement = <VideoUrl className="my-1" url={currentValue} />;
         } else {
           specialElement = (
