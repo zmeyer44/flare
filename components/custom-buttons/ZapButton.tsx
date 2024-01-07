@@ -1,7 +1,7 @@
 "use client";
 import { ComponentProps } from "react";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import LoginModal from "@/components/modals/login";
+import AuthModal from "@/components/modals/auth";
 import ZapModal from "@/components/modals/zap";
 import { modal } from "@/app/_providers/modal";
 import type { NostrEvent } from "@nostr-dev-kit/ndk";

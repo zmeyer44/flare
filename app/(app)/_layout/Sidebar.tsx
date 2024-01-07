@@ -13,6 +13,8 @@ import {
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
 import { usePathname } from "next/navigation";
+import { modal } from "@/app/_providers/modal";
+import AuthModal from "@/components/modals/auth";
 
 const ZapButton = dynamic(() => import("./_components/ZapButton"), {
   ssr: false,

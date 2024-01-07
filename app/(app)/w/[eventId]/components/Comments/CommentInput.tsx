@@ -106,7 +106,7 @@ export default function CommentInput({
                 placeholder="Leave a comment..."
                 autoFocus={autoFocus}
                 className={cn(
-                  "invisible-input min-h-[50px] text-base font-medium text-foreground placeholder:text-muted-foreground/70",
+                  "invisible-textarea min-h-[50px] text-base font-medium text-foreground placeholder:text-muted-foreground/70",
                 )}
               />
               <div className="mt-1 w-full">

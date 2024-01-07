@@ -153,7 +153,7 @@ export default function Page() {
             placeholder="Untitled video"
             autoFocus
             className={cn(
-              "invisible-input text-4xl font-medium text-foreground placeholder:text-muted-foreground/70",
+              "invisible-textarea text-4xl font-medium text-foreground placeholder:text-muted-foreground/70",
             )}
           />
           <div className={cn("rounded-xl bg-muted p-3")}>
@@ -165,7 +165,7 @@ export default function Page() {
               }
               placeholder="Enter video summary"
               className={cn(
-                "invisible-input min-h-[50px] text-base font-medium text-foreground placeholder:text-muted-foreground/70",
+                "invisible-textarea min-h-[50px] text-base font-medium text-foreground placeholder:text-muted-foreground/70",
               )}
             />
           </div>

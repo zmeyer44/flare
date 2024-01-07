@@ -3,7 +3,7 @@ import { useState, ComponentProps } from "react";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { useNDK } from "@/app/_providers/ndk";
 import { toast } from "sonner";
-import LoginModal from "@/components/modals/login";
+import AuthModal from "@/components/modals/auth";
 import { modal } from "@/app/_providers/modal";
 import { follow } from "@/lib/actions/create";
 import { NDKUser } from "@nostr-dev-kit/ndk";
@@ -67,8 +67,8 @@ export default function FollowButton({
       <Button
         onClick={() => {
           if (!currentUser) {
-            modal.show(<LoginModal />, {
-              id: "login",
+            modal.show(<AuthModal />, {
+              id: "auth",
             });
           } else {
             handleFollow();

@@ -35,6 +35,7 @@ export default function useCurrentUser() {
     try {
       const shouldReconnect = localStorage.getItem("shouldReconnect");
       if (!shouldReconnect || typeof window.nostr === "undefined") return;
+      if (ndk?.signer) return;
       const user = await loginWithNip07();
       if (!user) {
         throw new Error("NO auth");
@@ -78,13 +79,15 @@ export default function useCurrentUser() {
     const user = ndk.getUser({ hexpubkey: pubkey });
     console.log("user", user);
     await user.fetchProfile();
-
     // await db.users.add({
     //   profile: user.profile!,
     //   pubkey: pubkey,
     //   createdAt: unixTimeNowInSeconds(),
     // });
     setCurrentUser(user);
+    if (typeof window.webln !== "undefined") {
+      await window.webln.enable();
+    }
   }
 
   useEffect(() => {

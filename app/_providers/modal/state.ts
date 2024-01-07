@@ -78,6 +78,7 @@ class Observer {
   };
 
   dismiss = (id?: number | string) => {
+    console.log("Dismiss called", id);
     if (!id) {
       this.modals.forEach((modal) => {
         this.subscribers.forEach((subscriber) =>
@@ -85,7 +86,6 @@ class Observer {
         );
       });
     }
-
     this.subscribers.forEach((subscriber) => subscriber({ id, dismiss: true }));
     return id;
   };
