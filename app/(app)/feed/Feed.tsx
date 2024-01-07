@@ -55,7 +55,7 @@ export default function Feed() {
   return (
     <Section className="px-5">
       <SectionHeader>
-        <SectionTitle className="font-main text-2xl font-normal sm:text-3xl">
+        <SectionTitle className="font-main text-2xl font-semibold sm:text-3xl">
           Recent Uploads
         </SectionTitle>
       </SectionHeader>
