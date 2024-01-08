@@ -28,6 +28,8 @@ import useVideo, { getVideoDetails } from "@/lib/hooks/useVideo";
 import type { NDKKind, NDKEvent } from "@nostr-dev-kit/ndk";
 import useExpandableContainer from "@/lib/hooks/useExpandableContainer";
 import ZapButton from "@/components/custom-buttons/ZapButton";
+import { modal } from "@/app/_providers/modal";
+import AddToPlaylistModal from "@/components/modals/addToPlaylist";
 
 type VideoActionsProps = {
   event: NDKEvent;
@@ -133,6 +135,14 @@ export default function VideoActions({ event }: VideoActionsProps) {
                     }/w/${event.encode()}`,
                   );
                   toast.success("Link copied!");
+                },
+              },
+              {
+                label: "Add to Playlist",
+                action: () => {
+                  modal.show(
+                    <AddToPlaylistModal eventIdentifier={event.tagId()} />,
+                  );
                 },
               },
               {

@@ -1,13 +1,9 @@
-import { Suspense } from "react";
-import HeroSection, { HeroSectionFallback } from "./_sections/Hero";
-import TrendingSection from "./_sections/Trending";
-import ChannelSection from "./_sections/Channels";
-import PlaylistsSection from "./_sections/Playlists";
+import Playlists from "./Playlists";
 
 export default function Page() {
   return (
     <div className="relative isolate">
-      <div className="absolute inset-x-0 top-0 hidden h-[80svh] w-full sm:block">
+      <div className="absolute inset-x-0 top-0 h-[80svh] w-full ">
         <div className="relative isolate h-full w-full overflow-hidden">
           <svg
             className="absolute inset-0 z-10 h-full w-full  stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
@@ -53,12 +49,7 @@ export default function Page() {
         </div>
       </div>
       <div className="relative space-y-6 pt-5 sm:pt-7">
-        <Suspense fallback={<HeroSectionFallback />}>
-          <HeroSection />
-        </Suspense>
-        <TrendingSection />
-        <PlaylistsSection />
-        <ChannelSection />
+        <Playlists />
       </div>
     </div>
   );

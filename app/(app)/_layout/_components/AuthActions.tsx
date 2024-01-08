@@ -42,27 +42,6 @@ export default function AuthActions() {
   const { currentUser, logout, attemptLogin } = useCurrentUser();
   const { ndk } = useNDK();
 
-  useKeyboardShortcut(["shift", "ctrl", "u"], () => {
-    if (currentUser) {
-      router.push(`/channel/${currentUser?.npub}`);
-    } else {
-      modal.show(<LoginModal />, {
-        id: "login",
-      });
-    }
-  });
-  useKeyboardShortcut(["shift", "ctrl", "q"], () => {
-    if (currentUser) {
-      logout();
-    }
-  });
-
-  useEffect(() => {
-    if (ndk && !currentUser) {
-      void attemptLogin();
-    }
-  }, [ndk]);
-
   if (currentUser) {
     return (
       <>

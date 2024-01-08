@@ -62,6 +62,28 @@ export function relativeTime(timestamp: Date) {
   dayjs.extend(relative);
   return dayjs(timestamp).fromNow();
 }
+export function relativeTimeSmall(timestamp: Date) {
+  dayjs.extend(updateLocale);
+  dayjs.updateLocale("en", {
+    relativeTime: {
+      future: "in %s",
+      past: "%s",
+      s: "%ds",
+      m: "1m",
+      mm: "%dm",
+      h: "%dh",
+      hh: "%dh",
+      d: "1d",
+      dd: "%dd",
+      M: "a month",
+      MM: "%d months",
+      y: "a year",
+      yy: "%d years",
+    },
+  });
+  dayjs.extend(relative);
+  return dayjs(timestamp).fromNow();
+}
 export function daysOffset(targetDate: Date) {
   const currentDate = new Date();
 

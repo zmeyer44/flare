@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { RiSettings4Line, RiFireLine, RiWindyFill } from "react-icons/ri";
+import {
+  RiSettings4Line,
+  RiFireLine,
+  RiWindyFill,
+  RiTornadoFill,
+} from "react-icons/ri";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -59,6 +64,13 @@ export default function Sidebar() {
       icon: RiWindyFill,
       type: "link",
     },
+    // {
+    //   href: "/playlists",
+    //   name: "playlists",
+    //   label: "Playlists",
+    //   icon: RiTornadoFill,
+    //   type: "link",
+    // },
   ];
   return (
     <nav className="z-header- hidden h-[calc(100svh_-_var(--header-height))] w-[var(--sidebar-width)] flex-col  sm:flex">

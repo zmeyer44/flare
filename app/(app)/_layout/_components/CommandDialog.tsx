@@ -16,7 +16,7 @@ import {
 
 import { atom, useAtom } from "jotai";
 import useWindowSize from "@/lib/hooks/useWindowSize";
-import useSearch from "@/lib/hooks/useSearch";
+import useSearch, { SearchSuggestionObject } from "@/lib/hooks/useSearch";
 import { cn } from "@/lib/utils";
 import SearchVideoCard, {
   SearchVideoCardLoading,
@@ -24,18 +24,6 @@ import SearchVideoCard, {
 import { nip19 } from "nostr-tools";
 import { toast } from "sonner";
 
-type SearchSuggestionObject = {
-  index: string;
-  hits: {
-    identifier: string;
-    title: string;
-    summary?: string;
-    thumbnail?: string;
-    kind: number;
-    pubkey: string;
-    published_at: number;
-  }[];
-};
 export const commandDialogAtom = atom(false);
 export const anonModeAtom = atom(false);
 export const odellModeAtom = atom<"lower" | "upper" | null>(null);

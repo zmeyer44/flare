@@ -11,6 +11,7 @@ import { HttpAuthProvider } from "./httpAuth";
 import { GoogleAnalyticsInit } from "@/lib/analytics";
 import { Modstr } from "./modal";
 import { PlayerProvider } from "./pipPlayer";
+import Auth from "./auth";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const handleRouteChange = (url: string) => {
@@ -33,6 +34,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
               <div vaul-drawer-wrapper="" className="min-h-[100svh]">
                 {children}
               </div>
+              <Auth />
             </PlayerProvider>
           </NDKProvider>
         </TRPCProvider>
