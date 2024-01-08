@@ -16,7 +16,9 @@ export default function LandingLayout({
     "https://images.unsplash.com/photo-1630061945673-6b40216122de?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   ];
   const [background, setBackground] = useState(
-    localStorage.getItem("bg-image-url") ?? backgrounds[0],
+    window
+      ? localStorage?.getItem("bg-image-url") ?? backgrounds[0]
+      : backgrounds[0],
   );
   useKeyboardShortcut(["shift", " "], () => {
     const currentIndex = backgrounds.findIndex((b) => b === background) ?? 0;
