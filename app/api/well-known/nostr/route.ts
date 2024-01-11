@@ -22,7 +22,7 @@ import prisma from "@/lib/prisma";
 // }
 const data = {
   names: {
-    _: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
+    _: "01454b9c96f1ec481a0bcf0c8474f8b03593de28bc551935759739228b284d1f",
     zach: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
     "🔥": "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
   },
