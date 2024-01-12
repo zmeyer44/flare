@@ -54,8 +54,8 @@ async function handler() {
       status: 200,
     },
   );
-  response.headers.set("Content-Type", "application/json");
-  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.append("Content-Type", "application/json");
+  response.headers.append("Access-Control-Allow-Origin", "*");
   return response;
 }
 
