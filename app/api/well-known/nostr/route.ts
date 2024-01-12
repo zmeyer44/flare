@@ -32,7 +32,10 @@ async function handler() {
       nip05: true,
     },
   });
-  const userNip05Map = users.map((u) => [u.nip05, u.pubkey]);
+  const userNip05Map = [
+    ["_", "0123f0970666ef69d3b6f6d5d782290dc297eedb2aa62f560f90e28168e07aaf"],
+    ...users.map((u) => [u.nip05, u.pubkey]),
+  ];
   const formattedUsers = Object.fromEntries(userNip05Map);
   const response = new NextResponse(
     JSON.stringify(
