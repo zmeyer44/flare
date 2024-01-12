@@ -29,11 +29,12 @@ export const Users = (ndk: NDK | undefined) => {
       });
     } else {
       user = ndk.getUser({
-        hexpubkey: id,
+        pubkey: id,
       });
     }
-
-    await user.fetchProfile();
+    if (user.pubkey) {
+      await user.fetchProfile();
+    }
 
     if (user.profile) {
       refUsers.current = {

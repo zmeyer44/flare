@@ -114,6 +114,14 @@ const DrawerDescription = React.forwardRef<
 ));
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
 
+const DrawerBody = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("px-4 text-center sm:text-left", className)} {...props} />
+);
+DrawerBody.displayName = "DrawerBody";
+
 export {
   Drawer,
   DrawerPortal,

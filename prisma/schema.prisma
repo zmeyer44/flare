@@ -27,6 +27,8 @@ model User {
   storageCredits StorageCredit[]
   uploads        Upload[]
   role           UserRole        @default(USER)
+  password       String?
+  email          String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -97,4 +99,87 @@ model Upload {
 enum UserRole {
   USER
   PRO
+}
+
+// Nsec bunker stuff
+model Request {
+  id           String   @id @default(uuid())
+  keyName      String?
+  key          Key?     @relation(fields: [keyName], references: [keyName])
+  requestId    String
+  remotePubkey String
+  method       String
+  params       Json?
+  allowed      Boolean?
+
+  createdAt DateTime @default(now())
+}
+
+model KeyUser {
+  id                Int                @id @default(autoincrement())
+  keyName           String
+  key               Key                @relation(fields: [keyName], references: [keyName])
+  userPubkey        String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  revokedAt         DateTime?
+  lastUsedAt        DateTime?
+  description       String?
+  tokens            Token[]
+  signingConditions SigningCondition[]
+
+  @@unique([keyName, userPubkey])
+}
+
+model Key {
+  id                  Int       @id @default(autoincrement())
+  keyName             String    @unique
+  deletedAt           DateTime?
+  pubkey              String
+  encryptedPrivateKey String
+  tokens              Token[]
+  requests            Request[]
+  keyUsers            KeyUser[]
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model Token {
+  id         Int       @id @default(autoincrement())
+  keyName    String
+  key        Key       @relation(fields: [keyName], references: [keyName])
+  token      String    @unique
+  clientName String
+  createdBy  String
+  deletedAt  DateTime?
+  expiresAt  DateTime?
+  redeemedAt DateTime?
+  keyUserId  Int?
+  keyUser    KeyUser?  @relation(fields: [keyUserId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SigningCondition {
+  id             Int      @id @default(autoincrement())
+  method         String?
+  kind           String?
+  content        String?
+  keyUserKeyName String?
+  allowed        Boolean?
+  keyUserId      Int?
+  keyUser        KeyUser? @relation(fields: [keyUserId], references: [id])
+}
+
+model NostrEvent {
+  key        Int     @id @default(autoincrement())
+  id         String  @unique
+  kind       Int
+  content    String  @db.Text
+  created_at Int
+  pubkey     String
+  tags       Json    @default("[]")
+  sig        String
+  d          String?
 }

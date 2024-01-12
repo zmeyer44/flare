@@ -18,6 +18,10 @@ const sidebarNavItems = [
     title: "Uploads",
     href: "/account/uploads",
   },
+  {
+    title: "My Playlists",
+    href: "/account/playlists",
+  },
 ];
 
 interface SettingsLayoutProps {
@@ -38,7 +42,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
         <aside className="-mx-4 lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
-        <div className="flex-1">{children}</div>
+        <div className="w-full flex-1 overflow-hidden">{children}</div>
       </div>
     </div>
   );

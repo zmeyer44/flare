@@ -143,8 +143,16 @@ export function VideoUpload({
           <div className="flex gap-2">
             <Input
               value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
-              placeholder={"https://..."}
+              onChange={(e) => {
+                if (e.target.value.includes("youtu")) {
+                  alert(
+                    "Please enter the url to where the video is hosted. A youtube link will not work on all clients.",
+                  );
+                  return setVideoUrl("");
+                }
+                return setVideoUrl(e.target.value);
+              }}
+              placeholder={"https://... (not a YouTube link)"}
             />
             <Button
               onClick={() =>

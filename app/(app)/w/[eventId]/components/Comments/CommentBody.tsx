@@ -16,7 +16,7 @@ export default function CommentBody({ event }: CommentBodyProps) {
   const npub = event.author.npub;
   const { profile } = useProfile(event.author.pubkey);
   return (
-    <div className="flex gap-x-4">
+    <div className="flex w-full gap-x-4 overflow-hidden">
       <Avatar className="center h-[40px] w-[40px] overflow-hidden rounded-[.55rem] bg-muted">
         <AvatarImage
           className="object-cover"
@@ -30,7 +30,7 @@ export default function CommentBody({ event }: CommentBodyProps) {
           })}
         </AvatarFallback>
       </Avatar>
-      <div className="space-y-1">
+      <div className="space-y-1 overflow-hidden">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <span className="line-clamp-1 text-[14px] font-semibold">
@@ -44,7 +44,7 @@ export default function CommentBody({ event }: CommentBodyProps) {
             {relativeTime(new Date((event.created_at ?? 0) * 1000))}
           </p>
         </div>
-        <div className="">
+        <div className="break-words">
           <RenderText text={event.content} />
         </div>
         <ReactionButtons event={event} />

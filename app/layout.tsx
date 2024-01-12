@@ -23,7 +23,7 @@ const poppins = Poppins({
 
 const title = "Flare";
 const description =
-  "Flare is the next era of video streaming. You host your own content, post it to Nostr, and share it with the world. There's nothing the Commies can do about it";
+  "Unstoppable video. You host your own content, post it to Nostr, and share it with the world. There's nothing the Commies can do about it";
 const image = "https://flare-pub.s3.amazonaws.com/sponsors/mobile-preview.png";
 export const metadata: Metadata = {
   title,
