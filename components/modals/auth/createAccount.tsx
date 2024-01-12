@@ -33,18 +33,18 @@ import { toast } from "sonner";
 
 const PROVIDERS = [
   {
+    domain: "flare.pub",
+    label: "Flare.pub",
+    pubkey: "0123f0970666ef69d3b6f6d5d782290dc297eedb2aa62f560f90e28168e07aaf",
+  },
+  {
     domain: "nostr.me",
     label: "Nostr.me",
     pubkey: "9c1636cda4be9bce36fe06f99f71c21525b109e0f6f206eb7a5f72093ec89f02",
   },
   {
-    domain: "flare.pub",
-    label: "Flare.pub",
-    pubkey: "7c1636cda4be9bce36fe06f99f71c21525b109e0f6f206eb7a5f72093ec89f02",
-  },
-  {
-    domain: "getfaaans.com",
-    label: "GetFaans.com",
+    domain: "highlighter.com",
+    label: "Highlighter.com",
     pubkey: "8c1636cda4be9bce36fe06f99f71c21525b109e0f6f206eb7a5f72093ec89f02",
   },
 ] as const;
@@ -85,6 +85,7 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
     delayError: 2000,
   });
   const { setValue, watch } = form;
+
   async function onSubmit(data: CreateAccountFormValues) {
     setIsCreatingAccount(true);
     try {
@@ -146,7 +147,7 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
                   <FormControl>
                     <div className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-within:outline-none focus-within:ring-1 focus-within:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
                       <input
-                        placeholder="henry"
+                        placeholder="Ragnar"
                         className="invisible-input text-[16px] sm:text-sm"
                         {...field}
                       />
@@ -156,9 +157,13 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
                             <ProviderSelectModal
                               providers={[...PROVIDERS]}
                               activeProvider={activeProvider}
-                              onChange={(p) => {
+                              onChange={(provider) => {
+                                if (provider !== PROVIDERS[0].pubkey) {
+                                  alert("Comming soon");
+                                  return;
+                                }
                                 const selectedProvider = PROVIDERS.find(
-                                  (p) => p.pubkey === activeProvider.pubkey,
+                                  (p) => p.pubkey === provider,
                                 );
                                 if (selectedProvider) {
                                   setValue("provider", selectedProvider);

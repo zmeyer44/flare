@@ -115,6 +115,8 @@ const NDKProvider = ({
     console.log("Called createNip46Signer", ndk, npub, username, email);
     if (ndk === undefined) return undefined;
     const res = await _createNip46Signer(ndk, npub, domain, username, email);
+    console.log("_createNip46Signer res", res);
+
     if (res) {
       await setSigner(res.remoteSigner);
       return res;

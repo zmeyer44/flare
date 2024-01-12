@@ -72,9 +72,9 @@ export async function _createNip46Signer(
     console.log(" new NDKNip46Signer(", ndk, bunkerPubkey, localSigner);
 
     const signer = new NDKNip46Signer(ndk, bunkerPubkey, localSigner);
+    console.log("Local signer", signer);
     ndk.signer = signer;
     signer.rpc.on("authUrl", (url: string) => onAuthUrl(url));
-
     const newSignerPubkey = await signer.createAccount(
       username,
       bunkerDomain,
