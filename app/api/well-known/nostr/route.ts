@@ -34,8 +34,7 @@ async function handler() {
   });
   const userNip05Map = users.map((u) => [u.nip05, u.pubkey]);
   const formattedUsers = Object.fromEntries(userNip05Map);
-
-  return new NextResponse(
+  const response = new NextResponse(
     JSON.stringify(
       {
         names: formattedUsers,
@@ -53,15 +52,11 @@ async function handler() {
     ),
     {
       status: 200,
-      headers: {
-        "Cross-Origin-Resource-Policy": "cross-origin",
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        "Cache-Control": "s-maxage=3600, stale-while-revalidate=30",
-        "cache-control": "s-maxage=3600, stale-while-revalidate=30",
-      },
     },
   );
+  response.headers.set("Content-Type", "application/json");
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  return response;
 }
 
 export { handler as GET, handler as POST };
