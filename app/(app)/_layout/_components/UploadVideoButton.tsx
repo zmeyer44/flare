@@ -1,7 +1,7 @@
 "use client";
 import { modal } from "@/app/_providers/modal";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
-import LoginModal from "@/components/modals/login";
+import AuthModal from "@/components/modals/auth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { RiAddFill } from "react-icons/ri";
@@ -17,8 +17,8 @@ export default function UploadVideoButton() {
           if (currentUser) {
             router.push("/new-video");
           } else {
-            modal.show(<LoginModal />, {
-              id: "login",
+            modal.show(<AuthModal />, {
+              id: "auth",
             });
           }
         }}

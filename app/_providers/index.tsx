@@ -27,7 +27,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <TRPCProvider>
           <NDKProvider relayUrls={RELAYS}>
             {/* <Toaster richColors className="dark:hidden" /> */}
-            <Toaster theme="dark" className="hidden dark:block" />
+            <Toaster theme="dark" className="z-toast hidden md:block" />
+            <Toaster
+              theme="dark"
+              richColors
+              position="top-center"
+              className="z-toast md:hidden"
+            />
             <Modstr />
             <HttpAuthProvider />
             <PlayerProvider>

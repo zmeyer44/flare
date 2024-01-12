@@ -27,7 +27,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
-import LoginModal from "@/components/modals/login";
+import AuthModal from "@/components/modals/auth";
 import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { commandDialogAtom, odellModeAtom } from "./CommandDialog";
@@ -63,8 +63,8 @@ export default function AuthActions() {
       <SearchButton className="md:hidden" />
       <Button
         onClick={() =>
-          modal.show(<LoginModal />, {
-            id: "login",
+          modal.show(<AuthModal step="create-account" />, {
+            id: "auth",
           })
         }
         className="rounded-sm px-5 font-medium"

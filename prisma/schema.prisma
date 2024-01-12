@@ -132,16 +132,16 @@ model KeyUser {
 }
 
 model Key {
-  id                  Int       @id @default(autoincrement())
-  keyName             String    @unique
-  deletedAt           DateTime?
-  pubkey              String
-  encryptedPrivateKey String
-  tokens              Token[]
-  requests            Request[]
-  keyUsers            KeyUser[]
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  keyName       String    @unique
+  deletedAt     DateTime?
+  pubkey        String
+  encryptedNsec String
+  tokens        Token[]
+  requests      Request[]
+  keyUsers      KeyUser[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Token {
