@@ -22,9 +22,17 @@ import prisma from "@/lib/prisma";
 // }
 const data = {
   names: {
-    _: "01454b9c96f1ec481a0bcf0c8474f8b03593de28bc551935759739228b284d1f",
+    _: "0123f0970666ef69d3b6f6d5d782290dc297eedb2aa62f560f90e28168e07aaf",
     zach: "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
     "🔥": "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58",
+  },
+  nip46: {
+    "0123f0970666ef69d3b6f6d5d782290dc297eedb2aa62f560f90e28168e07aaf": [
+      "wss://relay.nsecbunker.com",
+    ],
+    "17717ad4d20e2a425cda0a2195624a0a4a73c4f6975f16b1593fc87fa46f2d58": [
+      "wss://relay.nsecbunker.com",
+    ],
   },
 };
 async function handler() {
