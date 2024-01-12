@@ -3,6 +3,36 @@ const nextConfig = {
   experimental: {
     swcPlugins: ["next-superjson-plugin"],
   },
+  async headers() {
+    return [
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "Cross-Origin-Embedder-Policy",
+            value: "require-corp",
+          },
+          {
+            key: "Access-Control-Allow-Origin",
+            value: `*`,
+          },
+        ],
+      },
+      {
+        source: "/.well-known/:path*",
+        headers: [
+          {
+            key: "Cross-Origin-Embedder-Policy",
+            value: "require-corp",
+          },
+          {
+            key: "Access-Control-Allow-Origin",
+            value: `*`,
+          },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
