@@ -87,6 +87,11 @@ export async function _createNip46Signer(
 
     if (newSignerPubkey) {
       alert(`remote pubkey returned ${newSignerPubkey}`);
+      return await _loginWithNip46(
+        ndk,
+        newSignerPubkey,
+        localSigner.privateKey,
+      );
       const remoteSigner = new NDKNip46Signer(
         ndk,
         newSignerPubkey,
