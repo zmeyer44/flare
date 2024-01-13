@@ -42,8 +42,10 @@ export async function _loginWithNip46(
     if (sk) {
       localSigner = new NDKPrivateKeySigner(sk);
     }
+    localStorage.setItem("nip46-attempt-sk", localSigner.privateKey ?? "");
     const remoteSigner = new NDKNip46Signer(ndk, userPubkey, localSigner);
     ndk.signer = remoteSigner;
+
     remoteSigner.rpc.on("authUrl", (url: string) => onAuthUrl(url));
     return remoteSigner.user().then(async (user) => {
       if (user.npub) {

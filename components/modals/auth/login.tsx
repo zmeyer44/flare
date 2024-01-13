@@ -61,7 +61,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
     setIsLoading(true);
     try {
       let npub = data.username;
-      let bunkerPubkey;
+      let targetPubkey;
       // Check if nip-05
       if (!npub.startsWith("npub")) {
         const pubkey = await nip05.queryProfile(npub.toLowerCase());
@@ -69,8 +69,8 @@ export default function loginForm({ setStep }: LoginFormProps) {
           toast.error("Unable to find profile");
           return;
         }
-        bunkerPubkey = pubkey.pubkey;
-        npub = nip19.npubEncode(bunkerPubkey);
+        targetPubkey = pubkey.pubkey;
+        npub = nip19.npubEncode(targetPubkey);
       }
       const { data: d } = nip19.decode(npub);
 
