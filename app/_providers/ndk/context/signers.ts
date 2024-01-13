@@ -31,17 +31,20 @@ export async function _loginWithSecret(skOrNsec: string) {
   }
 }
 
-export async function _loginWithNip46(ndk: NDK, token: string, sk?: string) {
+export async function _loginWithNip46(
+  ndk: NDK,
+  userPubkey: string,
+  sk?: string,
+) {
   try {
-    console.log("AT_loginWithNip46()", token);
+    console.log("AT_loginWithNip46()", userPubkey, sk);
     let localSigner = NDKPrivateKeySigner.generate();
     if (sk) {
       localSigner = new NDKPrivateKeySigner(sk);
     }
-
-    const remoteSigner = new NDKNip46Signer(ndk, token, localSigner);
-    remoteSigner.on("authUrl", (url: string) => onAuthUrl(url));
-
+    const remoteSigner = new NDKNip46Signer(ndk, userPubkey, localSigner);
+    ndk.signer = remoteSigner;
+    remoteSigner.rpc.on("authUrl", (url: string) => onAuthUrl(url));
     return remoteSigner.user().then(async (user) => {
       if (user.npub) {
         await remoteSigner.blockUntilReady();
@@ -49,13 +52,14 @@ export async function _loginWithNip46(ndk: NDK, token: string, sk?: string) {
           user: user,
           npub: (await remoteSigner.user()).npub,
           sk: localSigner.privateKey,
-          token: token,
+          token: userPubkey,
           remoteSigner: remoteSigner,
           localSigner: localSigner,
         };
       }
     });
   } catch (e) {
+    console.log("throwing errro", e);
     throw e;
   }
 }
@@ -68,7 +72,6 @@ export async function _createNip46Signer(
 ) {
   try {
     let localSigner = NDKPrivateKeySigner.generate();
-
     console.log(" new NDKNip46Signer(", ndk, bunkerPubkey, localSigner);
 
     const signer = new NDKNip46Signer(ndk, bunkerPubkey, localSigner);
@@ -106,6 +109,7 @@ export async function _loginWithNip07() {
 }
 
 function onAuthUrl(url: string) {
+  console.log("onAuthUrl", url);
   let popupNotOpened = true;
   let creating = true;
   let popup = window.open(url, "_blank", "width=400,height=600");

@@ -5,8 +5,8 @@ import currentUserStore from "@/lib/stores/currentUser";
 // import useEvents from "@/lib/hooks/useEvents";
 import { UserSchema } from "@/types";
 import { useNDK } from "@/app/_providers/ndk";
-import { nip19 } from "nostr-tools";
-import { type NDKKind } from "@nostr-dev-kit/ndk";
+import { nip19, getPublicKey } from "nostr-tools";
+import { NDKPrivateKeySigner, NDKSigner } from "@nostr-dev-kit/ndk";
 import { webln } from "@getalby/sdk";
 import { api } from "../trpc/api";
 
@@ -25,7 +25,7 @@ export default function useCurrentUser() {
     addFollow,
   } = currentUserStore();
   const { data: sesstionData } = useSession();
-  const { loginWithNip07, ndk } = useNDK();
+  const { loginWithNip07, ndk, loginWithNip46 } = useNDK();
 
   const { data: dbUser } = api.user.getCurrentUser.useQuery(undefined, {
     enabled: !!sesstionData,
@@ -33,15 +33,27 @@ export default function useCurrentUser() {
 
   async function attemptLogin() {
     try {
+      console.log("attemptLogin");
       const shouldReconnect = localStorage.getItem("shouldReconnect");
-      if (!shouldReconnect || typeof window.nostr === "undefined") return;
+      const localnip46sk = localStorage.getItem("nip46sk");
+      if (!shouldReconnect && !localnip46sk) return;
       if (ndk?.signer) return;
-      const user = await loginWithNip07();
-      if (!user) {
-        throw new Error("NO auth");
+      const nip46target = localStorage.getItem("nip46target");
+      if (localnip46sk && nip46target) {
+        console.log("private", localnip46sk);
+        const pubkey = getPublicKey(localnip46sk);
+        console.log("pubkey", pubkey);
+        const user = await loginWithNip46(nip46target, localnip46sk);
+        await loginWithPubkey(nip46target);
+      } else if (typeof window.nostr !== "undefined") {
+        const user = await loginWithNip07();
+        if (!user) {
+          throw new Error("NO auth");
+        }
+        const pubkey = nip19.decode(user.npub).data.toString();
+        await loginWithPubkey(pubkey);
       }
-      const pubkey = nip19.decode(user.npub).data.toString();
-      await loginWithPubkey(pubkey);
+
       if (typeof window.webln !== "undefined") {
         await window.webln.enable();
       }
@@ -53,6 +65,7 @@ export default function useCurrentUser() {
 
   function logout() {
     localStorage.removeItem("shouldReconnect");
+    localStorage.removeItem("nip46sk");
     setCurrentUser(null);
     signOut();
     window.location.reload();

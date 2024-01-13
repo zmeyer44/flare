@@ -26,9 +26,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { modal } from "@/app/_providers/modal";
-import ProviderSelectModal from "./providerSelect";
-import { HiChevronDown } from "react-icons/hi";
 import { Steps } from ".";
 import { useNDK } from "@/app/_providers/ndk";
 import { nip05, nip19 } from "nostr-tools";
@@ -64,6 +61,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
     setIsLoading(true);
     try {
       let npub = data.username;
+      let bunkerPubkey;
       // Check if nip-05
       if (/^(?:([\w.+-]+)@)?([\w.-]+)$/.test(npub)) {
         console.log("searching nip05");
@@ -72,13 +70,19 @@ export default function loginForm({ setStep }: LoginFormProps) {
           toast.error("Unable to find profile");
           return;
         }
-        npub = nip19.npubEncode(pubkey.pubkey);
+        bunkerPubkey = pubkey.pubkey;
+        npub = nip19.npubEncode(bunkerPubkey);
       }
+      const { data: d } = nip19.decode(npub);
       console.log("found npub", npub);
-      const login = await loginWithNip46(npub);
+      const login = await loginWithNip46(d.toString());
       console.log("Login attempt", login);
       if (login) {
         await loginWithPubkey(nip19.decode(npub).data.toString());
+        if (login.sk) {
+          localStorage.setItem("nip46sk", login.sk);
+          localStorage.setItem("nip46target", d.toString());
+        }
         toast.success("Logged in!");
       } else {
         toast.error("Unable to login");

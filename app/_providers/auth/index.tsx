@@ -14,6 +14,7 @@ export default function Auth() {
   const { ndk } = useNDK();
 
   useEffect(() => {
+    console.log("at useEffect for attemptLogin", currentUser);
     if (ndk && !currentUser) {
       void attemptLogin();
     }

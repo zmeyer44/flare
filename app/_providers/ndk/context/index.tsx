@@ -107,29 +107,38 @@ const NDKProvider = ({
   const { getUser, getProfile } = Users(ndk);
 
   async function createNip46Signer(
-    npub: string,
+    userPubkey: string,
     domain: string,
     username: string,
     email?: string,
   ) {
-    console.log("Called createNip46Signer", ndk, npub, username, email);
+    console.log("Called createNip46Signer", ndk, userPubkey, username, email);
     if (ndk === undefined) return undefined;
-    const res = await _createNip46Signer(ndk, npub, domain, username, email);
+    const res = await _createNip46Signer(
+      ndk,
+      userPubkey,
+      domain,
+      username,
+      email,
+    );
     console.log("_createNip46Signer res", res);
-
     if (res) {
       await setSigner(res.remoteSigner);
       return res;
     }
   }
-  async function loginWithNip46(npub: string, sk?: string) {
-    console.log("at loginWithNip46()");
+  async function loginWithNip46(userPubkey: string, sk?: string) {
+    console.log("at loginWithNip46()", relayUrls);
     if (ndk === undefined) return undefined;
-
-    const res = await _loginWithNip46(ndk, npub, sk);
-    if (res) {
-      await setSigner(res.remoteSigner);
-      return res;
+    try {
+      const res = await _loginWithNip46(ndk, userPubkey, sk);
+      console.log("res loginWithNip46()", res);
+      if (res) {
+        await setSigner(res.remoteSigner);
+        return res;
+      }
+    } catch (err) {
+      console.log("Error in loginWithNip46", err);
     }
   }
 
