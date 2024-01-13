@@ -9,11 +9,13 @@ import { nip19, getPublicKey } from "nostr-tools";
 import { NDKPrivateKeySigner, NDKSigner } from "@nostr-dev-kit/ndk";
 import { webln } from "@getalby/sdk";
 import { api } from "../trpc/api";
+import { useSearchParams } from "next/navigation";
 
 const loadNWCUrl = "";
 const nwc = new webln.NWC({ nostrWalletConnectUrl: loadNWCUrl });
 
 export default function useCurrentUser() {
+  const searchParams = useSearchParams();
   const {
     currentUser,
     setCurrentUser,
@@ -33,7 +35,17 @@ export default function useCurrentUser() {
 
   async function attemptLogin() {
     try {
-      console.log("attemptLogin");
+      console.log("attemptLogin", searchParams);
+      const attempt = localStorage.getItem("nip46-attempt-sk");
+      const paramPubkey = searchParams.get("pubkey");
+      if (attempt && paramPubkey === getPublicKey(attempt)) {
+        const user = await loginWithNip46(paramPubkey, attempt);
+        if (user) {
+          await loginWithPubkey(paramPubkey);
+          return;
+        }
+      }
+
       const shouldReconnect = localStorage.getItem("shouldReconnect");
       const localnip46sk = localStorage.getItem("nip46sk");
       if (!shouldReconnect && !localnip46sk) return;
