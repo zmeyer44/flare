@@ -14,6 +14,7 @@ export function HttpAuthProvider() {
   useEffect(() => {
     if (!currentUser || session || promptShown) return;
     if (ndk?.activeUser?.pubkey && httpAuthStatus === "unauthenticated") {
+      console.log("Active user", ndk?.activeUser?.pubkey);
       void attemptHttpLogin();
       setPromptShown(true);
     }

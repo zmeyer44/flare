@@ -96,6 +96,7 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
         data.email,
       );
       if (nip46Signer) {
+        console.log("Logging in with old", nip46Signer.newSignerPubkey);
         await loginWithPubkey(nip46Signer.newSignerPubkey);
         if (nip46Signer.sk) {
           localStorage.setItem("nip46sk", nip46Signer.sk);
