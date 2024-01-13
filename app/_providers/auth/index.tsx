@@ -7,11 +7,9 @@ import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { useNDK } from "../ndk";
 import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import LoginModal from "@/components/modals/login";
-import { useSearchParams } from "next/navigation";
 
 export default function Auth() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { currentUser, logout, attemptLogin } = useCurrentUser();
   const { ndk } = useNDK();
 
