@@ -19,6 +19,7 @@ export default function Auth() {
       void attemptLogin();
     }
   }, [ndk]);
+
   useKeyboardShortcut(["shift", "ctrl", "u"], () => {
     if (currentUser) {
       router.push(`/channel/${currentUser?.npub}`);
@@ -33,12 +34,6 @@ export default function Auth() {
       logout();
     }
   });
-
-  useEffect(() => {
-    if (ndk && !currentUser) {
-      void attemptLogin();
-    }
-  }, [ndk]);
 
   return <></>;
 }

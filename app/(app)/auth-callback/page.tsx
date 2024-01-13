@@ -28,6 +28,10 @@ export default function Page() {
       localStorage.removeItem("nip46-attempt-sk");
       const login = await loginWithNip46(pubkey, attempt);
       if (login) {
+        if (login.sk) {
+          localStorage.setItem("nip46sk", login.sk);
+          localStorage.setItem("nip46target", pubkey);
+        }
         await loginWithPubkey(pubkey);
         return;
       }

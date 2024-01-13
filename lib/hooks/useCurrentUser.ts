@@ -36,13 +36,13 @@ export default function useCurrentUser() {
       const localnip46sk = localStorage.getItem("nip46sk");
       if (!shouldReconnect && !localnip46sk) return;
       if (ndk?.signer) return;
-      const nip46target = localStorage.getItem("nip46target");
-      if (localnip46sk && nip46target) {
-        console.log("private", localnip46sk);
-        const pubkey = getPublicKey(localnip46sk);
-        console.log("pubkey", pubkey);
-        const user = await loginWithNip46(nip46target, localnip46sk);
-        await loginWithPubkey(nip46target);
+      const nip46targetPubkey = localStorage.getItem("nip46target");
+      if (localnip46sk && nip46targetPubkey) {
+        const user = await loginWithNip46(nip46targetPubkey, localnip46sk);
+        if (user) {
+          await loginWithPubkey(nip46targetPubkey);
+          return;
+        }
       } else if (typeof window.nostr !== "undefined") {
         const user = await loginWithNip07();
         if (!user) {
