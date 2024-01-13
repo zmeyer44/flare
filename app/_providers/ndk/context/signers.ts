@@ -137,7 +137,7 @@ function onAuthUrl(url: string) {
 }
 function redirectToAuthUrlWithCallback(url: string) {
   const redirectUrl = new URL(url);
-  const callbackPath = "/";
+  const callbackPath = "/auth-callback";
   const currentUrl = new URL(window.location.href);
   const callbackUrl = new URL(callbackPath, currentUrl.origin);
   redirectUrl.searchParams.set("callbackUrl", callbackUrl.toString());
