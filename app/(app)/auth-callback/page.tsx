@@ -20,8 +20,8 @@ export default function Page() {
 
   async function attemptLogin(pubkey: string) {
     const attempt = localStorage.getItem("nip46-attempt-sk");
-    if (attempt && pubkey === getPublicKey(attempt)) {
-      alert(`matches`);
+    if (attempt) {
+      alert(`attempt ${attempt}`);
       const login = await loginWithNip46(pubkey, attempt);
       if (login) {
         alert("LOgin");
@@ -32,7 +32,7 @@ export default function Page() {
   }
 
   return (
-    <div className="center">
+    <div className="center py-10 text-primary">
       <Spinner />
     </div>
   );
