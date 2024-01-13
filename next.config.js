@@ -9,10 +9,6 @@ const nextConfig = {
         source: "/api/:path*",
         headers: [
           {
-            key: "Cross-Origin-Embedder-Policy",
-            value: "require-corp",
-          },
-          {
             key: "Access-Control-Allow-Origin",
             value: `*`,
           },
@@ -22,10 +18,6 @@ const nextConfig = {
         source: "/.well-known/:path*",
         headers: [
           {
-            key: "Cross-Origin-Embedder-Policy",
-            value: "require-corp",
-          },
-          {
             key: "Access-Control-Allow-Origin",
             value: `*`,
           },
@@ -34,10 +26,6 @@ const nextConfig = {
       {
         source: "/:path*",
         headers: [
-          {
-            key: "Cross-Origin-Embedder-Policy",
-            value: "require-corp",
-          },
           {
             key: "Access-Control-Allow-Origin",
             value: `*`,
