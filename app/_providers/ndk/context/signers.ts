@@ -1,6 +1,6 @@
 "use client";
 
-import { nip19 } from "nostr-tools";
+import { getPublicKey, nip19 } from "nostr-tools";
 import NDK, {
   NDKNip07Signer,
   NDKNip46Signer,
@@ -41,8 +41,14 @@ export async function _loginWithNip46(
     let localSigner = NDKPrivateKeySigner.generate();
     if (sk) {
       localSigner = new NDKPrivateKeySigner(sk);
+    } else {
+      localStorage.setItem("nip46-attempt-sk", localSigner.privateKey ?? "");
     }
-    localStorage.setItem("nip46-attempt-sk", localSigner.privateKey ?? "");
+    alert(
+      `local signer private ${localSigner.privateKey}| public ${getPublicKey(
+        localSigner?.privateKey as string,
+      )}`,
+    );
     const remoteSigner = new NDKNip46Signer(ndk, userPubkey, localSigner);
     ndk.signer = remoteSigner;
 
