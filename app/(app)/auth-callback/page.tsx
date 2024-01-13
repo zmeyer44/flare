@@ -6,7 +6,7 @@ import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { useNDK } from "@/app/_providers/ndk";
 import { getPublicKey } from "nostr-tools";
 
-export function Page() {
+export default function Page() {
   const { loginWithNip46 } = useNDK();
   const { loginWithPubkey } = useCurrentUser();
   const searchParams = useSearchParams();
