@@ -96,11 +96,13 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
         data.email,
       );
       if (nip46Signer) {
-        console.log("Logging in with old", nip46Signer.newSignerPubkey);
-        await loginWithPubkey(nip46Signer.newSignerPubkey);
+        alert(
+          `created signer for remote ${nip46Signer.remoteSigner.remotePubkey}`,
+        );
+        await loginWithPubkey(nip46Signer.token);
         if (nip46Signer.sk) {
           localStorage.setItem("nip46sk", nip46Signer.sk);
-          localStorage.setItem("nip46target", nip46Signer.newSignerPubkey);
+          localStorage.setItem("nip46target", nip46Signer.token);
         }
         toast.success("Account created!");
       }

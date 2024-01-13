@@ -45,9 +45,11 @@ interface NDKContext {
   ) => Promise<
     | undefined
     | {
+        npub: string;
         sk: string | undefined;
-        newSignerPubkey: string;
+        token: string;
         remoteSigner: NDKNip46Signer;
+        localSigner: NDKPrivateKeySigner;
       }
   >;
   loginWithSecret: (skOrNsec: string) => Promise<
