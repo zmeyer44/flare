@@ -14,7 +14,7 @@ type AuthModalProps = {
 };
 
 export default function AuthModal({
-  step: startingStep = "create-account",
+  step: startingStep = "login",
 }: AuthModalProps) {
   const [step, setStep] = useState<Steps>(startingStep);
 

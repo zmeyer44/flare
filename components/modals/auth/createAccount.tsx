@@ -97,6 +97,10 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
       );
       if (nip46Signer) {
         await loginWithPubkey(nip46Signer.newSignerPubkey);
+        if (nip46Signer.sk) {
+          localStorage.setItem("nip46sk", nip46Signer.sk);
+          localStorage.setItem("nip46target", nip46Signer.newSignerPubkey);
+        }
         toast.success("Account created!");
       }
     } catch (err) {

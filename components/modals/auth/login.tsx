@@ -74,9 +74,9 @@ export default function loginForm({ setStep }: LoginFormProps) {
         npub = nip19.npubEncode(bunkerPubkey);
       }
       const { data: d } = nip19.decode(npub);
-      console.log("found npub", npub);
+
       const login = await loginWithNip46(d.toString());
-      console.log("Login attempt", login);
+
       if (login) {
         await loginWithPubkey(nip19.decode(npub).data.toString());
         if (login.sk) {
@@ -130,16 +130,16 @@ export default function loginForm({ setStep }: LoginFormProps) {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Nostr address</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="name@[provider].com or npub..."
+                      placeholder="Nostr address or npub..."
                       className="text-[16px] sm:text-sm"
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Enter your npub, nip-05, or you nsec bunker url
+                    Enter your nostr address of npub
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

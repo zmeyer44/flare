@@ -87,6 +87,7 @@ export async function _createNip46Signer(
       return {
         newSignerPubkey,
         remoteSigner: signer,
+        sk: localSigner.privateKey,
       };
     }
     return;

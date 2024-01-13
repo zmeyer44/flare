@@ -45,6 +45,7 @@ interface NDKContext {
   ) => Promise<
     | undefined
     | {
+        sk: string | undefined;
         newSignerPubkey: string;
         remoteSigner: NDKNip46Signer;
       }
