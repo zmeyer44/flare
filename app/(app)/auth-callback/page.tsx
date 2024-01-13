@@ -7,16 +7,16 @@ import { useNDK } from "@/app/_providers/ndk";
 import { getPublicKey } from "nostr-tools";
 
 export default function Page() {
-  const { loginWithNip46 } = useNDK();
+  const { loginWithNip46, ndk } = useNDK();
   const { loginWithPubkey } = useCurrentUser();
   const searchParams = useSearchParams();
   useEffect(() => {
     const pubkey = searchParams.get("pubkey");
-    if (pubkey) {
+    if (pubkey && ndk) {
       alert(`pubkey ${pubkey}`);
       void attemptLogin(pubkey);
     }
-  }, [searchParams]);
+  }, [searchParams, ndk]);
 
   async function attemptLogin(pubkey: string) {
     const attempt = localStorage.getItem("nip46-attempt-sk");

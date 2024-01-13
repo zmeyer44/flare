@@ -25,7 +25,7 @@ interface NDKContext {
   signer: NDKPrivateKeySigner | NDKNip46Signer | NDKNip07Signer | undefined;
   fetchEvents: (filter: NDKFilter) => Promise<NDKEvent[]>;
   loginWithNip46: (
-    npub: string,
+    targetPubkey: string,
     sk?: string,
   ) => Promise<
     | undefined
@@ -131,6 +131,7 @@ const NDKProvider = ({
   async function loginWithNip46(userPubkey: string, sk?: string) {
     console.log("at loginWithNip46()", relayUrls);
     if (ndk === undefined) return undefined;
+    alert("at loginWithNip46");
     try {
       const res = await _loginWithNip46(ndk, userPubkey, sk);
       console.log("res loginWithNip46()", res);
