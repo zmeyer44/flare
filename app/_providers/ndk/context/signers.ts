@@ -86,18 +86,13 @@ export async function _createNip46Signer(
     );
 
     if (newSignerPubkey) {
-      alert(`remote pubkey returned ${newSignerPubkey}`);
-      return await _loginWithNip46(
-        ndk,
-        newSignerPubkey,
-        localSigner.privateKey,
-      );
       const remoteSigner = new NDKNip46Signer(
         ndk,
         newSignerPubkey,
         localSigner,
       );
       ndk.signer = remoteSigner;
+      remoteSigner.rpc.on("authUrl", (url: string) => onAuthUrl(url));
       return remoteSigner.user().then(async (user) => {
         if (user.npub) {
           await remoteSigner.blockUntilReady();
