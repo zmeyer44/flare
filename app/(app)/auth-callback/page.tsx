@@ -4,27 +4,30 @@ import Spinner from "@/components/spinner";
 import { useSearchParams } from "next/navigation";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { useNDK } from "@/app/_providers/ndk";
-import { getPublicKey } from "nostr-tools";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const { loginWithNip46, ndk } = useNDK();
-  const { loginWithPubkey } = useCurrentUser();
+  const { loginWithPubkey, currentUser } = useCurrentUser();
   const searchParams = useSearchParams();
   useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+      return;
+    }
     const pubkey = searchParams.get("pubkey");
     if (pubkey && ndk) {
-      alert(`pubkey ${pubkey}`);
       void attemptLogin(pubkey);
     }
-  }, [searchParams, ndk]);
+  }, [searchParams, ndk, currentUser]);
 
   async function attemptLogin(pubkey: string) {
     const attempt = localStorage.getItem("nip46-attempt-sk");
     if (attempt) {
-      alert(`attempt ${attempt}`);
+      localStorage.removeItem("nip46-attempt-sk");
       const login = await loginWithNip46(pubkey, attempt);
       if (login) {
-        alert("LOgin");
         await loginWithPubkey(pubkey);
         return;
       }

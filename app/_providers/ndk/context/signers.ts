@@ -44,11 +44,6 @@ export async function _loginWithNip46(
     } else {
       localStorage.setItem("nip46-attempt-sk", localSigner.privateKey ?? "");
     }
-    alert(
-      `local signer private ${localSigner.privateKey}| public ${getPublicKey(
-        localSigner?.privateKey as string,
-      )}`,
-    );
     const remoteSigner = new NDKNip46Signer(ndk, userPubkey, localSigner);
     ndk.signer = remoteSigner;
 
