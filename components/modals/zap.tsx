@@ -79,7 +79,7 @@ export default function ZapModal({
     }
   }
   return (
-    <div className="">
+    <div className="px-4 md:px-0">
       <div className="flex pb-5">
         <h1 className="text-lg font-semibold text-foreground">{title}</h1>
       </div>

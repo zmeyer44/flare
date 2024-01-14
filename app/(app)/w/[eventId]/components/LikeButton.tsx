@@ -6,6 +6,8 @@ import useEvents from "@/lib/hooks/useEvents";
 import { useNDK } from "@/app/_providers/ndk";
 import { createEvent } from "@/lib/actions/create";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import { modal } from "@/app/_providers/modal";
+import AuthModal from "@/components/modals/auth";
 
 type LikeButtonProps = {
   contentEvent: NDKEvent;
@@ -23,7 +25,11 @@ export default function LikeButton({ contentEvent }: LikeButtonProps) {
   const upVotes = events.length - downVotes;
 
   async function handleLike(action: string) {
-    if (!currentUser || !ndk) return;
+    if (!currentUser) {
+      modal.show(<AuthModal />, { id: "auth" });
+      return;
+    }
+    if (!ndk) return;
     try {
       const preEvent = {
         content: action,
