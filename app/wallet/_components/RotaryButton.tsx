@@ -1,50 +1,91 @@
 "use client";
 import { useState } from "react";
+import useLongPress from "../_hooks/useLongPress";
+
 export default function RotaryButton() {
-  const [rotation, setRotation] = useState(0);
+  const [rotation, setRotation] = useState(210);
+  function handleRotate() {
+    setRotation((prev) => {
+      if (prev === 210) {
+        return 270;
+      } else if (prev === 270) {
+        return 340;
+      } else {
+        return 210;
+      }
+    });
+  }
+  function handleSelect() {
+    console.log("Select");
+  }
+
+  const defaultOptions = {
+    shouldPreventDefault: true,
+    delay: 500,
+  };
+  const longPressEvent = useLongPress(
+    handleSelect,
+    handleRotate,
+    defaultOptions,
+  );
   return (
     <div className="m-auto flex h-40 w-40 scale-150 transform text-center">
       <div className="center absolute inset-x-0 -top-12">
         <p className="font-semibold uppercase text-gray-600">Action Switch</p>
       </div>
-      <div className="absolute h-40 w-40 origin-center -rotate-90 scale-110  transform font-semibold text-gray-600">
-        100
-      </div>
-      <div className="absolute h-40 w-40 origin-center -rotate-45 scale-110 transform font-semibold text-gray-600">
-        200
-      </div>
-      <div className="absolute h-40 w-40 origin-center scale-110 transform font-semibold text-gray-600">
-        500
-      </div>
-      <div className="absolute h-40 w-40 origin-center rotate-45 scale-110 transform font-semibold text-gray-600">
-        1K
-      </div>
-      <div className="absolute h-40 w-40 origin-center rotate-90 scale-110 transform font-semibold text-gray-600">
-        5K
-      </div>
-
       <div
-        onClick={() => {
-          setRotation((prev) => prev + 60);
+        style={{
+          rotate: `-60deg`,
         }}
+        className="absolute h-40 w-40 origin-center scale-110 transform text-sm font-semibold uppercase text-gray-600"
+      >
+        Send
+      </div>
+      {/* <div className="absolute h-40 w-40 origin-center -rotate-45 scale-110 transform font-semibold text-gray-600">
+        200
+      </div> */}
+      <div className="absolute h-40 w-40 origin-center scale-110 transform text-sm font-semibold uppercase text-gray-600">
+        Scan
+      </div>
+      {/* <div className="absolute h-40 w-40 origin-center rotate-45 scale-110 transform font-semibold text-gray-600">
+        1K
+      </div> */}
+      <div
+        style={{
+          rotate: `60deg`,
+        }}
+        className="absolute h-40 w-40 origin-center scale-110 transform text-sm font-semibold uppercase text-gray-600"
+      >
+        Show
+      </div>
+      {/* @ts-ignore */}
+      <div
+        {...longPressEvent}
         className="bg-texture-otis-redding relative m-auto h-24 w-24 rounded-full bg-primary bg-opacity-80"
       >
         <div className="absolute h-24 w-24 scale-125 transform rounded-full border-2 border-gray-600"></div>
         <div className="absolute h-24 w-24 rounded-full border-l-2 border-r-2 border-t-2 border-white border-opacity-50"></div>
         <div className="absolute h-24 w-24 rounded-full border-b-2 border-l-2 border-r-2 border-black border-opacity-25"></div>
-
         <div
           style={{
             rotate: `${rotation}deg`,
           }}
-          className="bg-texture-otis-redding absolute m-auto ml-12 mt-12 h-1 w-1/2 origin-top-left -translate-x-1 transform rounded-md bg-gray-200 bg-opacity-90 transition-all"
-        ></div>
+          className="bg-texture-otis-redding absolute m-auto mb-[-4px] ml-12 mt-12 h-1 w-1/2 origin-top-left -translate-x-1 transform transition-all duration-200"
+        >
+          <div className="ml-auto h-1 w-4/5 -translate-y-[3px] transform rounded-md bg-gray-200 bg-opacity-90"></div>
+        </div>
+
         <div className="absolute h-24 w-24 rounded-full shadow-2xl"></div>
         <div className="absolute h-24 w-24 rounded-full shadow-2xl"></div>
         <div className="absolute h-24 w-24 rounded-full shadow-xl"></div>
         <div className="absolute h-24 w-24 rounded-full shadow-xl"></div>
         <div className="absolute h-24 w-24 rounded-full shadow-lg"></div>
         <div className="absolute h-24 w-24 rounded-full shadow-md"></div>
+      </div>
+      <div className="center absolute inset-x-0 -bottom-5">
+        <p className="text-[12px] font-semibold uppercase text-gray-600">
+          [Hold to select]
+        </p>
       </div>
     </div>
   );
