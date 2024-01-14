@@ -9,14 +9,16 @@ import { cn } from "@/lib/utils";
 import Template from "./template";
 import { QrReader } from "react-qr-reader";
 import QRFrameIcon from "@/assets/icons/QRFrameIcon";
+import { Button } from "../ui/button";
 
 type ScanModalProps = {
   onCapture: (data: string) => void;
+  onDismiss?: () => void;
 };
 
-export default function ScanModal({ onCapture }: ScanModalProps) {
+export default function ScanModal({ onCapture, onDismiss }: ScanModalProps) {
   return (
-    <Template>
+    <Template title="Scan Lightning invoice">
       <div className="pb-10">
         <div className="center relative mx-auto aspect-square max-w-[300px]">
           <QrReader
@@ -42,6 +44,11 @@ export default function ScanModal({ onCapture }: ScanModalProps) {
           />
           <QRFrameIcon className="absolute inset-0 mx-auto h-1/2 w-1/2 translate-y-1/2 text-primary" />
         </div>
+        {!!onDismiss && (
+          <Button onClick={onDismiss} className="mt-6" variant={"secondary"}>
+            Dismiss
+          </Button>
+        )}
       </div>
     </Template>
   );

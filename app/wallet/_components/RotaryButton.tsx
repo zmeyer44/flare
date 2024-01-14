@@ -4,6 +4,7 @@ import useLongPress from "../_hooks/useLongPress";
 import { modal } from "@/app/_providers/modal";
 import AuthModal from "@/components/modals/auth";
 import ScanModal from "@/components/modals/scan";
+import QRCodeModal from "@/components/modals/qr";
 
 export default function RotaryButton() {
   //   const info = useDeviceInfo();
@@ -46,10 +47,22 @@ export default function RotaryButton() {
     const remainder = rotation % 180;
     if (remainder === -90) {
       step = "scan";
-      modal.show(<ScanModal onCapture={(e) => alert(e)} />);
+      modal.show(
+        <ScanModal
+          onCapture={(e) => alert(e)}
+          onDismiss={() => modal.dismiss()}
+        />,
+      );
     } else if (remainder === -30) {
       step = "show";
-      modal.show(<AuthModal />);
+      modal.show(
+        <QRCodeModal
+          code="lnurl1dp68gurn8ghj7urjd9kkzmpwdejhgtewwajkcmpdddhx7amw9akxuatjd3cz7cmgv9exxmmpd3j8yct8dahxvmrexy0xna2x"
+          title="Receive Bitcoin"
+          displayValue="lnurl1dp68gurn8ghj7urjd9kkzmpwdejhgtewwajkcmpdddhx7amw9akxuatjd3cz7cmgv9exxmmpd3j8yct8dahxvmrexy0xna2x"
+          description="Scan Qr code to receive lightning"
+        />,
+      );
     } else {
       modal.show(<AuthModal />);
     }
