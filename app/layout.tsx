@@ -72,7 +72,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning={true}
-      className="dark bg-background "
+      className="dark bg-background"
     >
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />

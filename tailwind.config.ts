@@ -58,6 +58,8 @@ module.exports = {
         condensed: ["var(--font-inter-tight)"],
         dm: ["var(--font-dm-sans)"],
         main: ["var(--font-main)"],
+        "major-mono": ["var(--font-major-mono)"],
+        audiowide: ["var(--font-audiowide)"],
       },
       width: {
         sidebar: "var(--sidebar-width)",

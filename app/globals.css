@@ -173,3 +173,7 @@ html {
 .odell-mode-upper {
   text-transform: uppercase !important;
 }
+
+.bg-texture-otis-redding {
+  background-image: url("https://www.transparenttextures.com/patterns/otis-redding.png");
+}
