@@ -16,6 +16,10 @@ const useLongPress = (
         | React.MouseEvent<HTMLDivElement>
         | React.TouchEventHandler<HTMLDivElement>,
     ) => {
+      if (shouldPreventDefault) {
+        // @ts-ignore
+        event.preventDefault();
+      }
       // @ts-ignore
       if (shouldPreventDefault && event?.target && target.current) {
         // @ts-ignore
