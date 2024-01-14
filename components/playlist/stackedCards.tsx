@@ -92,14 +92,14 @@ export default function StackedPlaylistCard({
               key={e.id}
               className={cn(
                 zIndexes[idx],
-                "group relative flex w-full max-w-[100px] items-center transition-all hover:max-w-[200px]",
+                "group relative flex w-full max-w-[100px] items-center transition-all hover:max-w-[180px]",
                 (idx === 0 || (idx === events.length - 1 && !showAddOption)) &&
-                  "hover:max-w-[150px]",
+                  "hover:max-w-[140px]",
                 thumbnailCardClassName,
               )}
             >
               {idx !== 0 && (
-                <div className="h-[100px] max-w-[50px] flex-2"></div>
+                <div className="h-[100px] w-[40px] max-w-[40px] flex-2"></div>
               )}
               <div className="center relative h-full w-[100px] transform overflow-hidden rounded-lg object-cover shadow-[0_0_#0000004d,_0_9px_20px_#0000004a,_0_37px_37px_#00000042] transition-all group-hover:-translate-y-2 group-hover:scale-110 group-hover:shadow-[0_0_#0000004d,_0_9px_20px_#0000004a,_0_37px_37px_#00000042,_0_10px_50px_#00000026] group-hover:shadow-muted/50">
                 <AspectRatio ratio={3 / 4}>
@@ -114,7 +114,7 @@ export default function StackedPlaylistCard({
                     )}
                   />
                 </AspectRatio>
-                <div className="absolute bottom-0 right-0 pb-2 pr-2 ">
+                <div className="absolute bottom-0 right-0 pb-2 pr-2">
                   <Button
                     //   onClick={() => setOpen(true)}
                     variant="default"
@@ -128,7 +128,7 @@ export default function StackedPlaylistCard({
                 </div>
               </div>
               {(idx !== events.length - 1 || showAddOption) && (
-                <div className="h-[100px] max-w-[50px] flex-3"></div>
+                <div className="h-[100px] w-[40px] max-w-[40px] flex-2"></div>
               )}
             </Link>
           ))
