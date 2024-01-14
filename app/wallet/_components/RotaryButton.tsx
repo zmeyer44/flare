@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import useLongPress from "../_hooks/useLongPress";
-import useDeviceInfo from "../_hooks/useDeviceInfo";
+import { modal } from "@/app/_providers/modal";
+import AuthModal from "@/components/modals/auth";
 
 export default function RotaryButton() {
   //   const info = useDeviceInfo();
@@ -47,7 +48,7 @@ export default function RotaryButton() {
     } else if (remainder === -30) {
       step = "show";
     }
-    alert(`Selected ${step} ${remainder}`);
+    modal.show(<AuthModal />);
   }
 
   const defaultOptions = {
