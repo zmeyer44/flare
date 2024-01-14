@@ -20,31 +20,34 @@ export default function RotaryButton() {
               (typeof safari !== "undefined" && safari?.pushNotification),
           ),
       );
-      alert(JSON.stringify(info));
     }
   }, [info]);
-  const [rotation, setRotation] = useState(210);
-
+  const [rotation, setRotation] = useState(-150);
+  function getSafariVal(num: number) {
+    if (num <= 180) return num;
+    return -180 + (num - 180);
+  }
   function handleRotate() {
-    if (isSafari) {
+    if (isSafari || info?.osName === "iOS") {
       setRotation((prev) => {
-        if (prev === 210) {
-          return 270;
-        } else if (prev === 270) {
-          return 330;
+        const val = getSafariVal(prev);
+        if (val === -150) {
+          return -90;
+        } else if (val === -90) {
+          return -30;
         } else {
-          return 210;
+          return -150;
         }
       });
     } else {
       setRotation((prev) => {
-        const remainder = prev % 180;
-        if (remainder === 30) {
-          return prev + 60;
-        } else if (remainder === 90) {
-          return prev + 60;
+        const val = getSafariVal(prev);
+        if (val === -150) {
+          return -90;
+        } else if (val === -90) {
+          return -30;
         } else {
-          return prev + 240;
+          return -150;
         }
       });
       //   setRotation((prev) => {
@@ -62,12 +65,12 @@ export default function RotaryButton() {
   function handleSelect() {
     let step = "send";
     const remainder = rotation % 180;
-    if (remainder === 90) {
+    if (remainder === -90) {
       step = "scan";
-    } else if (remainder === 150) {
+    } else if (remainder === -30) {
       step = "show";
     }
-    alert(`Selected ${step}`);
+    alert(`Selected ${step} ${remainder}`);
   }
 
   const defaultOptions = {
