@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import useLongPress from "../_hooks/useLongPress";
 
 export default function RotaryButton() {
-  const [isSafari, setIsSafari] = useState(
-    // @ts-ignore
-    /constructor/i.test(window?.HTMLElement) ||
+  const [isSafari] = useState(
+    (typeof window !== "undefined" &&
+      // @ts-ignore
+      /constructor/i.test(window?.HTMLElement)) ||
       (function (p) {
         return p.toString() === "[object SafariRemoteNotification]";
       })(
