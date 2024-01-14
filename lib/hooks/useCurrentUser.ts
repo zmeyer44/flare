@@ -31,19 +31,22 @@ export default function useCurrentUser() {
   });
 
   async function attemptLogin() {
+    console.log("attemptLogin()");
     try {
       const shouldReconnect = localStorage.getItem("shouldReconnect");
       const localnip46sk = localStorage.getItem("nip46sk");
-      if (!shouldReconnect && !localnip46sk) return;
-      if (ndk?.signer) return;
+      if (!shouldReconnect && !localnip46sk) return console.log("!!");
+      if (ndk?.signer) return console.log("ndk signer");
       const nip46targetPubkey = localStorage.getItem("nip46target");
       if (localnip46sk && nip46targetPubkey) {
         const user = await loginWithNip46(nip46targetPubkey, localnip46sk);
         if (user) {
           await loginWithPubkey(nip46targetPubkey);
+          console.log("return nip46targetPubkey");
           return;
         }
-      } else if (typeof window.nostr !== "undefined") {
+      }
+      if (typeof window.nostr !== "undefined") {
         const user = await loginWithNip07();
         if (!user) {
           throw new Error("NO auth");
@@ -51,7 +54,6 @@ export default function useCurrentUser() {
         const pubkey = nip19.decode(user.npub).data.toString();
         await loginWithPubkey(pubkey);
       }
-
       if (typeof window.webln !== "undefined") {
         await window.webln.enable();
       }

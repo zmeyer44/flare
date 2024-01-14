@@ -83,6 +83,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
           localStorage.setItem("nip46sk", login.sk);
           localStorage.setItem("nip46target", d.toString());
         }
+        localStorage.setItem("shouldReconnect", "true");
         toast.success("Logged in!");
       } else {
         toast.error("Unable to login");
@@ -107,6 +108,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
         throw new Error("No user found");
       }
       await loginWithPubkey(user.user.pubkey);
+      localStorage.setItem("shouldReconnect", "true");
     } catch (err) {
       console.log("Error logging in with extension", err);
     } finally {
