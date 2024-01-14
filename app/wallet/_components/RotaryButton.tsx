@@ -7,13 +7,14 @@ export default function RotaryButton() {
   function handleRotate() {
     setRotation((prev) => {
       const remainder = prev % 180;
+      console.log("Remainder", remainder);
 
       if (remainder === 30) {
         return prev + 60;
-      } else if (prev === 90) {
+      } else if (remainder === 90) {
         return prev + 60;
       } else {
-        return prev + 210;
+        return prev + 240;
       }
     });
   }
