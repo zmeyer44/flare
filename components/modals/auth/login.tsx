@@ -77,7 +77,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
       const login = await loginWithNip46(d.toString());
 
       if (login) {
-        alert(`Logging in  ${login.remoteSigner.remotePubkey}`);
+        // alert(`Logging in  ${login.remoteSigner.remotePubkey}`);
         await loginWithPubkey(d.toString());
         if (login.sk) {
           localStorage.setItem("nip46sk", login.sk);
