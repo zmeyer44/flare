@@ -13,7 +13,7 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
-
+import { useRouter } from "next/navigation";
 import { atom, useAtom } from "jotai";
 import useWindowSize from "@/lib/hooks/useWindowSize";
 import useSearch, { SearchSuggestionObject } from "@/lib/hooks/useSearch";
@@ -29,6 +29,7 @@ export const anonModeAtom = atom(false);
 export const odellModeAtom = atom<"lower" | "upper" | null>(null);
 
 export default function CommandDialogComponent() {
+  const router = useRouter();
   const { isMobile } = useWindowSize();
 
   const [anon, setAnon] = useAtom(anonModeAtom);
@@ -125,6 +126,12 @@ export default function CommandDialogComponent() {
         <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
         <input
           onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && searchInput.toLowerCase() === "wallet") {
+              e.preventDefault();
+              router.push("/wallet");
+            }
+          }}
           className={cn(
             "flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 md:h-12",
           )}
