@@ -79,10 +79,10 @@ export default function Page() {
           </div>
           <div className="flex w-full flex-1 flex-col overflow-hidden px-3 pb-3 font-mono">
             <div className="flex items-center gap-x-1 text-primary">
-              <h3 className="font-normal">txns</h3>
+              <h3 className="font-main">txns</h3>
               <RiFileList3Line className="h-4 w-4" />
             </div>
-            <ul className="mt-1 flex-1 space-y-2 overflow-y-auto rounded-xl rounded-b-[41px] border border-primary bg-orange-800/30 p-3 text-primary">
+            <ul className="mt-1 flex-1 space-y-2 overflow-y-auto rounded-xl rounded-b-[41px] border border-primary bg-orange-800/30 p-3 text-primary scrollbar-none">
               {transactions.map((e, idx) => (
                 <li key={idx} className="flex items-center gap-x-2">
                   <div className="flex items-center gap-x-1">

@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useRef, useState } from "react";
+import { stopPropagation } from "@/lib/utils";
 
 const useLongPress = (
   onLongPress: (a: any) => void,
@@ -19,6 +20,8 @@ const useLongPress = (
       if (shouldPreventDefault) {
         // @ts-ignore
         event.preventDefault();
+        // @ts-ignore
+        stopPropagation(event);
       }
       // @ts-ignore
       if (shouldPreventDefault && event?.target && target.current) {
