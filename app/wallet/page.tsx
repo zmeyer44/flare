@@ -100,7 +100,10 @@ export default function Page() {
                   <div className="h-0 flex-1 border-b-2 border-dotted border-primary/60"></div>
                   <div className="flex items-center ">
                     <p className="text-[14px] leading-none">
-                      {formatNumber(e.amount)}
+                      {`${e.direction === "in" ? "+" : "-"}${formatNumber(
+                        e.amount,
+                      )}`}
+                      <span className="ml-1 text-[9px]">sats</span>
                     </p>
                   </div>
                 </li>
