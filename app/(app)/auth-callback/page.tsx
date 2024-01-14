@@ -32,6 +32,7 @@ export default function Page() {
           localStorage.setItem("nip46sk", login.sk);
           localStorage.setItem("nip46target", pubkey);
         }
+        alert(`Logging in  ${login.remoteSigner.remotePubkey} vs ${pubkey}`);
         await loginWithPubkey(pubkey);
         return;
       }
