@@ -96,9 +96,6 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
         data.email,
       );
       if (nip46Signer) {
-        alert(
-          `created signer for remote ${nip46Signer.remoteSigner.remotePubkey}`,
-        );
         await loginWithPubkey(nip46Signer.token);
         if (nip46Signer.sk) {
           localStorage.setItem("nip46sk", nip46Signer.sk);
