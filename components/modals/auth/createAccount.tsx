@@ -101,7 +101,7 @@ export default function CreateAccountForm({ setStep }: CreateAccountFormProps) {
           localStorage.setItem("nip46sk", nip46Signer.sk);
           localStorage.setItem("nip46target", nip46Signer.token);
         }
-        localStorage.setItem("shouldReconnect", "true");
+        // localStorage.setItem("shouldReconnect", "true");
         toast.success("Account created!");
       }
     } catch (err) {

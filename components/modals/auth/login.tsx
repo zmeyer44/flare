@@ -83,7 +83,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
           localStorage.setItem("nip46sk", login.sk);
           localStorage.setItem("nip46target", d.toString());
         }
-        localStorage.setItem("shouldReconnect", "true");
+        // localStorage.setItem("shouldReconnect", "true");
         toast.success("Logged in!");
       } else {
         toast.error("Unable to login");
