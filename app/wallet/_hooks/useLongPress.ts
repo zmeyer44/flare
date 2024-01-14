@@ -74,10 +74,13 @@ const isTouchEvent = (
 };
 
 const preventDefault = (event: React.TouchEvent<HTMLDivElement>) => {
-  if (!isTouchEvent(event)) return;
-
+  // @ts-ignore
+  stopPropagation(event);
+  if (!isTouchEvent(event)) return false;
   if (event.touches.length < 2 && event.preventDefault) {
     event.preventDefault();
+
+    return false;
   }
 };
 
