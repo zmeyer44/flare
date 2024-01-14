@@ -110,20 +110,21 @@ const NDKProvider = ({
   const { getUser, getProfile } = Users(ndk);
 
   async function createNip46Signer(
-    userPubkey: string,
+    bunkerPubkey: string,
     domain: string,
     username: string,
     email?: string,
   ) {
-    console.log("Called createNip46Signer", ndk, userPubkey, username, email);
+    console.log("Called createNip46Signer", ndk, bunkerPubkey, username, email);
     if (ndk === undefined) return undefined;
     const res = await _createNip46Signer(
       ndk,
-      userPubkey,
+      bunkerPubkey,
       domain,
       username,
       email,
     );
+    alert(`Setting signer ${res?.remoteSigner}`);
     console.log("_createNip46Signer res", res);
     if (res) {
       await setSigner(res.remoteSigner);

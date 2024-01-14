@@ -77,7 +77,7 @@ export default function loginForm({ setStep }: LoginFormProps) {
       const login = await loginWithNip46(d.toString());
 
       if (login) {
-        await loginWithPubkey(nip19.decode(npub).data.toString());
+        await loginWithPubkey(d.toString());
         if (login.sk) {
           localStorage.setItem("nip46sk", login.sk);
           localStorage.setItem("nip46target", d.toString());

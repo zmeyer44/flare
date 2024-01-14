@@ -92,20 +92,13 @@ export async function _createNip46Signer(
         localSigner,
       );
       ndk.signer = remoteSigner;
-      remoteSigner.rpc.on("authUrl", (url: string) => onAuthUrl(url));
-      return remoteSigner.user().then(async (user) => {
-        if (user.npub) {
-          await remoteSigner.blockUntilReady();
-          return {
-            user: user,
-            npub: (await remoteSigner.user()).npub,
-            sk: localSigner.privateKey,
-            token: newSignerPubkey,
-            remoteSigner: remoteSigner,
-            localSigner: localSigner,
-          };
-        }
-      });
+      return {
+        npub: (await remoteSigner.user()).npub,
+        sk: localSigner.privateKey,
+        token: newSignerPubkey,
+        remoteSigner: remoteSigner,
+        localSigner: localSigner,
+      };
     }
     return;
   } catch (e) {
