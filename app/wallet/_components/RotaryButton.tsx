@@ -25,7 +25,7 @@ export default function RotaryButton() {
 
       <div
         onClick={() => {
-          setRotation((prev) => prev + 30);
+          setRotation((prev) => prev + 60);
         }}
         className="bg-texture-otis-redding relative m-auto h-24 w-24 rounded-full bg-primary bg-opacity-80"
       >
