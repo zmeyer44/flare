@@ -1,32 +1,55 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useLongPress from "../_hooks/useLongPress";
 
 export default function RotaryButton() {
+  const [isSafari, setIsSafari] = useState(
+    // @ts-ignore
+    /constructor/i.test(window?.HTMLElement) ||
+      (function (p) {
+        return p.toString() === "[object SafariRemoteNotification]";
+      })(
+        // @ts-ignore
+        !window["safari"] ||
+          // @ts-ignore
+          (typeof safari !== "undefined" && safari?.pushNotification),
+      ),
+  );
   const [rotation, setRotation] = useState(210);
+
   function handleRotate() {
-    // setRotation((prev) => {
-    //   const remainder = prev % 180;
-    //   if (remainder === 30) {
-    //     return prev + 60;
-    //   } else if (remainder === 90) {
-    //     return prev + 60;
-    //   } else {
-    //     return prev + 240;
-    //   }
-    // });
-    setRotation((prev) => {
-      if (prev === 210) {
-        return 270;
-      } else if (prev === 270) {
-        return 330;
-      } else {
-        return 210;
-      }
-    });
+    if (isSafari) {
+      setRotation((prev) => {
+        if (prev === 210) {
+          return 270;
+        } else if (prev === 270) {
+          return 330;
+        } else {
+          return 210;
+        }
+      });
+    } else {
+      setRotation((prev) => {
+        const remainder = prev % 180;
+        if (remainder === 30) {
+          return prev + 60;
+        } else if (remainder === 90) {
+          return prev + 60;
+        } else {
+          return prev + 240;
+        }
+      });
+    }
   }
   function handleSelect() {
-    alert("Select");
+    let step = "send";
+    const remainder = rotation % 180;
+    if (remainder === 90) {
+      step = "scan";
+    } else if (remainder === 150) {
+      step = "show";
+    }
+    alert(`Selected ${step}`);
   }
 
   const defaultOptions = {
