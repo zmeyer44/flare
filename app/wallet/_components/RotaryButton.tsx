@@ -4,63 +4,40 @@ import useLongPress from "../_hooks/useLongPress";
 import useDeviceInfo from "../_hooks/useDeviceInfo";
 
 export default function RotaryButton() {
-  const info = useDeviceInfo();
-  const [isSafari, setIsSafari] = useState(false);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsSafari(
-        // @ts-ignore
-        /constructor/i.test(window?.HTMLElement) ||
-          (function (p) {
-            return p.toString() === "[object SafariRemoteNotification]";
-          })(
-            // @ts-ignore
-            !window["safari"] ||
-              // @ts-ignore
-              (typeof safari !== "undefined" && safari?.pushNotification),
-          ),
-      );
-    }
-  }, [info]);
+  //   const info = useDeviceInfo();
+  //   const [isSafari, setIsSafari] = useState(false);
+  //   useEffect(() => {
+  //     if (typeof window !== "undefined") {
+  //       setIsSafari(
+  //         // @ts-ignore
+  //         /constructor/i.test(window?.HTMLElement) ||
+  //           (function (p) {
+  //             return p.toString() === "[object SafariRemoteNotification]";
+  //           })(
+  //             // @ts-ignore
+  //             !window["safari"] ||
+  //               // @ts-ignore
+  //               (typeof safari !== "undefined" && safari?.pushNotification),
+  //           ),
+  //       );
+  //     }
+  //   }, [info]);
   const [rotation, setRotation] = useState(-150);
   function getSafariVal(num: number) {
     if (num <= 180) return num;
     return -180 + (num - 180);
   }
   function handleRotate() {
-    if (isSafari || info?.osName === "iOS") {
-      setRotation((prev) => {
-        const val = getSafariVal(prev);
-        if (val === -150) {
-          return -90;
-        } else if (val === -90) {
-          return -30;
-        } else {
-          return -150;
-        }
-      });
-    } else {
-      setRotation((prev) => {
-        const val = getSafariVal(prev);
-        if (val === -150) {
-          return -90;
-        } else if (val === -90) {
-          return -30;
-        } else {
-          return -150;
-        }
-      });
-      //   setRotation((prev) => {
-      //     const remainder = prev % 180;
-      //     if (remainder === 30) {
-      //       return prev + 60;
-      //     } else if (remainder === 90) {
-      //       return prev + 60;
-      //     } else {
-      //       return prev + 240;
-      //     }
-      //   });
-    }
+    setRotation((prev) => {
+      const val = getSafariVal(prev);
+      if (val === -150) {
+        return -90;
+      } else if (val === -90) {
+        return -30;
+      } else {
+        return -150;
+      }
+    });
   }
   function handleSelect() {
     let step = "send";

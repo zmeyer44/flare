@@ -17,6 +17,7 @@ const useLongPress = (
         | React.MouseEvent<HTMLDivElement>
         | React.TouchEventHandler<HTMLDivElement>,
     ) => {
+      console.log("Start called");
       if (shouldPreventDefault) {
         // @ts-ignore
         event.preventDefault();
@@ -47,6 +48,9 @@ const useLongPress = (
         | React.TouchEventHandler<HTMLDivElement>,
       shouldTriggerClick = true,
     ) => {
+      // @ts-ignore
+      preventDefault(event);
+      console.log("clear called");
       timeout.current && clearTimeout(timeout.current);
       shouldTriggerClick && !longPressTriggered && onClick();
       setLongPressTriggered(false);
