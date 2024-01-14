@@ -19,7 +19,7 @@ export default function RotaryButton() {
     });
   }
   function handleSelect() {
-    console.log("Select");
+    alert("Select");
   }
 
   const defaultOptions = {
