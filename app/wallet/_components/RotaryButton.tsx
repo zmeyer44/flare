@@ -3,19 +3,23 @@ import { useState, useEffect } from "react";
 import useLongPress from "../_hooks/useLongPress";
 
 export default function RotaryButton() {
-  const [isSafari] = useState(
-    (typeof window !== "undefined" &&
-      // @ts-ignore
-      /constructor/i.test(window?.HTMLElement)) ||
-      (function (p) {
-        return p.toString() === "[object SafariRemoteNotification]";
-      })(
+  const [isSafari, setIsSafari] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsSafari(
         // @ts-ignore
-        !window["safari"] ||
-          // @ts-ignore
-          (typeof safari !== "undefined" && safari?.pushNotification),
-      ),
-  );
+        /constructor/i.test(window?.HTMLElement) ||
+          (function (p) {
+            return p.toString() === "[object SafariRemoteNotification]";
+          })(
+            // @ts-ignore
+            !window["safari"] ||
+              // @ts-ignore
+              (typeof safari !== "undefined" && safari?.pushNotification),
+          ),
+      );
+    }
+  }, []);
   const [rotation, setRotation] = useState(210);
 
   function handleRotate() {
