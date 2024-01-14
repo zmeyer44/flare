@@ -124,9 +124,16 @@ const NDKProvider = ({
       username,
       email,
     );
-    alert(`Setting signer ${res?.remoteSigner}`);
+    alert(
+      `Setting signer ${JSON.stringify({
+        localSigner: res?.remoteSigner.localSigner,
+        remotePubkey: res?.remoteSigner.remotePubkey,
+        token: res?.remoteSigner.token,
+      })}`,
+    );
     console.log("_createNip46Signer res", res);
     if (res) {
+      ndk.signer = res.remoteSigner;
       await setSigner(res.remoteSigner);
       return res;
     }
@@ -137,6 +144,13 @@ const NDKProvider = ({
     try {
       const res = await _loginWithNip46(ndk, userPubkey, sk);
       console.log("res loginWithNip46()", res);
+      alert(
+        `Setting signer ${JSON.stringify({
+          localSigner: res?.remoteSigner.localSigner,
+          remotePubkey: res?.remoteSigner.remotePubkey,
+          token: res?.remoteSigner.token,
+        })}`,
+      );
       if (res) {
         await setSigner(res.remoteSigner);
         return res;
