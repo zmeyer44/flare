@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { modal } from "@/app/_providers/modal";
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { RiNotification4Line, RiSearchLine, RiAddFill } from "react-icons/ri";
 import { SiRelay } from "react-icons/si";
-import StatusIndicator from "@/components/statusIndicator";
+import StatusIndicator, { type Status } from "@/components/statusIndicator";
 import type { NDKUser } from "@nostr-dev-kit/ndk";
 import { truncateText, getTwoLetters } from "@/lib/utils";
 import {
@@ -26,7 +26,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import AuthModal from "@/components/modals/auth";
 import { useNDK } from "@/app/_providers/ndk";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
@@ -188,7 +187,38 @@ export function NewUploadButton({ className }: { className?: string }) {
   );
 }
 export function Relays() {
+  const [relays, setRelays] = useState<
+    {
+      url: string;
+      status: Status;
+    }[]
+  >([]);
   const { ndk } = useNDK();
+  useEffect(() => {
+    processRelays();
+  }, [ndk?.pool.relays]);
+
+  function processRelays() {
+    if (!ndk?.pool.relays) return [];
+    const relays: {
+      url: string;
+      status: Status;
+    }[] = [];
+    for (let value of ndk?.pool.relays.values()) {
+      relays.push({
+        url: value.url,
+        status:
+          value.connectivity.status === 1
+            ? "online"
+            : value.connectivity.status === 3
+              ? "offline"
+              : value.connectivity.status === 2
+                ? "error"
+                : "warning",
+      });
+    }
+    setRelays(relays);
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -201,11 +231,11 @@ export function Relays() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="z-header+ w-56" align="end" forceMount>
-        {ndk?.explicitRelayUrls?.map((r) => (
-          <DropdownMenuGroup key={r}>
+        {relays.map((r) => (
+          <DropdownMenuGroup key={r.url}>
             <DropdownMenuItem className="flex items-center gap-x-2 overflow-hidden">
-              <StatusIndicator status="online" />
-              <span className="w-full truncate">{r}</span>
+              <StatusIndicator status={r.status} />
+              <span className="w-full truncate">{r.url}</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         ))}

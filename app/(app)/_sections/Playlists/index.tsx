@@ -48,7 +48,7 @@ export default function PlaylistsSection() {
           View all <RiArrowRightLine className="ml-1 h-4 w-4" />
         </Button> */}
       </SectionHeader>
-      <SectionContent className="relative overflow-x-hidden">
+      <SectionContent className="relative overflow-hidden overflow-x-hidden">
         <HorizontalCarousel playlists={playlists} />
       </SectionContent>
     </Section>

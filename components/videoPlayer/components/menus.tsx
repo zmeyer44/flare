@@ -133,7 +133,7 @@ export function Settings({
     <DropdownMenuP>
       <TooltipProvider>
         <TooltipP delayDuration={100}>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
               <Button size={"icon"} variant={"ghost"}>
                 <SettingsIcon className="h-7 w-7" />

@@ -6,8 +6,9 @@ const statuses = {
   error: "text-rose-400 bg-rose-400/10",
   warning: "text-yellow-400 bg-yellow-400/10",
 };
+export type Status = keyof typeof statuses;
 type StatusIndicatorProps = {
-  status: keyof typeof statuses;
+  status: Status;
 };
 
 export default function StatusIndicator({ status }: StatusIndicatorProps) {
