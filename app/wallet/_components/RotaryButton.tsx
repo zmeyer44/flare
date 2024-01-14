@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import useLongPress from "../_hooks/useLongPress";
+import useDeviceInfo from "../_hooks/useDeviceInfo";
 
 export default function RotaryButton() {
+  const info = useDeviceInfo();
   const [isSafari, setIsSafari] = useState(false);
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -18,8 +20,9 @@ export default function RotaryButton() {
               (typeof safari !== "undefined" && safari?.pushNotification),
           ),
       );
+      alert(JSON.stringify(info));
     }
-  }, []);
+  }, [info]);
   const [rotation, setRotation] = useState(210);
 
   function handleRotate() {
@@ -44,6 +47,16 @@ export default function RotaryButton() {
           return prev + 240;
         }
       });
+      //   setRotation((prev) => {
+      //     const remainder = prev % 180;
+      //     if (remainder === 30) {
+      //       return prev + 60;
+      //     } else if (remainder === 90) {
+      //       return prev + 60;
+      //     } else {
+      //       return prev + 240;
+      //     }
+      //   });
     }
   }
   function handleSelect() {
