@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import useLongPress from "../_hooks/useLongPress";
 import { modal } from "@/app/_providers/modal";
 import AuthModal from "@/components/modals/auth";
+import ScanModal from "@/components/modals/scan";
 
 export default function RotaryButton() {
   //   const info = useDeviceInfo();
@@ -45,10 +46,13 @@ export default function RotaryButton() {
     const remainder = rotation % 180;
     if (remainder === -90) {
       step = "scan";
+      modal.show(<ScanModal onCapture={(e) => alert(e)} />);
     } else if (remainder === -30) {
       step = "show";
+      modal.show(<AuthModal />);
+    } else {
+      modal.show(<AuthModal />);
     }
-    modal.show(<AuthModal />);
   }
 
   const defaultOptions = {
