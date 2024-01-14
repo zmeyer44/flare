@@ -6,12 +6,14 @@ export default function RotaryButton() {
   const [rotation, setRotation] = useState(210);
   function handleRotate() {
     setRotation((prev) => {
-      if (prev === 210) {
-        return 270;
-      } else if (prev === 270) {
-        return 340;
+      const remainder = prev % 180;
+
+      if (remainder === 30) {
+        return prev + 60;
+      } else if (prev === 90) {
+        return prev + 60;
       } else {
-        return 210;
+        return prev + 210;
       }
     });
   }
@@ -29,7 +31,7 @@ export default function RotaryButton() {
     defaultOptions,
   );
   return (
-    <div className="m-auto flex h-40 w-40 scale-150 transform text-center">
+    <div className="m-auto flex h-40 w-40 scale-150 transform select-none text-center">
       <div className="center absolute inset-x-0 -top-12">
         <p className="font-semibold uppercase text-gray-600">Action Switch</p>
       </div>
