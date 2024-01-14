@@ -5,16 +5,23 @@ import useLongPress from "../_hooks/useLongPress";
 export default function RotaryButton() {
   const [rotation, setRotation] = useState(210);
   function handleRotate() {
+    // setRotation((prev) => {
+    //   const remainder = prev % 180;
+    //   if (remainder === 30) {
+    //     return prev + 60;
+    //   } else if (remainder === 90) {
+    //     return prev + 60;
+    //   } else {
+    //     return prev + 240;
+    //   }
+    // });
     setRotation((prev) => {
-      const remainder = prev % 180;
-      console.log("Remainder", remainder);
-
-      if (remainder === 30) {
-        return prev + 60;
-      } else if (remainder === 90) {
-        return prev + 60;
+      if (prev === 210) {
+        return 270;
+      } else if (prev === 270) {
+        return 330;
       } else {
-        return prev + 240;
+        return 210;
       }
     });
   }
