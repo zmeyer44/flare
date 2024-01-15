@@ -8,8 +8,25 @@ import {
   RiLoginCircleFill,
   RiLogoutCircleRLine,
   RiCashLine,
+  RiArrowLeftRightLine,
 } from "react-icons/ri";
+import {
+  CashuMint,
+  CashuWallet,
+  MintKeys,
+  getEncodedToken,
+  generateNewMnemonic,
+} from "@cashu/cashu-ts";
 
+const wallet = new CashuWallet(
+  new CashuMint(
+    "https://legend.lnbits.com/cashu/api/v1/AptDNABNBXv8gpuywhx6NV",
+  ),
+  {},
+);
+
+const { pr, hash } = await wallet.requestMint(200);
+const nemonic = generateNewMnemonic();
 type Transaction = {
   type: "lightning" | "ecash";
   direction: "in" | "out";
@@ -80,7 +97,7 @@ export default function Page() {
           <div className="flex w-full flex-1 flex-col overflow-hidden px-3 pb-3 font-mono">
             <div className="flex items-center gap-x-1 text-primary">
               <h3 className="font-main">txns</h3>
-              <RiFileList3Line className="h-4 w-4" />
+              <RiArrowLeftRightLine className="h-4 w-4" />
             </div>
             <ul className="mt-1 flex-1 space-y-2 overflow-y-auto rounded-xl rounded-b-[39px] border border-primary bg-orange-800/30 p-3 text-primary scrollbar-none">
               {transactions.map((e, idx) => (
