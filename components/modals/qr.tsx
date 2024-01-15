@@ -29,7 +29,7 @@ export default function QRCodeModal({
   return (
     <Template title={title} description={description}>
       <div className="py-4 pb-10">
-        <div className="center relative mx-auto aspect-square max-w-[300px]">
+        <div className="center relative mx-auto aspect-square min-h-[340px] max-w-[300px]">
           <div className="flex flex-col gap-6">
             <QrCode code={code} />
           </div>
