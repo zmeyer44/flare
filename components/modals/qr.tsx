@@ -35,7 +35,7 @@ export default function QRCodeModal({
           </div>
         </div>
         {!!displayValue && (
-          <div className="center mx-auto mt-6 max-w-[300px] gap-x-3 text-center text-muted-foreground">
+          <div className="center mx-auto max-w-[300px] gap-x-3 pt-6 text-center text-muted-foreground">
             <p className="line-clamp-1 break-all">{displayValue}</p>
             <Button
               onClick={() => {
