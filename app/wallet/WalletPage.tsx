@@ -50,12 +50,6 @@ export default function Page({ dbUser }: { dbUser: CurrentUserWithMintType }) {
     trustModal,
     setTrustModal,
   } = useCashuToken();
-  useEffect(() => {
-    console.log("mint", { mints: dbUser.mints });
-    if (dbUser.mints.length === 0) {
-      alert("No mints");
-    }
-  }, [dbUser]);
 
   const {
     data: hasMint,
