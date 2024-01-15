@@ -18,15 +18,6 @@ import {
   generateNewMnemonic,
 } from "@cashu/cashu-ts";
 
-const wallet = new CashuWallet(
-  new CashuMint(
-    "https://legend.lnbits.com/cashu/api/v1/AptDNABNBXv8gpuywhx6NV",
-  ),
-  {},
-);
-
-const { pr, hash } = await wallet.requestMint(200);
-const nemonic = generateNewMnemonic();
 type Transaction = {
   type: "lightning" | "ecash";
   direction: "in" | "out";
