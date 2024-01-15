@@ -30,8 +30,10 @@ model User {
   password       String?
   email          String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  mints     UserMint[]
+  proofs    Proof[]
 }
 
 model Video {
@@ -182,4 +184,64 @@ model NostrEvent {
   tags       Json    @default("[]")
   sig        String
   d          String?
+}
+
+// Wallet Stuff
+model Mint {
+  id       String     @id @default(uuid())
+  url      String     @unique
+  keySets  keySet[]
+  invoices Invoice[]
+  users    UserMint[]
+}
+
+model UserMint {
+  userPubkey String
+  user       User    @relation(fields: [userPubkey], references: [pubkey], onDelete: Cascade)
+  mintUrl    String
+  mint       Mint    @relation(fields: [mintUrl], references: [url], onDelete: Cascade)
+  customName String?
+  default    Boolean @default(false)
+
+  @@id([userPubkey, mintUrl])
+  @@index(mintUrl)
+  @@index(userPubkey)
+}
+
+model Proof {
+  id         String
+  amount     Int
+  secret     String  @id
+  C          String
+  used       Boolean @default(false)
+  userPubkey String
+  user       User    @relation(fields: [userPubkey], references: [pubkey], onDelete: Cascade)
+}
+
+model keySet {
+  id      String
+  mint    Mint   @relation(fields: [mintUrl], references: [url], onDelete: Cascade)
+  mintUrl String
+
+  @@id([id, mintUrl])
+  @@index(mintUrl)
+}
+
+model MintKey {
+  id     String
+  amount Int
+  pubkey String
+
+  @@id([id, pubkey])
+}
+
+model Invoice {
+  amount  Int
+  pr      String
+  hash    String   @id
+  time    DateTime @default(now())
+  mint    Mint     @relation(fields: [mintUrl], references: [url])
+  mintUrl String
+
+  @@index(mintUrl)
 }

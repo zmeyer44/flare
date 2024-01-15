@@ -2,11 +2,34 @@
 import { useState, useEffect } from "react";
 import useLongPress from "../_hooks/useLongPress";
 import { modal } from "@/app/_providers/modal";
-import AuthModal from "@/components/modals/auth";
+import SendModal from "./SendModal";
 import ScanModal from "@/components/modals/scan";
 import QRCodeModal from "@/components/modals/qr";
+import { UserMint } from "@prisma/client";
+import { useWallet } from "../_providers/walletProvider";
+import { Proof } from "@cashu/cashu-ts";
+type RotaryButtonProps = {
+  onScan: (data: string) => Promise<boolean>;
+  mint: UserMint;
+  loading: boolean;
+};
 
-export default function RotaryButton() {
+export default function RotaryButton({
+  onScan,
+  loading,
+  mint,
+}: RotaryButtonProps) {
+  const { sendToken } = useWallet();
+
+  async function handleSendEcash(
+    amount: number,
+    memo: string,
+    proofs: Proof[],
+  ) {
+    const token = await sendToken(mint.mintUrl, amount, memo, proofs);
+    console.log("returing", token);
+    return token;
+  }
   //   const info = useDeviceInfo();
   //   const [isSafari, setIsSafari] = useState(false);
   //   useEffect(() => {
@@ -49,8 +72,15 @@ export default function RotaryButton() {
       step = "scan";
       modal.show(
         <ScanModal
-          onCapture={(e) => alert(e)}
+          onCapture={(e) => {
+            onScan(e).then((e) => {
+              if (e) {
+                modal.dismiss();
+              }
+            });
+          }}
           onDismiss={() => modal.dismiss()}
+          loading={loading}
         />,
       );
     } else if (remainder === -30) {
@@ -64,7 +94,7 @@ export default function RotaryButton() {
         />,
       );
     } else {
-      modal.show(<AuthModal />);
+      modal.show(<SendModal mint={mint} sendEcash={handleSendEcash} />);
     }
   }
 

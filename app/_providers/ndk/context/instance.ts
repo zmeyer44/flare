@@ -12,7 +12,6 @@ import NDKCacheAdapterDexie from "@nostr-dev-kit/ndk-cache-dexie";
 
 export default function NDKInstance(explicitRelayUrls: string[]) {
   const loaded = useRef(false);
-
   const [ndk, _setNDK] = useState<NDK | undefined>(undefined);
   const [signer, _setSigner] = useState<
     NDKPrivateKeySigner | NDKNip46Signer | NDKNip07Signer | undefined

@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/drawer";
 export default function Template({
   children,
-  footer,
+  footer: Footer,
   title,
   description,
 }: {
   children: ReactNode;
-  footer?: ReactNode;
+  footer?: () => ReactNode;
   title?: string;
   description?: string;
 }) {
@@ -31,7 +31,11 @@ export default function Template({
         </DrawerHeader>
       )}
       <DrawerBody>{children}</DrawerBody>
-      {!!footer && <DrawerFooter>{footer}</DrawerFooter>}
+      {!!Footer && (
+        <DrawerFooter>
+          <Footer />
+        </DrawerFooter>
+      )}
     </div>
   );
 }

@@ -185,8 +185,7 @@ export const authOptions: NextAuthOptions = {
       return url;
     },
   },
-  // debug: !VERCEL_DEPLOYMENT,
-  debug: true,
+  debug: !VERCEL_DEPLOYMENT,
 };
 
 export function getSession() {
@@ -195,10 +194,7 @@ export function getSession() {
 
 export async function getCurrentUserSession() {
   try {
-    console.log("At create session");
     const session = await getSession();
-    console.log("Session", session);
-
     if (!session?.user?.id) {
       return null;
     }
