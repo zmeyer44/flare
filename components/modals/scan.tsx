@@ -21,7 +21,9 @@ type ScanModalProps = {
 
 export default function ScanModal({ onCapture, loading }: ScanModalProps) {
   const [input, setInput] = useState("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   function handleSubmit(val: string) {
+    setHasSubmitted(true);
     onCapture(val);
   }
 
@@ -34,7 +36,7 @@ export default function ScanModal({ onCapture, loading }: ScanModalProps) {
               if (!!result) {
                 const value = result["text"] as string;
 
-                if (value.startsWith("cashu")) {
+                if (value.startsWith("cashu") || !hasSubmitted) {
                   setInput(value);
                   handleSubmit(value);
                   // setInput(value);
