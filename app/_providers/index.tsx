@@ -1,8 +1,6 @@
 "use client";
 
-import { Toaster } from "sonner";
-import { ModalProvider } from "./modal-old/provider";
-// import useRouteChange from "@/lib/hooks/useRouteChange";
+import { Toaster } from "sonner"; // import useRouteChange from "@/lib/hooks/useRouteChange";
 import { NDKProvider } from "./ndk";
 import { RELAYS } from "@/constants";
 import TRPCProvider from "./trpc/Provider";
