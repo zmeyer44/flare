@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useLongPress from "../_hooks/useLongPress";
 import { modal } from "@/app/_providers/modal";
 import SendModal from "./SendModal";
@@ -30,24 +30,7 @@ export default function RotaryButton({
     console.log("returing", token);
     return token;
   }
-  //   const info = useDeviceInfo();
-  //   const [isSafari, setIsSafari] = useState(false);
-  //   useEffect(() => {
-  //     if (typeof window !== "undefined") {
-  //       setIsSafari(
-  //         // @ts-ignore
-  //         /constructor/i.test(window?.HTMLElement) ||
-  //           (function (p) {
-  //             return p.toString() === "[object SafariRemoteNotification]";
-  //           })(
-  //             // @ts-ignore
-  //             !window["safari"] ||
-  //               // @ts-ignore
-  //               (typeof safari !== "undefined" && safari?.pushNotification),
-  //           ),
-  //       );
-  //     }
-  //   }, [info]);
+
   const [rotation, setRotation] = useState(-150);
   function getSafariVal(num: number) {
     if (num <= 180) return num;
@@ -82,6 +65,9 @@ export default function RotaryButton({
           onDismiss={() => modal.dismiss()}
           loading={loading}
         />,
+        {
+          className: "bg-gradient-to-bl from-gray-600 to-gray-700",
+        },
       );
     } else if (remainder === -30) {
       step = "show";
@@ -92,9 +78,14 @@ export default function RotaryButton({
           displayValue="lnurl1dp68gurn8ghj7urjd9kkzmpwdejhgtewwajkcmpdddhx7amw9akxuatjd3cz7cmgv9exxmmpd3j8yct8dahxvmrexy0xna2x"
           description="Scan Qr code to receive lightning"
         />,
+        {
+          className: "bg-gradient-to-bl from-gray-600 to-gray-700",
+        },
       );
     } else {
-      modal.show(<SendModal mint={mint} sendEcash={handleSendEcash} />);
+      modal.show(<SendModal mint={mint} sendEcash={handleSendEcash} />, {
+        className: "bg-gradient-to-bl from-gray-600 to-gray-700",
+      });
     }
   }
 
@@ -120,15 +111,11 @@ export default function RotaryButton({
       >
         Send
       </div>
-      {/* <div className="absolute h-40 w-40 origin-center -rotate-45 scale-110 transform font-semibold text-gray-600">
-        200
-      </div> */}
+
       <div className="absolute h-40 w-40 origin-center scale-110 transform text-sm font-semibold uppercase text-gray-600">
         Scan
       </div>
-      {/* <div className="absolute h-40 w-40 origin-center rotate-45 scale-110 transform font-semibold text-gray-600">
-        1K
-      </div> */}
+
       <div
         style={{
           rotate: `60deg`,
@@ -165,51 +152,6 @@ export default function RotaryButton({
         <p className="text-[12px] font-semibold uppercase text-gray-600">
           [Hold to select]
         </p>
-      </div>
-    </div>
-  );
-  return (
-    <div className="m-auto flex h-40 w-40 scale-75 transform text-center">
-      <div className="center absolute inset-x-0 -top-10">
-        <p className="font-semibold text-gray-600">Fee Rate</p>
-      </div>
-      <div className="absolute h-40 w-40 origin-center -rotate-90 scale-110  transform font-semibold text-gray-600">
-        500
-      </div>
-      <div className="absolute h-40 w-40 origin-center -rotate-45 scale-110 transform font-semibold text-gray-600">
-        1K
-      </div>
-      <div className="absolute h-40 w-40 origin-center scale-110 transform font-semibold text-gray-600">
-        2K
-      </div>
-      <div className="absolute h-40 w-40 origin-center rotate-45 scale-110 transform font-semibold text-gray-600">
-        5K
-      </div>
-      <div className="absolute h-40 w-40 origin-center rotate-90 scale-110 transform font-semibold text-gray-600">
-        10K
-      </div>
-
-      <div
-        onClick={() => {
-          setRotation((prev) => prev + 30);
-        }}
-        className="bg-texture-otis-redding relative m-auto h-24 w-24 rounded-full bg-primary bg-opacity-80"
-      >
-        <div className="absolute h-24 w-24 scale-125 transform rounded-full border-2 border-gray-600"></div>
-        <div className="absolute h-24 w-24 rounded-full border-l-2 border-r-2 border-t-2 border-white border-opacity-50"></div>
-        <div className="absolute h-24 w-24 rounded-full border-b-2 border-l-2 border-r-2 border-black border-opacity-25"></div>
-        <div
-          style={{
-            rotate: `${rotation}deg`,
-          }}
-          className="bg-texture-otis-redding absolute m-auto ml-12 mt-12 h-1 w-1/2 origin-top-left -rotate-45 transform rounded-md bg-gray-200 bg-opacity-90 transition-all"
-        ></div>
-        <div className="absolute h-24 w-24 rounded-full shadow-2xl"></div>
-        <div className="absolute h-24 w-24 rounded-full shadow-2xl"></div>
-        <div className="absolute h-24 w-24 rounded-full shadow-xl"></div>
-        <div className="absolute h-24 w-24 rounded-full shadow-xl"></div>
-        <div className="absolute h-24 w-24 rounded-full shadow-lg"></div>
-        <div className="absolute h-24 w-24 rounded-full shadow-md"></div>
       </div>
     </div>
   );

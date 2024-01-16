@@ -69,6 +69,7 @@ const Modal = ({
             }}
             className="fixed inset-0 bg-black/40"
           />
+
           <Modal
             style={{
               zIndex: 940 + layer * 2,
@@ -83,7 +84,7 @@ const Modal = ({
     );
   };
   return (
-    <DialogContent {...props}>
+    <DialogContent {...props} className={modal.className}>
       {modal.jsx}
       <NestedModal />
     </DialogContent>
@@ -113,6 +114,7 @@ const ModalDrawer = ({
         }}
       >
         <DrawerContent
+          className={nestedModals[0]!.className}
           style={{
             maxHeight: `${maxHeight - 2}%`,
           }}
@@ -196,140 +198,26 @@ const Modstr = (props: ToasterProps) => {
     );
   }
   return (
-    // Remove item from normal navigation flow, only available via hotkey
-    <>
-      <section aria-label={`modal-provider`} tabIndex={-1}>
-        <Drawer
-          open={!!modals.length}
-          onClose={() => setModals([])}
-          shouldScaleBackground={true}
-        >
-          <DrawerContent
-            style={{
-              maxHeight: "96%",
-            }}
-          >
-            <ModalDrawer
-              modal={rootModal}
-              nestedModals={modals.slice(1)}
-              removeModal={removeModal}
-            />
-          </DrawerContent>
-        </Drawer>
-      </section>
-      {/* <section
-        aria-label={`${containerAriaLabel} ${hotkeyLabel}`}
-        tabIndex={-1}
+    <section aria-label={`modal-provider`} tabIndex={-1}>
+      <Drawer
+        open={!!modals.length}
+        onClose={() => setModals([])}
+        shouldScaleBackground={true}
       >
-        {possiblePositions.map((position, index) => {
-          const [y, x] = position.split("-");
-          return (
-            <ol
-              key={position}
-              dir={dir === "auto" ? getDocumentDirection() : dir}
-              tabIndex={-1}
-              ref={listRef}
-              className={className}
-              data-sonner-toaster
-              data-rich-colors={richColors}
-              data-y-position={y}
-              data-x-position={x}
-              style={
-                {
-                  "--front-toast-height": `${heights[0]?.height}px`,
-                  "--offset":
-                    typeof offset === "number"
-                      ? `${offset}px`
-                      : offset || VIEWPORT_OFFSET,
-                  "--width": `${TOAST_WIDTH}px`,
-                  "--gap": `${GAP}px`,
-                  ...style,
-                } as React.CSSProperties
-              }
-              onBlur={(event) => {
-                if (
-                  isFocusWithinRef.current &&
-                  !event.currentTarget.contains(event.relatedTarget)
-                ) {
-                  isFocusWithinRef.current = false;
-                  if (lastFocusedElementRef.current) {
-                    lastFocusedElementRef.current.focus({
-                      preventScroll: true,
-                    });
-                    lastFocusedElementRef.current = null;
-                  }
-                }
-              }}
-              onFocus={(event) => {
-                const isNotDismissible =
-                  event.target instanceof HTMLElement &&
-                  event.target.dataset.dismissible === "false";
-
-                if (isNotDismissible) return;
-
-                if (!isFocusWithinRef.current) {
-                  isFocusWithinRef.current = true;
-                  lastFocusedElementRef.current =
-                    event.relatedTarget as HTMLElement;
-                }
-              }}
-              onMouseEnter={() => setExpanded(true)}
-              onMouseMove={() => setExpanded(true)}
-              onMouseLeave={() => {
-                // Avoid setting expanded to false when interacting with a toast, e.g. swiping
-                if (!interacting) {
-                  setExpanded(false);
-                }
-              }}
-              onPointerDown={(event) => {
-                const isNotDismissible =
-                  event.target instanceof HTMLElement &&
-                  event.target.dataset.dismissible === "false";
-
-                if (isNotDismissible) return;
-                setInteracting(true);
-              }}
-              onPointerUp={() => setInteracting(false)}
-            >
-              {toasts
-                .filter(
-                  (toast) =>
-                    (!toast.position && index === 0) ||
-                    toast.position === position,
-                )
-                .map((toast, index) => (
-                  <Toast
-                    key={toast.id}
-                    index={index}
-                    toast={toast}
-                    duration={toastOptions?.duration ?? duration}
-                    className={toastOptions?.className}
-                    descriptionClassName={toastOptions?.descriptionClassName}
-                    invert={!!invert}
-                    visibleToasts={visibleToasts}
-                    closeButton={!!closeButton}
-                    interacting={interacting}
-                    position={position}
-                    style={toastOptions?.style}
-                    unstyled={toastOptions?.unstyled}
-                    classNames={toastOptions?.classNames}
-                    cancelButtonStyle={toastOptions?.cancelButtonStyle}
-                    actionButtonStyle={toastOptions?.actionButtonStyle}
-                    removeToast={removeToast}
-                    toasts={toasts}
-                    heights={heights}
-                    setHeights={setHeights}
-                    expandByDefault={!!expand}
-                    gap={gap}
-                    loadingIcon={loadingIcon}
-                    expanded={expanded}
-                  />
-                ))}
-            </ol>
-          );
-        })}
-      </section> */}
-    </>
+        <DrawerContent
+          className={rootModal.className}
+          style={{
+            maxHeight: "96%",
+          }}
+        >
+          <ModalDrawer
+            modal={rootModal}
+            nestedModals={modals.slice(1)}
+            removeModal={removeModal}
+          />
+        </DrawerContent>
+      </Drawer>
+    </section>
   );
 };
 export { modal, Modstr, ToastT, ExternalToast };

@@ -46,6 +46,7 @@ class Observer {
       type?: ToastTypes;
       promise?: PromiseT;
       jsx?: React.ReactElement;
+      className?: string;
     },
   ) => {
     const { node, ...rest } = data;

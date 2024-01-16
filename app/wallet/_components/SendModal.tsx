@@ -65,6 +65,7 @@ export default function SendModal({ mint, sendEcash }: SendModalProps) {
         />,
         {
           id: "send-ecash",
+          className: "bg-gradient-to-bl from-gray-600 to-gray-700",
         },
       );
     }
