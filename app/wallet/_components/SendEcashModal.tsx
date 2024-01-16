@@ -21,7 +21,7 @@ export default function SendEcashModal({
   const [loading, setLoading] = useState(false);
   return (
     <Template title="Send Ecash">
-      <div className="flex min-h-[60vh] flex-col gap-y-5">
+      <div className="flex min-h-[60vh] flex-col gap-y-5 md:min-h-0">
         <div className="pb-2">
           <div className="flex items-center justify-center space-x-2">
             <div className="flex-1 text-center">
@@ -30,7 +30,7 @@ export default function SendEcashModal({
                   placeholder="0"
                   autoFocus
                   pattern="[0-9]*"
-                  className="invisible-input h-full border-0 bg-transparent text-center text-5xl font-bold  shadow-none file:border-0 file:bg-transparent placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="invisible-input h-full border-0 bg-transparent text-center !text-5xl font-bold  shadow-none file:border-0 file:bg-transparent placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50"
                   onChange={(e) => {
                     if (e.target.value === "") {
                       setEcashAmount(0);
