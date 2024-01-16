@@ -111,7 +111,7 @@ export default function CommandDialogComponent() {
         } else {
           setDebounce(searchInput);
         }
-      }, 150);
+      }, 300);
     }
   }, [searchInput, debounce]);
 
