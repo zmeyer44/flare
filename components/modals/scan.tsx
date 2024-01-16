@@ -26,7 +26,7 @@ export default function ScanModal({ onCapture, loading }: ScanModalProps) {
   }
 
   return (
-    <Template title="Scan Lightning invoice">
+    <Template title="Scan Cashu Token">
       <div className="pb-10">
         <div className="center relative mx-auto aspect-square max-w-[300px]">
           <QrReader
