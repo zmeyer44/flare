@@ -12,12 +12,6 @@ import { PlayerProvider } from "./pipPlayer";
 import Auth from "./auth";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const handleRouteChange = (url: string) => {
-    const RichHistory = sessionStorage.getItem("RichHistory");
-    if (!RichHistory) {
-      sessionStorage.setItem("RichHistory", "true");
-    }
-  };
   // useRouteChange(handleRouteChange);
   return (
     <>

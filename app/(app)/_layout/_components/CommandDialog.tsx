@@ -5,13 +5,9 @@ import { useKeyboardShortcut } from "@/lib/hooks/useKeyboardShortcut";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import {
   CommandDialog,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import { useRouter } from "next/navigation";
 import { atom, useAtom } from "jotai";
