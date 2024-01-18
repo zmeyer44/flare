@@ -105,7 +105,6 @@ export const storageRouter = createTRPCRouter({
           bytes: 2_147_483_648,
           pubkey: ctx.session.user.pubkey,
           paymentEventId: paymentEventId,
-          paymentEvent: JSON.stringify(input.paymentEvent),
         },
       });
       return { newCredits };
