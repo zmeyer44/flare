@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Spinner from "@/components/spinner";
 import VideoPlayer from "@/components/videoPlayer";
@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RiSearchLine } from "react-icons/ri";
-
+import { useSession } from "next-auth/react";
+import { attemptHttpLogin } from "@/app/_providers/httpAuth";
 import { nip19 } from "nostr-tools";
 
 import { useNDK } from "@/app/_providers/ndk";
@@ -68,6 +69,14 @@ export function VideoUpload({
   const [videoUrl, setVideoUrl] = useState("");
   const { remainingCredits } = useStorageCredits();
   const { fetchEvents, ndk } = useNDK();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (!showEventInput && !session?.user) {
+      alert("Must sign http auth event to upload videos");
+      attemptHttpLogin(ndk!);
+    }
+  }, [session?.user, showEventInput]);
 
   async function handleSearch() {
     if (!eventTagId) return;
