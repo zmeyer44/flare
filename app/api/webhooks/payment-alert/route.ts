@@ -85,6 +85,16 @@ async function handler(req: Request) {
     });
   }
 
+  await prisma.user.upsert({
+    where: {
+      pubkey: data.payer_pubkey,
+    },
+    create: {
+      pubkey: data.payer_pubkey,
+    },
+    update: {},
+  });
+
   await prisma.storageCredit.create({
     data: {
       paymentHash: data.payment_hash,
