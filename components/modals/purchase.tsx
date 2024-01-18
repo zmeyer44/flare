@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Split from "@/components/spread/Split";
 import { Button } from "@/components/ui/button";
-
+import { attemptHttpLogin } from "@/app/_providers/httpAuth";
 import {
   POOL_FEE,
   SATS_PER_SHARE,
@@ -19,6 +19,8 @@ import { useNDK } from "@/app/_providers/ndk";
 import { Pool } from "@/lib/strategy/Pool";
 import { toast } from "sonner";
 import { sendZap } from "@/lib/actions/zap";
+import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import { useSession, signIn } from "next-auth/react";
 
 const intervals = [
   10, 25, 50, 75, 100, 150, 200, 250, 350, 500, 750, 1000, 1250, 1500, 2_000,
@@ -58,6 +60,7 @@ export default function PurchaseModal({
   const [isLoading, setIsLoading] = useState(false);
   const [sats, setSats] = useState(2000);
   const { ndk } = useNDK();
+  const { data: session } = useSession();
   console.log("pool", pool);
   const stats = [
     {
@@ -91,7 +94,15 @@ export default function PurchaseModal({
   }
   async function handleSendZap() {
     try {
+      if (!ndk) return;
       setIsLoading(true);
+      if (!session?.user) {
+        const res = await attemptHttpLogin(ndk);
+        if (!res) {
+          toast.error("Unable to complete http login");
+          return;
+        }
+      }
       const result = await sendZap(ndk!, sats, testEvent);
       buyShares(token, sats / SATS_PER_SHARE);
       toast.success("Shares bought!");
