@@ -100,7 +100,6 @@ async function handler(req: Request) {
       paymentHash: data.payment_hash,
       pubkey: data.payer_pubkey,
       bytes: 2_147_483_648,
-      paymentEvent: data.metadata.zap_request_raw,
       paymentEventId: data.metadata.zap_request.id,
     },
   });

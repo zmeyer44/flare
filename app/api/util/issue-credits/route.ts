@@ -11,7 +11,6 @@ async function handler() {
         },
       },
       bytes: 2147483648,
-      paymentEvent: "{}",
       paymentEventId: "custom-9",
     },
   });

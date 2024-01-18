@@ -78,13 +78,14 @@ model StorageCredit {
   id             Int     @id @default(autoincrement())
   bytes          BigInt  @db.UnsignedBigInt
   paymentEventId String  @unique
-  paymentEvent   Json
   paymentHash    String? @unique
   pubkey         String
-  user           User    @relation(fields: [pubkey], references: [pubkey])
+  user           User    @relation(fields: [pubkey], references: [pubkey], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index(pubkey)
 }
 
 model Upload {
