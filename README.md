@@ -1,39 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Flare
 
-## Getting Started
+Flare is a [nostr](<[url](https://github.com/nostr-protocol/nostr)>) video sharing client. Users can post kind 34235 events on Flare or any other compatable nostr client to view, like, zap, or comment on.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [x] Kind 35235 Video events support
+- [x] Kind 35237 Video views support
+- [x] 30005 Video playlists creation and viewing
+- [x] Commenting, reactions, and zapping
+- [x] View profiles, add to contact list
+- [x] Customize your profile
+- [x] Purchase upload credits and upload directly via Flare
+- [x] Use existing video url to kind 1063 event to create a kind 34235 video event
+- [x] NIP 07 Login support
+- [x] NIP 46 Bunker login support
+- [x] NIP 05 Support
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about Nostr, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Nostr NIPs Repo](https://github.com/nostr-protocol/nips) - learn about NIPs, the guidelines for Nostr.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Run Flare Locally
 
-## Deploy on Vercel
+First, install all dependencies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+bun install
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Next, start the development server:
+
+```bash
+bun run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Prisma commands
 
