@@ -23,7 +23,8 @@ async function handler(req: NextRequest) {
   });
   await ndkInstance.connect(6000);
   ndkInstance.signer = signer;
-  const { email, name, message } = contactParse.parse(req.body);
+  const rawJson = await req.json();
+  const { email, name, message } = contactParse.parse(rawJson);
 
   const event = new NDKEvent(ndkInstance, {
     content: `Contact form submission: \n
