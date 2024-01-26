@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { nip19 } from "nostr-tools";
@@ -38,31 +38,32 @@ type EditVideoPageProps = {
 
 export default function Page({ params }: { params: EditVideoPageProps }) {
   const router = useRouter();
-  const { ndk } = useNDK();
+  const { fetchEvents, ndk } = useNDK();
   const { currentUser } = useCurrentUser();
-  console.log("Ssearching for ", {
-    filter: {
+  const [event, setEvent] = useState<NDKEvent>();
+  useEffect(() => {
+    if (ndk) {
+      handleFetchEvent();
+    }
+  }, [ndk, params.d]);
+  async function handleFetchEvent() {
+    const events = await fetchEvents({
       kinds: [34235],
       authors: [currentUser?.pubkey as string],
       ["#d"]: [params.d],
       limit: 1,
-    },
-  });
-  const { events } = useEvents({
-    filter: {
-      kinds: [34235],
-      authors: [currentUser?.pubkey as string],
-      ["#d"]: [params.d],
-      limit: 1,
-    },
-  });
-  const eventToEdit = events[0];
-  if (events.length === 0 || !eventToEdit) {
+    });
+    if (events.length) {
+      setEvent(events[0]);
+    }
+  }
+
+  if (!event) {
     return (
       <div className="center py-10">
         <Spinner />
       </div>
     );
   }
-  return <EditVideoPage event={eventToEdit} />;
+  return <EditVideoPage event={event} />;
 }
