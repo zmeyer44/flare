@@ -7,7 +7,7 @@ import { nip19 } from "nostr-tools";
 import type { NDKEvent, NDKKind } from "@nostr-dev-kit/ndk";
 import useProfile from "@/lib/hooks/useProfile";
 import { getTagValues } from "@/lib/nostr/utils";
-import Player, { VideoUpload } from "./components/Player";
+import Player, { VideoUpload } from "../components/Player";
 import { Textarea } from "@/components/ui/textarea";
 import useAutosizeTextArea from "@/lib/hooks/useAutoSizeTextArea";
 import { cn } from "@/lib/utils";
@@ -25,8 +25,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useRouter } from "next/navigation";
-import Thumbnail from "./components/thumbnail";
-import TextTracks from "./components/textTracks";
+import Thumbnail from "../components/thumbnail";
+import TextTracks from "../components/textTracks";
 import { RiAlertLine } from "react-icons/ri";
 
 export default function Page() {

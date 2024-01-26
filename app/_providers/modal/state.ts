@@ -20,7 +20,7 @@ class Observer {
 
   // We use arrow functions to maintain the correct `this` reference
   subscribe = (subscriber: (modal: ModalT | ToastToDismiss) => void) => {
-    //@ts-ignoreå
+    //@ts-ignore
     this.subscribers.push(subscriber);
 
     return () => {

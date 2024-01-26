@@ -73,7 +73,6 @@ export function VideoUpload({
 
   useEffect(() => {
     if (!showEventInput && !session?.user) {
-      alert("Must sign http auth event to upload videos");
       attemptHttpLogin(ndk!);
     }
   }, [session?.user, showEventInput]);

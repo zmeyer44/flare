@@ -15,7 +15,7 @@ export default function UploadVideoButton() {
       <Button
         onClick={() => {
           if (currentUser) {
-            router.push("/new-video");
+            router.push("/video/new");
           } else {
             modal.show(<AuthModal />, {
               id: "auth",

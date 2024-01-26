@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 import {
   cn,
   getTwoLetters,
@@ -20,7 +20,6 @@ import LikeToggleButton from "@/components/custom-buttons/LikeToggleButton";
 import FollowButton from "@/components/custom-buttons/FollowButton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RenderText } from "@/components/textRendering";
-
 import useProfile from "@/lib/hooks/useProfile";
 import { relativeTime } from "@/lib/utils/dates";
 import { toast } from "sonner";
@@ -30,11 +29,14 @@ import useExpandableContainer from "@/lib/hooks/useExpandableContainer";
 import ZapButton from "@/components/custom-buttons/ZapButton";
 import { modal } from "@/app/_providers/modal";
 import AddToPlaylistModal from "@/components/modals/addToPlaylist";
-
+import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import { getTagValues } from "@/lib/nostr/utils";
 type VideoActionsProps = {
   event: NDKEvent;
 };
 export default function VideoActions({ event }: VideoActionsProps) {
+  const { currentUser } = useCurrentUser();
+  const router = useRouter();
   const npub = event.author.npub;
   const { profile, followers } = useProfile(event.author.pubkey, {
     fetchFollowerCount: true,
@@ -158,6 +160,18 @@ export default function VideoActions({ event }: VideoActionsProps) {
                   toast.success("Copied event");
                 },
               },
+              ...(currentUser?.pubkey === event.author.pubkey
+                ? [
+                    {
+                      label: "Edit Event",
+                      action: () => {
+                        router.push(
+                          `/video/${getTagValues("d", event.tags) ?? ""}/edit`,
+                        );
+                      },
+                    },
+                  ]
+                : []),
             ]}
           />
         </div>

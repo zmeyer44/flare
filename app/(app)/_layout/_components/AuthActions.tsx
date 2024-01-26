@@ -175,7 +175,7 @@ export function SearchButton({ className }: { className?: string }) {
 }
 export function NewUploadButton({ className }: { className?: string }) {
   return (
-    <Link href="/new-video">
+    <Link href="/video/new">
       <Button
         variant="default"
         size="icon"
