@@ -236,6 +236,13 @@ model MintKey {
   @@id([id, pubkey])
 }
 
+model Waitlist {
+  id        Int      @id @default(autoincrement())
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Invoice {
   amount  Int
   pr      String
