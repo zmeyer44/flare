@@ -238,7 +238,7 @@ model MintKey {
 
 model Waitlist {
   id        Int      @id @default(autoincrement())
-  email     String
+  email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
