@@ -6,7 +6,7 @@ const ContactSchema = z.object({
   email: z.string(),
 });
 
-async function handler(req: Request) {
+async function POST(req: Request) {
   const rawJson = await req.json();
   const data = ContactSchema.parse(rawJson);
 
@@ -25,4 +25,15 @@ async function handler(req: Request) {
   });
 }
 
-export { handler as GET, handler as POST };
+async function GET(req: Request) {
+  const data = await prisma.waitlist.findMany({
+    select: {
+      email: true,
+    },
+  });
+
+  return NextResponse.json(data);
+}
+
+export { GET, POST };
+// export { handler as GET, handler as POST };
