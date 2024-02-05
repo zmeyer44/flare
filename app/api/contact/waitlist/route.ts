@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 
@@ -25,14 +25,24 @@ async function POST(req: Request) {
   });
 }
 
-async function GET(req: Request) {
+async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const token = searchParams.get("token");
+  if (token !== process.env.WAITLIST_TOKEN) {
+    return NextResponse.json({
+      data: "Invalid token",
+    });
+  }
   const data = await prisma.waitlist.findMany({
     select: {
       email: true,
     },
   });
 
-  return NextResponse.json(data);
+  const response = new NextResponse(JSON.stringify(data, undefined, 2), {
+    status: 200,
+  });
+  return response;
 }
 
 export { GET, POST };
