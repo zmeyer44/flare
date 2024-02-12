@@ -39,7 +39,7 @@ async function GET(req: NextRequest) {
     },
   });
 
-  const response = new NextResponse(JSON.stringify(data, undefined, 2), {
+  const response = new NextResponse(JSON.stringify({ count: data.length, data }, undefined, 2), {
     status: 200,
   });
   return response;
